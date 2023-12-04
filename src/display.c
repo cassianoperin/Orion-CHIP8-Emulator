@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include "display.h"
 
-bool display_init()
+bool display_init(void)
 {
 	// Initialization flag
 	bool success = true;
@@ -26,7 +26,8 @@ bool display_init()
 	else
 	{
 		// Create window
-		window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN );
+		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI );
+		window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN );
 		if( window == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -63,7 +64,7 @@ bool display_init()
 }
 
 
-bool display_draw(unsigned int frame, Scene *scene)
+bool display_draw(unsigned int frame)
 {
 	//Initialization flag
 	bool success = true;
@@ -77,27 +78,6 @@ bool display_draw(unsigned int frame, Scene *scene)
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, display_pixels, display_SCREEN_WIDTH_X * sizeof(uint32_t));
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
-
-	// ----- Update Text Messages ----- //
-
-	// Message Slot 1
-	if ( string_msg1 != NULL && strcmp( string_msg1, "") != 0 ) {
-		SDL_RenderCopy(renderer, scene->message1, NULL, &scene->message1_Rect);
-	}
-	// Message Slot 2
-	if ( string_msg2 != NULL && strcmp( string_msg2, "") != 0 ) {
-    	SDL_RenderCopy(renderer, scene->message2, NULL, &scene->message2_Rect);
-	}
-	// Message Slot 3
-	if ( string_msg3 != NULL && strcmp( string_msg3, "") != 0 ) {
-    	SDL_RenderCopy(renderer, scene->message3, NULL, &scene->message3_Rect);
-	}
-	// Message Slot 4
-	// if ( string_msg4 != NULL && strcmp( string_msg4, "") != 0 ) {
-	if ( string_msg4 != NULL && strcmp( string_msg4, "") != 0 ) {
-    	SDL_RenderCopy(renderer, scene->message4, NULL, &scene->message4_Rect);
-	}
-
 	// Draw
 	SDL_RenderPresent(renderer);
 
@@ -108,7 +88,7 @@ bool display_draw(unsigned int frame, Scene *scene)
 }
 
 
-void SDL_close()
+void SDL_close(void)
 {
 	// Destroy window	
 	SDL_DestroyRenderer( renderer );
@@ -120,7 +100,7 @@ void SDL_close()
 	SDL_Quit();
 }
 
-void display_update_theme(){
+void display_update_theme(void){
 	unsigned int i;
 
 	// Update graphics vector with new colors
@@ -138,7 +118,7 @@ void display_update_theme(){
 }
 
 // Print Graphics on Console
-void draw_graphics_console() {
+void draw_graphics_console(void) {
 
 	int line, column, index = 0;
 

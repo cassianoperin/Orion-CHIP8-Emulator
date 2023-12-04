@@ -2,13 +2,13 @@ SRC_DIR = src
 # BUILD_DIR = build/debug
 BUILD_DIR = build/
 CC = gcc
-# SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-SRC_FILES = $(SRC_DIR)/main.c
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+# SRC_FILES = $(SRC_DIR)/main.c
 OBJ_NAME = gui
 # INCLUDE_PATHS = -Iinclude
 # LIBRARY_PATHS = -Llib
 COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
-LINKER_FLAGS = -lsdl2 -lSDL2_ttf 
+LINKER_FLAGS = -lsdl2
 
 all:
 	$(CC) $(COMPILER_FLAGS) $(LINKER_FLAGS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(SRC_FILES) -o $(BUILD_DIR)/$(OBJ_NAME)

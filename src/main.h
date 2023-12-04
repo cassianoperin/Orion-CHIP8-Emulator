@@ -50,13 +50,7 @@
 // // Quirks
 // extern bool                     quirk_display_wait;
 
-// // --------------------------------- External Functions --------------------------------- //
-// // Font
-// extern bool font_init(SDL_Renderer *renderer);
-// extern void font_update_msg1(SDL_Renderer *renderer);
-// extern void font_update_msg2(SDL_Renderer *renderer);
-// extern void font_update_msg3(SDL_Renderer *renderer);
-// extern void font_update_msg4(SDL_Renderer *renderer);
+// --------------------------------- External Functions --------------------------------- //
 // // Cli
 // extern void command_line_interface(int argc, char* args[]);
 // // Lib
@@ -81,10 +75,10 @@
 // // Input
 // extern void input_keyboard();
 // extern void input_keyboard_remaps();
-// // Display
-// extern bool display_init();
-// extern bool display_draw(unsigned int frame, Scene *scene);
-// extern void SDL_close();
+// Display
+extern bool display_init(void);
+extern bool display_draw(unsigned int frame);
+extern void SDL_close(void);
 // // Audio
 // extern void sound_init();
 // extern void sound_close();
@@ -97,15 +91,15 @@
 // SDL Video
 SDL_Window *window;
 SDL_Renderer *renderer;
-// SDL_Texture *texture;
+SDL_Texture *texture;
 
 // // Game path and ROM name
 // char *filename;
 // // Flag to indicate rom in hexadecimal format
 // bool rom_format_hex;
 
-// // Control the Main loop exit
-// bool quit;
+// Control the Main loop exit
+bool quit;
 
 // // Cycle Counters
 // // unsigned int cycle               = 0;     // Main loop cycles

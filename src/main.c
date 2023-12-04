@@ -2,16 +2,6 @@
 #include <SDL2/SDL.h>
 #include "main.h"
 
-/* Variables */
-#define WINDOW_WIDTH 1200
-#define WINDOW_HEIGHT 800
-
-/* ===============================================================
- *
- *                          MAIN
- *
- * ===============================================================*/
-
 static int overview(struct nk_context *ctx)
 {
     /* window flags */
@@ -1308,60 +1298,26 @@ static int overview(struct nk_context *ctx)
     return !nk_window_is_closed(ctx, "Overview");
 }
 
+
+
+/* ===============================================================
+ *
+ *                          MAIN
+ *
+ * ===============================================================*/
+
 int main(int argc, char *argv[])
 {
 
-    int running = 1;
-    int flags = 0;
     float font_scale = 1;
 
     /* GUI */
     struct nk_context *ctx;
     struct nk_colorf bg;
 
-    /* SDL setup */
-    SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
-    SDL_Init(SDL_INIT_VIDEO);
 
-    window = SDL_CreateWindow("Demo",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI);
-
-    if (window == NULL) {
-        SDL_Log("Error SDL_CreateWindow %s", SDL_GetError());
-        exit(-1);
-    }
-
-    flags |= SDL_RENDERER_ACCELERATED;
-    flags |= SDL_RENDERER_PRESENTVSYNC;
-
-#if 0
-    SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles2");
-#endif
-
-    renderer = SDL_CreateRenderer(window, -1, flags);
-
-    if (renderer == NULL) {
-        SDL_Log("Error SDL_CreateRenderer %s", SDL_GetError());
-        exit(-1);
-    }
-
-    /* scale the renderer output for High-DPI displays */
-    {
-        int render_w, render_h;
-        int window_w, window_h;
-        float scale_x, scale_y;
-        SDL_GetRendererOutputSize(renderer, &render_w, &render_h);
-        SDL_GetWindowSize(window, &window_w, &window_h);
-        scale_x = (float)(render_w) / (float)(window_w);
-        scale_y = (float)(render_h) / (float)(window_h);
-        SDL_RenderSetScale(renderer, scale_x, scale_y);
-        font_scale = scale_y;
-    }
+	// -------------------------- SDL Init -------------------------- //
+	display_init();
 
     /* GUI */
     ctx = nk_sdl_init(window, renderer);
@@ -1391,25 +1347,7 @@ int main(int argc, char *argv[])
         nk_style_set_font(ctx, &font->handle);
     }
 
-    #ifdef INCLUDE_STYLE
-    /* ease regression testing during Nuklear release process; not needed for anything else */
-    #ifdef STYLE_WHITE
-    set_style(ctx, THEME_WHITE);
-    #elif defined(STYLE_RED)
-    set_style(ctx, THEME_RED);
-    #elif defined(STYLE_BLUE)
-    set_style(ctx, THEME_BLUE);
-    #elif defined(STYLE_DARK)
-    set_style(ctx, THEME_DARK);
-    #endif
-    #endif
-
-    bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
-
-
-
-
-    while (running)
+    while ( !quit )
     {
         /* Input */
         SDL_Event evt;
