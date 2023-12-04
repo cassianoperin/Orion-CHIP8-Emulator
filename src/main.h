@@ -72,8 +72,8 @@
 // extern unsigned int CPU_CLOCK;
 // // Quirks
 // extern void handle_quirks(char *game_signature);
-// // Input
-// extern void input_keyboard();
+// Input
+extern void input_keyboard(void);
 // extern void input_keyboard_remaps();
 // Display
 extern bool display_init(void);
@@ -92,6 +92,13 @@ extern void SDL_close(void);
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
+
+// --- Nuklear --- //
+/* GUI */
+struct nk_context *ctx;
+struct nk_colorf bg;
+// GUI Font
+struct nk_font_atlas *atlas;
 
 // // Game path and ROM name
 // char *filename;

@@ -1311,20 +1311,16 @@ int main(int argc, char *argv[])
 
     float font_scale = 1;
 
-    /* GUI */
-    struct nk_context *ctx;
-    struct nk_colorf bg;
-
-
 	// -------------------------- SDL Init -------------------------- //
 	display_init();
+
 
     /* GUI */
     ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */
     /* Load Cursor: if you uncomment cursor loading please hide the cursor */
     {
-        struct nk_font_atlas *atlas;
+        // struct nk_font_atlas *atlas;
         struct nk_font_config config = nk_font_config(0);
         struct nk_font *font;
 
@@ -1347,16 +1343,15 @@ int main(int argc, char *argv[])
         nk_style_set_font(ctx, &font->handle);
     }
 
+
+
+
+	// ----------------------- Infinite Loop  ----------------------- //
     while ( !quit )
     {
-        /* Input */
-        SDL_Event evt;
-        nk_input_begin(ctx);
-        while (SDL_PollEvent(&evt)) {
-            if (evt.type == SDL_QUIT) goto cleanup;
-            nk_sdl_handle_event(&evt);
-        }
-        nk_input_end(ctx);
+
+        // ------------- Keyboard ------------ //
+        input_keyboard();
 
         /* GUI 
         if (nk_begin(ctx, "Demo", nk_rect(0, 0, 230, 250),
@@ -1404,10 +1399,10 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(renderer);
     }
 
-cleanup:
-    nk_sdl_shutdown();
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+	//Free resources and close SDL
+	// sound_close();
+    nk_sdl_shutdown(); // Nuklear
+	SDL_close();
+
     return 0;
 }
