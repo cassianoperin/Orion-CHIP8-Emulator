@@ -1,3 +1,6 @@
+/* --------------------------------- External Variables --------------------------------- */
+extern struct nk_font_atlas *atlas;
+
 /*
  * Nuklear - 4.9.4 - public domain
  */

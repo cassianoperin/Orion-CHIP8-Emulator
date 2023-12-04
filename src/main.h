@@ -81,6 +81,8 @@ extern void SDL_close(void);
 // // Audio
 // extern void sound_init();
 // extern void sound_close();
+// GUI
+extern int overview(struct nk_context *ctx);
 
 // // ---------------------------------- Global Constants ---------------------------------- //
 // // NTSC: 60hz, PAL: 50HZ
