@@ -93,17 +93,11 @@
 // // NTSC: 60hz, PAL: 50HZ
 // const int   pal_freq   = 60; 					
 
-// // ---------------------------------- Global Variables ---------------------------------- //
-// // SDL Video
-// SDL_Window *window;
-// SDL_Renderer *renderer;
+// ---------------------------------- Global Variables ---------------------------------- //
+// SDL Video
+SDL_Window *window;
+SDL_Renderer *renderer;
 // SDL_Texture *texture;
-
-// int FONTX = 0;
-
-// // // SDL Font
-// TTF_Font *font;
-// SDL_Surface *text;
 
 // // Game path and ROM name
 // char *filename;

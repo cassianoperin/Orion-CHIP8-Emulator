@@ -1310,9 +1310,7 @@ static int overview(struct nk_context *ctx)
 
 int main(int argc, char *argv[])
 {
-    /* Platform */
-    SDL_Window *win;
-    SDL_Renderer *renderer;
+
     int running = 1;
     int flags = 0;
     float font_scale = 1;
@@ -1325,11 +1323,11 @@ int main(int argc, char *argv[])
     SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
     SDL_Init(SDL_INIT_VIDEO);
 
-    win = SDL_CreateWindow("Demo",
+    window = SDL_CreateWindow("Demo",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI);
 
-    if (win == NULL) {
+    if (window == NULL) {
         SDL_Log("Error SDL_CreateWindow %s", SDL_GetError());
         exit(-1);
     }
@@ -1345,7 +1343,7 @@ int main(int argc, char *argv[])
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles2");
 #endif
 
-    renderer = SDL_CreateRenderer(win, -1, flags);
+    renderer = SDL_CreateRenderer(window, -1, flags);
 
     if (renderer == NULL) {
         SDL_Log("Error SDL_CreateRenderer %s", SDL_GetError());
@@ -1358,7 +1356,7 @@ int main(int argc, char *argv[])
         int window_w, window_h;
         float scale_x, scale_y;
         SDL_GetRendererOutputSize(renderer, &render_w, &render_h);
-        SDL_GetWindowSize(win, &window_w, &window_h);
+        SDL_GetWindowSize(window, &window_w, &window_h);
         scale_x = (float)(render_w) / (float)(window_w);
         scale_y = (float)(render_h) / (float)(window_h);
         SDL_RenderSetScale(renderer, scale_x, scale_y);
@@ -1366,7 +1364,7 @@ int main(int argc, char *argv[])
     }
 
     /* GUI */
-    ctx = nk_sdl_init(win, renderer);
+    ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */
     /* Load Cursor: if you uncomment cursor loading please hide the cursor */
     {
@@ -1471,7 +1469,7 @@ int main(int argc, char *argv[])
 cleanup:
     nk_sdl_shutdown();
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(win);
+    SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
 }
