@@ -37,9 +37,8 @@
 // extern unsigned char	        SoundTimer;
 // extern bool                     cpu_pause;
 // extern unsigned int             cycle_counter_cpu;
-// // Display
-// extern Scene                    scene;
-// extern unsigned int             frame;
+// Display
+extern unsigned int             frame;
 // extern unsigned int             frame_counter;
 // // Audio
 // extern SDL_AudioDeviceID        audio_device_id;
