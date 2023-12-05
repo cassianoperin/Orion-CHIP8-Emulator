@@ -82,7 +82,8 @@ extern void SDL_close(void);
 // extern void sound_init();
 // extern void sound_close();
 // GUI
-extern int overview(struct nk_context *ctx);
+extern void gui_init(void);
+extern int menu(struct nk_context *ctx);
 
 // // ---------------------------------- Global Constants ---------------------------------- //
 // // NTSC: 60hz, PAL: 50HZ
@@ -100,6 +101,7 @@ struct nk_context *ctx;
 struct nk_colorf bg;
 // GUI Font
 struct nk_font_atlas *atlas;
+float font_scale = 1;
 
 // // Game path and ROM name
 // char *filename;

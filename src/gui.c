@@ -1,6 +1,6 @@
 #include "gui.h"
 
-int overview(struct nk_context *ctx)
+int menu(struct nk_context *ctx)
 {
     /* window flags */
     static int show_menu = nk_true;
@@ -1294,4 +1294,35 @@ int overview(struct nk_context *ctx)
     }
     nk_end(ctx);
     return !nk_window_is_closed(ctx, "Overview");
+}
+
+
+void gui_init(void)
+{
+    ctx = nk_sdl_init(window, renderer);
+    /* Load Fonts: if none of these are loaded a default font will be used  */
+    /* Load Cursor: if you uncomment cursor loading please hide the cursor */
+    {
+        // struct nk_font_atlas *atlas;
+        struct nk_font_config config = nk_font_config(0);
+        struct nk_font *font;
+
+        /* set up the font atlas and add desired font; note that font sizes are
+        * multiplied by font_scale to produce better results at higher DPIs */
+        nk_sdl_font_stash_begin(&atlas);
+        font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/DroidSans.ttf", 14 * font_scale, &config);*/
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/Roboto-Regular.ttf", 16 * font_scale, &config);*/
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/kenvector_future_thin.ttf", 13 * font_scale, &config);*/
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/ProggyClean.ttf", 12 * font_scale, &config);*/
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/ProggyTiny.ttf", 10 * font_scale, &config);*/
+        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/Cousine-Regular.ttf", 13 * font_scale, &config);*/
+        nk_sdl_font_stash_end();
+
+        /* this hack makes the font appear to be scaled down to the desired
+        * size and is only necessary when font_scale > 1 */
+        font->handle.height /= font_scale;
+        /*nk_style_load_all_cursors(ctx, atlas->cursors);*/
+        nk_style_set_font(ctx, &font->handle);
+    }
 }
