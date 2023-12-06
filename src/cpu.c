@@ -16,8 +16,8 @@
 // 	// Check for Quirks
 // 	handle_quirks(game_signature);
 
-// 	// Load Fonts
-// 	cpu_load_fonts();
+	// Load Fonts
+	// cpu_load_fonts(void);
 
 // 	// Clean counters
 // 	cycle_cpu = 0;
@@ -91,23 +91,22 @@ void cpu_initialize(void) {
 	cpu_pause		= false;
 }
 
-// void cpu_load_fonts(){
+void cpu_load_fonts(void) {
 
-// 	unsigned char i;
+	unsigned char i;
 
-// 	// Load CHIP-8 8x5 fontset (Memory address 0-79)
-// 	for ( i = 0; i < sizeof(Chip8Fontset); i++  ){
-// 		Memory[i] = Chip8Fontset[i];
-// 	}
+	// Load CHIP-8 8x5 fontset (Memory address 0-79)
+	for ( i = 0; i < sizeof(Chip8Fontset); i++  ){
+		Memory[i] = Chip8Fontset[i];
+	}
 
-// 	if ( !quirk_ClockProgram_fonts ) {
-// 		// Load SCHIP 8x10 fontset (Memory address 80-240)
-// 		for ( i = 0; i < sizeof(SCHIPFontset); i++ ) {
-// 			Memory[i+80] = SCHIPFontset[i];
-// 		}
-// 	}
-
-// }
+	if ( !quirk_ClockProgram_fonts ) {
+		// Load SCHIP 8x10 fontset (Memory address 80-240)
+		for ( i = 0; i < sizeof(SCHIPFontset); i++ ) {
+			Memory[i+80] = SCHIPFontset[i];
+		}
+	}
+}
 
 // // Debug
 // void cpu_debug_print(){ // Missing Delay Timers and Keys

@@ -44,13 +44,38 @@ int main(int argc, char *argv[])
     // Initialize
 	cpu_initialize();
 
+    // Initialize Audio System
+	sound_init();
 
+	// // CLI and argument validation
+	command_line_interface(argc, argv);
+
+	// Load Game into Memory
+	filename = argv[1];
+	load_rom(filename,  Memory, (sizeof(Memory) / sizeof(Memory[0])) );
+	printf("Loaded game: %s\n", filename);
+
+	// Get Game signature for Qwirks
+	game_signature = get_game_signature(filename);
+	printf("Signature:   %s\n", game_signature );
+
+	// Check for Quirks
+	handle_quirks(game_signature);
+
+	// Load Fonts
+	cpu_load_fonts();
+
+	// Keyboard remaps
+	input_keyboard_remaps();
 
 	// -------------------------- SDL Init -------------------------- //
 	display_init();
 
  	// -------------------------- GUI Init -------------------------- //
     gui_init();
+
+	// Seconds Counter
+	timeSecondStart = SDL_GetPerformanceCounter();
 
 	// ----------------------- Infinite Loop  ----------------------- //
     while ( !quit )

@@ -4,11 +4,6 @@
 #include "../lib/nuklear.h"
 #include "../lib/nuklear_sdl_renderer.h"
 
-// // Boolean Type for Vanilla C
-// typedef int bool;
-// #define true 1
-// #define false 0
-
 // --------------------------------- External Variables --------------------------------- //
 // Main - SDL Video
 extern SDL_Window *window;
@@ -31,8 +26,8 @@ unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
 // Display Array
 // unsigned int  display_pixels[2048];
 unsigned int  display_pixels[8192];
-// // Frames per second
-// unsigned char display_FPS;
+// Frames per second
+unsigned char display_FPS;
 // Debug Pixels
 bool debug_pixels;                          // Print pixels to console
 // Frame Counters

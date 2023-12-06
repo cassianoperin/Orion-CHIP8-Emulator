@@ -118,7 +118,7 @@ bool            key_FX0A_pressed = false;    // keep track of the state of first
 
 // -------------------------------------- Functions ------------------------------------- //
 void cpu_initialize(void);
-// void cpu_load_fonts();
+void cpu_load_fonts(void);
 // void cpu_debug_print();
 // void cpu_interpreter();
 // void cpu_reset();

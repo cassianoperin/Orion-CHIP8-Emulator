@@ -501,58 +501,58 @@ void input_keyboard(void) {
 	nk_input_end(ctx);
 }
 
-// void input_keyboard_remaps() {
-// 	input_remap_flag = false;
+void input_keyboard_remaps(void) {
+	input_remap_flag = false;
 
 
-// 	// ---------------------- CHIP8 ---------------------- //
+	// ---------------------- CHIP8 ---------------------- //
 
-// 	// Game "Blinky [Hans Christian Egeberg, 1991].ch8"
-// 	if ( !strcmp(game_signature, "121A322E303020432E20+203129") ) {
-// 		input_remap_flag = true;
-// 		input_remap_btn_UP		= 0x3;
-// 		input_remap_btn_DOWN	= 0x6;
-// 		input_remap_btn_LEFT	= 0x7;
-// 		input_remap_btn_RIGHT	= 0x8;
-// 		printf("Keys remaped to Arrows.\n");
-// 	}
+	// Game "Blinky [Hans Christian Egeberg, 1991].ch8"
+	if ( !strcmp(game_signature, "121A322E303020432E20+203129") ) {
+		input_remap_flag = true;
+		input_remap_btn_UP		= 0x3;
+		input_remap_btn_DOWN	= 0x6;
+		input_remap_btn_LEFT	= 0x7;
+		input_remap_btn_RIGHT	= 0x8;
+		printf("Keys remaped to Arrows.\n");
+	}
 
-// 	// Game "Blinky [Hans Christian Egeberg] (alt).ch8"
-// 	if ( !strcmp(game_signature, "00E0121A4368722E2045+174546") ) {
-// 		input_remap_flag = true;
-// 		input_remap_btn_UP		= 0x2;
-// 		input_remap_btn_DOWN	= 0x8;
-// 		input_remap_btn_LEFT	= 0x4;
-// 		input_remap_btn_RIGHT	= 0x6;
-// 		printf("Keys remaped to Arrows.\n");
-// 	}
+	// Game "Blinky [Hans Christian Egeberg] (alt).ch8"
+	if ( !strcmp(game_signature, "00E0121A4368722E2045+174546") ) {
+		input_remap_flag = true;
+		input_remap_btn_UP		= 0x2;
+		input_remap_btn_DOWN	= 0x8;
+		input_remap_btn_LEFT	= 0x4;
+		input_remap_btn_RIGHT	= 0x6;
+		printf("Keys remaped to Arrows.\n");
+	}
 
-// 	// CHIP-8 Game "Syzygy [Roy Trevino, 1990].ch8"
-// 	if ( !strcmp(game_signature, "12128D8D20A931393930+88372") ) {
-// 		input_remap_flag = true;
-// 		input_remap_btn_UP		= 0x3;
-// 		input_remap_btn_DOWN	= 0x6;
-// 		input_remap_btn_LEFT	= 0x7;
-// 		input_remap_btn_RIGHT	= 0x8;
-// 		printf("Keys remaped to Arrows, C, F and V\n");
-// 	}
+	// CHIP-8 Game "Syzygy [Roy Trevino, 1990].ch8"
+	if ( !strcmp(game_signature, "12128D8D20A931393930+88372") ) {
+		input_remap_flag = true;
+		input_remap_btn_UP		= 0x3;
+		input_remap_btn_DOWN	= 0x6;
+		input_remap_btn_LEFT	= 0x7;
+		input_remap_btn_RIGHT	= 0x8;
+		printf("Keys remaped to Arrows, C, F and V\n");
+	}
 	
-// 	// CHIP-8 Game "Tank.ch8"
-// 	if ( !strcmp(game_signature, "123076FB602080654F00+47957") ) {
-// 		input_remap_flag = true;
-// 		input_remap_btn_UP		= 0x8;
-// 		input_remap_btn_DOWN	= 0x2;
-// 		input_remap_btn_LEFT	= 0x4;
-// 		input_remap_btn_RIGHT	= 0x6;
-// 		input_remap_btn_SPACE 	= 0x5;
-// 		printf("Keys remaped to Arrows and SPACE.\n");
-// 	}
+	// CHIP-8 Game "Tank.ch8"
+	if ( !strcmp(game_signature, "123076FB602080654F00+47957") ) {
+		input_remap_flag = true;
+		input_remap_btn_UP		= 0x8;
+		input_remap_btn_DOWN	= 0x2;
+		input_remap_btn_LEFT	= 0x4;
+		input_remap_btn_RIGHT	= 0x6;
+		input_remap_btn_SPACE 	= 0x5;
+		printf("Keys remaped to Arrows and SPACE.\n");
+	}
 
-// 	// CHIP-8 Game "Pong (1 player).ch8"
-// 	if ( !strcmp(game_signature, "6A026B0C6C3F6D0CA2EA+25041") ) {
-// 		input_remap_flag = true;
-// 		input_remap_btn_UP		= 0x1;
-// 		input_remap_btn_DOWN	= 0x4;
-// 		printf("Keys remaped to UP and DOWN.\n");
-// 	}
-// }
+	// CHIP-8 Game "Pong (1 player).ch8"
+	if ( !strcmp(game_signature, "6A026B0C6C3F6D0CA2EA+25041") ) {
+		input_remap_flag = true;
+		input_remap_btn_UP		= 0x1;
+		input_remap_btn_DOWN	= 0x4;
+		printf("Keys remaped to UP and DOWN.\n");
+	}
+}

@@ -25,55 +25,54 @@
 #include "../lib/nuklear_sdl_renderer.h"
 
 
-// // --------------------------------- External Variables --------------------------------- //
-// // Lib
-// extern char *game_signature;
-// extern char *string_msg1,*string_msg2, *string_msg3, *string_msg4;
+// --------------------------------- External Variables --------------------------------- //
+// Lib
+extern char *game_signature;
 // // extern char teste;
-// // CPU
-// extern unsigned char	        Memory[4096];
-// extern bool                     cpu_draw_flag;
-// extern unsigned char	        DelayTimer;
-// extern unsigned char	        SoundTimer;
-// extern bool                     cpu_pause;
-// extern unsigned int             cycle_counter_cpu;
+// CPU
+extern unsigned char	        Memory[4096];
+extern bool                     cpu_draw_flag;
+extern unsigned char	        DelayTimer;
+extern unsigned char	        SoundTimer;
+extern bool                     cpu_pause;
+extern unsigned int             cycle_counter_cpu;
 // Display
 extern unsigned int             frame;
-// extern unsigned int             frame_counter;
-// // Audio
-// extern SDL_AudioDeviceID        audio_device_id;
-// extern bool                     playing_sound;
-// extern bool                     sound_enabled;
+extern unsigned int             frame_counter;
+// Audio
+extern SDL_AudioDeviceID        audio_device_id;
+extern bool                     playing_sound;
+extern bool                     sound_enabled;
 // // Font
 // extern bool                     msg_emuinfo;
-// // Quirks
-// extern bool                     quirk_display_wait;
+// Quirks
+extern bool                     quirk_display_wait;
 
 // --------------------------------- External Functions --------------------------------- //
-// // Cli
-// extern void command_line_interface(int argc, char* args[]);
-// // Lib
+// Cli
+extern void command_line_interface(int argc, char* argv[]);
+// Lib
 // extern bool ticker_second(long lastTime, long currentTime);
 // extern bool ticker_cpu(long lastTime, long currentTime);
 // extern bool ticker_fps(long lastTime, long currentTime);
 // extern void showCPS(long long unsigned int number);
 // extern void showFPS(int number);
 // extern void showCPU_CPS(int number);
-// extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
-// extern char *get_game_signature(char *filename);
+extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
+extern char *get_game_signature(char *filename);
 // extern long getMicrotime();
 // extern void string_memory_alloc();
 // extern void string_memory_free();
 // CPU
 extern void cpu_initialize(void);
-// extern void cpu_load_fonts();
+extern void cpu_load_fonts(void);
 // extern void cpu_interpreter();
 // extern unsigned int CPU_CLOCK;
-// // Quirks
-// extern void handle_quirks(char *game_signature);
+// Quirks
+extern void handle_quirks(char *game_signature);
 // Input
 extern void input_keyboard(void);
-// extern void input_keyboard_remaps();
+extern void input_keyboard_remaps(void);
 // Display
 extern bool display_init(void);
 extern bool display_draw(unsigned int frame);
@@ -103,10 +102,10 @@ struct nk_colorf bg;
 struct nk_font_atlas *atlas;
 float font_scale = 1;
 
-// // Game path and ROM name
-// char *filename;
-// // Flag to indicate rom in hexadecimal format
-// bool rom_format_hex;
+// Game path and ROM name
+char *filename;
+// Flag to indicate rom in hexadecimal format
+bool rom_format_hex;
 
 // Control the Main loop exit
 bool quit;
