@@ -78,6 +78,13 @@ bool display_draw(unsigned int frame)
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, display_pixels, display_SCREEN_WIDTH_X * sizeof(uint32_t));
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	// SDL_RenderPresent(renderer);
+
+	// Draw GUI
+	// SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
+	SDL_RenderClear(renderer);
+	nk_sdl_render(NK_ANTI_ALIASING_ON);
+
 	// Draw
 	SDL_RenderPresent(renderer);
 

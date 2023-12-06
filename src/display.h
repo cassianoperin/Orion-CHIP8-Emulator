@@ -1,6 +1,9 @@
 #pragma once
 #include "typedef.h"
 
+#include "../lib/nuklear.h"
+#include "../lib/nuklear_sdl_renderer.h"
+
 // // Boolean Type for Vanilla C
 // typedef int bool;
 // #define true 1
