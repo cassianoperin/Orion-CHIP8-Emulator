@@ -23,73 +23,73 @@
 // 	cycle_cpu = 0;
 // }
 
-// void cpu_initialize(){
+void cpu_initialize(void) {
 
-// 	// Clock
-// 	CPU_CLOCK  = CHIP8_DEFAULT_CLOCK;
+	// Clock
+	CPU_CLOCK  = CHIP8_DEFAULT_CLOCK;
 
-// 	// Components
-// 	memset(Memory, 0x00,  (sizeof(Memory) / sizeof(Memory[0])) );	// Clean Memory
-// 	PC = 0x200;								// Start at 0x200 (default CHIP-8)
-// 	Opcode = 0x00;
-// 	memset(Stack, 0x00, sizeof(Stack));		// Clean Stack
-// 	SP = 0x00;
-// 	memset(V, 0x00, sizeof(V));				// Clean V Register
-// 	I = 0x00;
+	// Components
+	memset(Memory, 0x00,  (sizeof(Memory) / sizeof(Memory[0])) );	// Clean Memory
+	PC = 0x200;								// Start at 0x200 (default CHIP-8)
+	Opcode = 0x00;
+	memset(Stack, 0x00, sizeof(Stack));		// Clean Stack
+	SP = 0x00;
+	memset(V, 0x00, sizeof(V));				// Clean V Register
+	I = 0x00;
 	
-// 	// Initialization - Clean pixels array
-// 	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
-// 			display_pixels[i] = display_pixel_OFF_color;
-// 	}
+	// Initialization - Clean pixels array
+	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+			display_pixels[i] = display_pixel_OFF_color;
+	}
 
-// 	// Legacy Opcodes and Quirks - AS WAS TO TEST GAMES
-// 	// CHIP8
-// 	// quirk_VF_Reset_8xy1_8xy2_8xy3		= true;
-// 	// quirk_Memory_legacy_Fx55_Fx65		= true;
-// 	// quirk_display_wait					= true;
-// 	// quirk_Clipping_Dxyn					= false;
-// 	// quirk_Shifting_legacy_8xy6_8xyE		= true;
-// 	// quirk_Jump_with_offset_Bnnn			= false;
+	// Legacy Opcodes and Quirks - AS WAS TO TEST GAMES
+	// CHIP8
+	// quirk_VF_Reset_8xy1_8xy2_8xy3		= true;
+	// quirk_Memory_legacy_Fx55_Fx65		= true;
+	// quirk_display_wait					= true;
+	// quirk_Clipping_Dxyn					= false;
+	// quirk_Shifting_legacy_8xy6_8xyE		= true;
+	// quirk_Jump_with_offset_Bnnn			= false;
 
-// 	// New quirk pattern
-// 	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
-// 	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-// 	quirk_display_wait				= true;		// Display wait
-// 	quirk_Clipping_Dxyn				= true;		// Clipping
-// 	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
-// 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
+	// New quirk pattern
+	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
+	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
+	quirk_display_wait				= true;		// Display wait
+	quirk_Clipping_Dxyn				= true;		// Clipping
+	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
 
-// 	// // ETI
-// 	// quirk_ETI660_64x32_screen        	= false;
-// 	// // SCHIP
-// 	// quirk_Spacefight2091_Fx1E            = false;
-// 	// quirk_Resize_SCHIP_00FE_00FF         = true;
-// 	// quirk_LoRes_Wide_Sprite_Dxy0         = false;
-// 	// quirk_Scroll_SCHIP_00CN_00FB_00FC    = false;
-// 	// quirk_ClockProgram_fonts             = false;
-// 	// Keyboard_slow_press                  = false;
+	// // ETI
+	// quirk_ETI660_64x32_screen        	= false;
+	// // SCHIP
+	// quirk_Spacefight2091_Fx1E            = false;
+	// quirk_Resize_SCHIP_00FE_00FF         = true;
+	// quirk_LoRes_Wide_Sprite_Dxy0         = false;
+	// quirk_Scroll_SCHIP_00CN_00FB_00FC    = false;
+	// quirk_ClockProgram_fonts             = false;
+	// Keyboard_slow_press                  = false;
 
-// 	// SCHIP Specific Variables
-// 	cpu_SCHIP_mode 		 = false;
-// 	cpu_SCHIP_LORES_mode = false;
+	// SCHIP Specific Variables
+	cpu_SCHIP_mode 		 = false;
+	cpu_SCHIP_LORES_mode = false;
 
-// 	// Screen Size
-// 	display_SCREEN_WIDTH_X  = 64;		// Number of Columns in Graphics
-// 	display_SCREEN_HEIGHT_Y = 32;		// Number of Lines in Graphics
+	// Screen Size
+	display_SCREEN_WIDTH_X  = 64;		// Number of Columns in Graphics
+	display_SCREEN_HEIGHT_Y = 32;		// Number of Lines in Graphics
 	
-// 	// Keyboard
-// 	memset(Key, 0x00, sizeof(Key));
+	// Keyboard
+	memset(Key, 0x00, sizeof(Key));
 
-// 	// Initialize random generator
-// 	srand(time(NULL));
+	// Initialize random generator
+	srand(time(NULL));
 
-// 	// Sound
-// 	sound_enabled = true;
+	// Sound
+	sound_enabled = true;
 
-// 	// Debug
-// 	cpu_debug_mode	= false;
-// 	cpu_pause		= false;
-// }
+	// Debug
+	cpu_debug_mode	= false;
+	cpu_pause		= false;
+}
 
 // void cpu_load_fonts(){
 

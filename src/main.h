@@ -64,8 +64,8 @@ extern unsigned int             frame;
 // extern long getMicrotime();
 // extern void string_memory_alloc();
 // extern void string_memory_free();
-// // CPU
-// extern void cpu_initialize();
+// CPU
+extern void cpu_initialize(void);
 // extern void cpu_load_fonts();
 // extern void cpu_interpreter();
 // extern unsigned int CPU_CLOCK;
@@ -78,16 +78,16 @@ extern void input_keyboard(void);
 extern bool display_init(void);
 extern bool display_draw(unsigned int frame);
 extern void SDL_close(void);
-// // Audio
-// extern void sound_init();
-// extern void sound_close();
+// Audio
+extern void sound_init(void);
+extern void sound_close(void);
 // GUI
 extern void gui_init(void);
 extern int menu(struct nk_context *ctx);
 
-// // ---------------------------------- Global Constants ---------------------------------- //
-// // NTSC: 60hz, PAL: 50HZ
-// const int   pal_freq   = 60; 					
+// ---------------------------------- Global Constants ---------------------------------- //
+// NTSC: 60hz, PAL: 50HZ
+const int   pal_freq   = 60; 					
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // SDL Video
