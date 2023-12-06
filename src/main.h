@@ -66,8 +66,8 @@ extern char *get_game_signature(char *filename);
 // CPU
 extern void cpu_initialize(void);
 extern void cpu_load_fonts(void);
-// extern void cpu_interpreter();
-// extern unsigned int CPU_CLOCK;
+extern void cpu_interpreter(void);
+extern unsigned int CPU_CLOCK;
 // Quirks
 extern void handle_quirks(char *game_signature);
 // Input
@@ -110,9 +110,9 @@ bool rom_format_hex;
 // Control the Main loop exit
 bool quit;
 
-// // Cycle Counters
+// Cycle Counters
 // // unsigned int cycle               = 0;     // Main loop cycles
-// unsigned int cycle_counter       = 0;     // Main loop cyles/second counter
+unsigned int cycle_counter       = 0;     // Main loop cyles/second counter
 
 // // Main loop control
 // unsigned int sleep_modulus      = 100;     // Cycle modulus do reduce infinity loop useless usage of cpu

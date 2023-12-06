@@ -347,26 +347,10 @@ void input_keyboard(void) {
 				// 	}
 				// 	break;
 
-				// // Debug
-				// case SDLK_9:
-				// 	cpu_debug_mode = !cpu_debug_mode;
-
-				// 	if (cpu_debug_mode ) {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Debug mode: ENABLED");
-				// 		font_update_msg4(renderer);
-
-				// 	} else {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Debug mode: DISABLED");
-				// 		font_update_msg4(renderer);
-				// 	}
-
-				// 	// Draw
-				// 	display_draw(frame_counter, &scene);
-				// 	message_slot4_timer = 3;
-
-				// 	break;
+				// Debug
+				case SDLK_9:
+					cpu_debug_mode = !cpu_debug_mode;
+					break;
 
 				// // Reset
 				// case SDLK_0:

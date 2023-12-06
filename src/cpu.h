@@ -34,51 +34,51 @@ extern char *filename;
 // Sound
 extern bool sound_enabled;
 
-// // --------------------------------- External Functions --------------------------------- //
-// // Lib
-// extern void handle_quirks(char *game_signature);
-// extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
-// // CHIP-8
-// void opc_chip8_0NNN();
-// extern void opc_chip8_00E0();
-// extern void opc_chip8_00EE();
-// extern void opc_chip8_1NNN();
-// extern void opc_chip8_2NNN();
-// extern void opc_chip8_3XNN();
-// extern void opc_chip8_4XNN();
-// extern void opc_chip8_5XY0();
-// extern void opc_chip8_6XNN();
-// extern void opc_chip8_7XNN();
-// extern void opc_chip8_8XY0(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY1(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY2(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY3(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY4(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY5(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY6(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XY7(unsigned char x, unsigned char y);
-// extern void opc_chip8_8XYE(unsigned char x, unsigned char y);
-// extern void opc_chip8_9XY0();
-// extern void opc_chip8_ANNN();
-// extern void opc_chip8_BNNN();
-// extern void opc_chip8_CXNN();
-// extern void opc_chip8_DXYN();
-// extern void opc_chip8_EX9E(unsigned char x);
-// extern void opc_chip8_EXA1(unsigned char x);
-// extern void opc_chip8_FX0A(unsigned char x);
-// extern void opc_chip8_FX07(unsigned char x);
-// extern void opc_chip8_FX15(unsigned char x);
-// extern void opc_chip8_FX18(unsigned char x);
-// extern void opc_chip8_FX1E(unsigned char x);
-// extern void opc_chip8_FX29(unsigned char x);
-// extern void opc_chip8_FX33(unsigned char x);
-// extern void opc_chip8_FX55(unsigned char x);
-// extern void opc_chip8_FX65(unsigned char x);
-// // CHIP-8 Undocumented
-// extern void opc_chip8_ND_02D8();
-// // SCHIP
-// extern void opc_schip_00FF();
-// extern void opc_schip_DXY0();
+// --------------------------------- External Functions --------------------------------- //
+// Lib
+extern void handle_quirks(char *game_signature);
+extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
+// CHIP-8
+// void opc_chip8_0NNN(); // Not needed by any game, just for documentation
+extern void opc_chip8_00E0(void);
+extern void opc_chip8_00EE(void);
+extern void opc_chip8_1NNN(void);
+extern void opc_chip8_2NNN(void);
+extern void opc_chip8_3XNN(void);
+extern void opc_chip8_4XNN(void);
+extern void opc_chip8_5XY0(void);
+extern void opc_chip8_6XNN(void);
+extern void opc_chip8_7XNN(void);
+extern void opc_chip8_8XY0(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY1(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY2(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY3(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY4(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY5(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY6(unsigned char x, unsigned char y);
+extern void opc_chip8_8XY7(unsigned char x, unsigned char y);
+extern void opc_chip8_8XYE(unsigned char x, unsigned char y);
+extern void opc_chip8_9XY0(void);
+extern void opc_chip8_ANNN(void);
+extern void opc_chip8_BNNN(void);
+extern void opc_chip8_CXNN(void);
+extern void opc_chip8_DXYN(void);
+extern void opc_chip8_EX9E(unsigned char x);
+extern void opc_chip8_EXA1(unsigned char x);
+extern void opc_chip8_FX0A(unsigned char x);
+extern void opc_chip8_FX07(unsigned char x);
+extern void opc_chip8_FX15(unsigned char x);
+extern void opc_chip8_FX18(unsigned char x);
+extern void opc_chip8_FX1E(unsigned char x);
+extern void opc_chip8_FX29(unsigned char x);
+extern void opc_chip8_FX33(unsigned char x);
+extern void opc_chip8_FX55(unsigned char x);
+extern void opc_chip8_FX65(unsigned char x);
+// CHIP-8 Undocumented
+extern void opc_chip8_ND_02D8(void);
+// SCHIP
+extern void opc_schip_00FF(void);
+extern void opc_schip_DXY0(void);
 
 // ---------------------------------- Global Constants ---------------------------------- //
 const int CHIP8_DEFAULT_CLOCK = 500;
@@ -98,7 +98,7 @@ unsigned char   Key[16];                    // Control the Keys Pressed
 bool            cpu_draw_flag;			    // Send the draw to screen signal
 // Debug
 bool            cpu_debug_mode;  	        // Enable debug messages
-// char            cpu_debug_message[120];     // Debug messages
+char            cpu_debug_message[120];     // Debug messages
 // SCHIP Specific Variables
 bool            cpu_SCHIP_mode;             // SCHIP mode (ENABLED or DISABLED)
 bool            cpu_SCHIP_LORES_mode;       // SCHIP in Low Resolution mode (00FE)
@@ -119,6 +119,6 @@ bool            key_FX0A_pressed = false;    // keep track of the state of first
 // -------------------------------------- Functions ------------------------------------- //
 void cpu_initialize(void);
 void cpu_load_fonts(void);
-// void cpu_debug_print();
-// void cpu_interpreter();
+void cpu_debug_print(void);
+void cpu_interpreter(void);
 // void cpu_reset();

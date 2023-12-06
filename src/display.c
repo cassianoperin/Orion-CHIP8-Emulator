@@ -82,7 +82,7 @@ bool display_draw(unsigned int frame)
 
 	// Draw GUI
 	// SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
-	SDL_RenderClear(renderer);
+	// SDL_RenderClear(renderer);
 	nk_sdl_render(NK_ANTI_ALIASING_ON);
 
 	// Draw

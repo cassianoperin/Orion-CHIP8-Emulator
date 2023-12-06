@@ -81,16 +81,249 @@ int main(int argc, char *argv[])
     while ( !quit )
     {
 
-        // ------------- Keyboard ------------- //
-        input_keyboard();
+		// --------------------------------- START OF SECONDs COUNTER  --------------------------------- //
+		if ( timeSecondLast - timeSecondStart >= 1000000000 ){ 
+
+			// // Seconds Ticker validation
+			// printf("Second: %lld\n", timeSecondLast - timeSecondStart );
+			// printf ("FINAL 60FPS time: %llu\n\n", timeFrameDurationSum);
+
+			// Window Title Message update
+			char title_msg[80];
+			sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, pal_freq, timeFrameDurationSum);
+			SDL_SetWindowTitle(window, title_msg);
+
+			// if ( msg_emuinfo ) {
+			// 	// -------- Message slot 1 -------- //
+			// 	showCPS(cycle_counter); 	// Update string_msg1	
+			// 	font_update_msg1(renderer);
+
+			// 	// -------- Message slot 2 -------- //
+			// 	showCPU_CPS(cycle_counter_cpu);
+			// 	font_update_msg2(renderer);
+
+			// 	// -------- Message slot 3 -------- //
+			// 	showFPS(frame_counter);
+			// 	font_update_msg3(renderer);
+			// }
+
+			// // Message slot 4 timer
+			// // if ( !cpu_pause) {
+			// 	if ( message_slot4_timer > 0 ) {
+			// 		message_slot4_timer --;
+
+			// 		// When reach zero, clear
+			// 		if ( message_slot4_timer == 0 ) {
+			// 			// strcpy(string_msg4, "");
+			// 		}
+			// 	}	
+			// // }
+
+			// --------- Reset Counters ---------- //
+			// Main cycle
+			cycle_counter = 0;
+			// Frame
+			frame = 0;
+			frame_counter = 0;
+			timeFrameDurationSum = 0;
+			// CPU
+			cycle_counter_cpu = 0;
+			// Second
+			timeSecondStart = SDL_GetPerformanceCounter(); // Reset seconds counter
+			opcodesPerFrameResidualSum = 0;
+
+		}
+
+		// Timing: Start frame
+		timeFrameStartCount = SDL_GetPerformanceCounter();
+
+		// Increment Cycle per second counter
+		cycle_counter++;
+		// ---------------------------------- END OF SECONDs COUNTER  ---------------------------------- //
+
+
+
+		// --------------------------- P1: START OF FRAME OPERATIONS  --------------------------- //
+
+		// ------------- Keyboard ------------ //
+		input_keyboard();
+
+		// ----------- Delay Timer ----------- //
+		if ( DelayTimer > 0 ) {
+			DelayTimer--;
+		}
+
+		// ----------- Sound Timer ----------- //
+		if ( SoundTimer > 0 ) {			// Just play if sound flag is enabled
+			if ( sound_enabled ) {
+				if ( !playing_sound ) {
+					// Start playing the beep
+					SDL_PauseAudioDevice(audio_device_id, 0);
+					
+					// Avoid starting again when already playing the sound
+					playing_sound = true;
+				}
+			}
+			SoundTimer--;
+		} else {
+			if ( playing_sound ) {
+				// Stop sound
+				SDL_PauseAudioDevice(audio_device_id, 1);
+
+				// Avoid starting again when already playing the sound
+				playing_sound = false;
+			}
+		}
+
+		// Draw screen (game and text messages)
+		if ( quirk_display_wait ) {
+
+			// Draw
+			display_draw(frame);
+
+		}
+
+		// --------------- CPU --------------- //
+		float opcodesPerFrame = (float)CPU_CLOCK / pal_freq;					// Opcodes per frame (float)
+		// printf("Opcodes: %f\n",opcodesPerFrame);
+		float opcodesPerFrameResidual = opcodesPerFrame - (int)opcodesPerFrame;	// Opcodes per frame residual
+		// printf("Residual: %f\n",opcodesPerFrameResidual);
+		// printf("Sum anterior: %f\n",opcodesPerFrameResidualSum);
+		opcodesPerFrameResidualSum += opcodesPerFrameResidual;					// Opcode residual from last frame
+		// printf("Sum: %f\n\n",opcodesPerFrameResidualSum);
+		
+		for( int i = 0 ; i < ( (int)opcodesPerFrame ) ; i++) {
+			if ( !cpu_pause ) {
+
+				cpu_interpreter();
+				
+				// If in original draw mode, check for draw flag and draw to screen, not syncing with vsync
+				if ( !quirk_display_wait ) {
+					if ( cpu_draw_flag ) {
+						// Draw
+						display_draw(frame);
+						// Reset the draw flag
+						cpu_draw_flag = false;
+					}
+				}
+
+				// Sum the residual to add an aditional frame if necessary
+				if ( opcodesPerFrameResidualSum > 1 ) {
+					cpu_interpreter();
+
+					if ( !quirk_display_wait ) {
+						if ( cpu_draw_flag ) {
+							// Draw
+							display_draw(frame);
+							// Reset the draw flag
+							cpu_draw_flag = false;
+						}
+					}
+
+					// Update the residual opcode sum counter
+					opcodesPerFrameResidualSum = opcodesPerFrameResidualSum - 1;
+				}
+			}
+		}
+		
+
+
+
+		// ------------------- P2: START OF FRAME OPERATIONS TIME MEASUREMENT  ------------------ //
+		// Timing: Update timeFrameLastCount adding the time spent on operations
+		timeFrameLastCount = SDL_GetPerformanceCounter();
+		timeDeltaOperations = timeFrameLastCount - timeFrameStartCount;
+		// Timing: Transform operations delta into seconds view
+		float timeFrameSecondsOperations = timeDeltaOperations / (float) perfFrequency;
+
+		// Debug Timing
+		if ( debug_timing ) {
+			printf("Frame: %02d OPERATIONS:\tperfFrequency: %llu\ttimeFrameStartCount: %llu\ttimeDeltaOperations: %llu\ttimeFrameDuration: %llu\ttimeFrameSecondsOperations: %fs\tmsPerFrame:%fms\n",
+				frame, perfFrequency, timeFrameStartCount, timeDeltaOperations, timeFrameLastCount, timeFrameSecondsOperations, msPerFrame );
+		}
+
+		
+		// ------------------------------ P3: START OF FRAME SLEEP  ----------------------------- //
+
+		// if we have time remaining on this frame, sleep
+		if ( timeFrameSecondsOperations <= msPerFrame ) {
+
+			// Get the integer part of the remaining time
+			timeFrameSleep = 1000 * (msPerFrame - timeFrameSecondsOperations);
+			
+			// I've reduced 2 ms from the sleep due to its imprecision, to avoid sleep more than the time of the frame
+			// and later sleep more with fine adjustment
+			if ( timeFrameSleep > 2 ) {
+				SDL_Delay(timeFrameSleep - 2);
+
+				// Count the exact ammount of time spent for the sleep function	
+				uint64_t timeFrameSleepCount = SDL_GetPerformanceCounter();
+				timeDeltaSleep = timeFrameSleepCount - timeFrameLastCount;
+				if ( debug_timing ) {
+					printf("SLEEP:\t\ttimeFrameSleep: %dms\ttimeDeltaSleep(real time spent on sleep): %llu\tTotal frame time: %llu\n",
+						timeFrameSleep-2, timeDeltaSleep, timeDeltaOperations + timeDeltaSleep);
+				}
+			} else {
+				if ( debug_timing ) {
+					printf("SLEEP:\t\tNo time added\n");
+				}
+			}
+
+			// If entered here, update the last frame count
+			timeFrameLastCount = SDL_GetPerformanceCounter();
+		}
+		
+		// Sum the time spent in operation + sleep to have the total cycle time
+		timeFrameDuration = timeDeltaOperations + timeDeltaSleep;
+
+
+		// ------------------------------ P4: START OF FINE SLEEP  ------------------------------ //
+		// Use main cycle loop to have precision on frames and seconds counter
+		while (timeFrameDuration < msPerFrameInt ) {
+			timeFrameStartCount = SDL_GetPerformanceCounter();
+			timeDeltaOperations = timeFrameStartCount - timeFrameLastCount;
+			timeFrameDuration += timeDeltaOperations;
+			// If entered here, update the last frame count
+			timeFrameLastCount = timeFrameStartCount;
+
+			// It will generate a LOT of logs, take care
+			// if ( debug_timing ) {
+			// 	// printf("FINE: Loop to spent cycle %d time: %llu\t\tTotal frame time: %llu\n", counterFrames, timeDeltaOperations, timeFrameDuration);
+			// }
+
+			// If entered here, update the cycle counter
+			cycle_counter++;
+		}
+
+		// Debug Timing
+		if ( debug_timing ) {
+			printf("Final frame time: %llu\n\n", timeFrameDuration);
+		}
+
+		// Update the timeFrameDuration with the timing of the last cycle
+		timeFrameDurationSum += timeFrameDuration;
+
+		// // Increment frame counter
+		frame ++;
+
+		// Increment Main Loop Cycle
+		// cycle++;
+
+		// Seconds Counter
+		timeSecondLast = SDL_GetPerformanceCounter();
+
+
+
+
+
 
         // ---------------- Menu -------------- //
         menu(ctx);
 
 
 
-        // --------------- Draw --------------- //
-        display_draw(frame);
+        // // --------------- Draw --------------- //
+        // display_draw(frame);
 
 
     }

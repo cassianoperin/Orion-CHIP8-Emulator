@@ -27,11 +27,10 @@ extern char *game_signature;
 // CPU
 extern unsigned char   Key[];
 extern bool cpu_pause;
-// extern bool cpu_debug_mode;
+extern bool cpu_debug_mode;
 // // extern unsigned int    cycle_counter_cpu;
 // extern unsigned int CPU_CLOCK;
 // // Font
-// extern char *string_msg1, *string_msg2, *string_msg3, *string_msg4;
 // extern bool msg_emuinfo;
 // // Sound
 // extern bool sound_enabled;
