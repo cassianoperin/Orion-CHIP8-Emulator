@@ -15,8 +15,9 @@
 #include "typedef.h"
 
 // --------------------------------- External Variables --------------------------------- //
-// Main - SDL Video
+// Main
 extern SDL_Window *window;
+
 // CPU
 extern unsigned int     CPU_CLOCK;
 extern bool             cpu_SCHIP_mode;
@@ -45,7 +46,8 @@ extern unsigned char display_SCALE;
 extern unsigned int  display_pixel_ON_color;
 extern unsigned int  display_pixel_OFF_color;
 extern unsigned int  display_pixels[8192];
+
+
 // -------------------------------------- Functions ------------------------------------- //
-// CHIP-8
 void opc_schip_00FF(void);
 void opc_schip_DXY0(void);

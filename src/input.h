@@ -1,7 +1,7 @@
 #pragma once
 #include "typedef.h"
 
-// #define Max_Overclock 5000
+#define Max_Overclock 3000
 
 // // --------------------------------- External Variables --------------------------------- //
 // Main
@@ -12,15 +12,14 @@ extern bool              quit;
 // extern SDL_Renderer *renderer;
 // extern SDL_Texture *texture;
 // extern unsigned int cycle_counter;
-// extern unsigned int message_slot4_timer;
-// extern const int pal_freq;
+extern const int pal_freq;
 // // Display
-// extern unsigned int  display_pixel_ON_color;
-// extern unsigned int  display_pixel_OFF_color;
-// extern unsigned int  display_pixel_ON_color_alt;
-// extern unsigned int  display_pixel_OFF_color_alt;
+extern unsigned int  display_pixel_ON_color;
+extern unsigned int  display_pixel_OFF_color;
+extern unsigned int  display_pixel_ON_color_alt;
+extern unsigned int  display_pixel_OFF_color_alt;
 // extern unsigned int  display_pixels[8192]; 
-// extern unsigned char display_color_theme;
+extern unsigned char display_color_theme;
 // extern unsigned int  frame_counter;
 // Lib
 extern char *game_signature;
@@ -28,20 +27,19 @@ extern char *game_signature;
 extern unsigned char   Key[];
 extern bool cpu_pause;
 extern bool cpu_debug_mode;
-// // extern unsigned int    cycle_counter_cpu;
-// extern unsigned int CPU_CLOCK;
+// extern unsigned int    cycle_counter_cpu;
+extern unsigned int CPU_CLOCK;
 // // Font
 // extern bool msg_emuinfo;
-// // Sound
-// extern bool sound_enabled;
+// Sound
+extern bool sound_enabled;
 
-// // --------------------------------- External Functions --------------------------------- //
-// // CPU
-// extern void cpu_reset();
-// extern void cpu_interpreter();
-// // Display
-// extern void display_update_theme();
-// extern bool display_draw(unsigned int frame, Scene *scene);
+// --------------------------------- External Functions --------------------------------- //
+// CPU
+extern void cpu_reset(void);
+extern void cpu_interpreter(void);
+// Display
+extern void display_update_theme(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool            input_remap_flag;

@@ -5,6 +5,7 @@
 #include "../lib/nuklear.h"
 #include "../lib/nuklear_sdl_renderer.h"
 
+// Handle Inputs
 void input_keyboard(void) {
 
 	//Event handler
@@ -117,209 +118,146 @@ void input_keyboard(void) {
 					
 					break;
 
-				// Interface
+				// ----------- Interface ----------- //
 
-				// // Pause
-				// case SDLK_p:
-				// 	cpu_pause = !cpu_pause;
+				// Pause
+				case SDLK_p:
+					cpu_pause = !cpu_pause;
 
-				// 	if (cpu_pause ) {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Pause: ENABLED");
-				// 		font_update_msg4(renderer);
+					if (cpu_pause ) {
+						printf("Pause: ENABLED\n");
+					} else {
+						printf("Pause: DISABLED\n");
+					}
 
-				// 		// Draw
-				// 		display_draw(frame_counter, &scene);
+					break;
 
-				// 		message_slot4_timer = 3;
-				// 	} else {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Pause: DISABLED");
-				// 		font_update_msg4(renderer);
+				// Sound
+				case SDLK_o:
+					sound_enabled = !sound_enabled;
 
-				// 		// Draw
-				// 		display_draw(frame_counter, &scene);
+					if (sound_enabled ) {
+						printf("Sound: ENABLED\n");
+					} else {
+						printf("Sound: DISABLED\n");
+					}
 
-				// 		message_slot4_timer = 3;
-				// 	}
+					break;
 
-				// 	break;
+				// Step Forward
+				case SDLK_i:
 
-				// // Sound
-				// case SDLK_o:
-				// 	sound_enabled = !sound_enabled;
+					if (cpu_pause ) {
+						cpu_interpreter();
+						printf("CPU: STEP FORWARD\n");
+					}
 
-				// 	if (sound_enabled ) {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Sound: ENABLED");
-				// 		font_update_msg4(renderer);
-
-				// 		// Draw
-				// 		display_draw(frame_counter, &scene);
-
-				// 		message_slot4_timer = 3;
-				// 	} else {
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "Sound: DISABLED");
-				// 		font_update_msg4(renderer);
-
-				// 		// Draw
-				// 		display_draw(frame_counter, &scene);
-
-				// 		message_slot4_timer = 3;
-				// 	}
-
-				// 	break;
-
-				// // Step Forward
-				// case SDLK_i:
-
-				// 	if (cpu_pause ) {
-						
-				// 		cpu_interpreter();
-						
-				// 		// -------- Message slot 4 -------- //
-				// 		strcpy(string_msg4, "CPU: STEP FORWARD");
-				// 		font_update_msg4(renderer);
-
-				// 		// Draw
-				// 		display_draw(frame_counter, &scene);
-
-				// 		message_slot4_timer = 3;
-				// 	}
-
-				// 	break;
+					break;
 					
-				// // Reduce Clock
-				// case SDLK_5:
-				// 	if ( CPU_CLOCK >= pal_freq + 10) {
-				// 		CPU_CLOCK -= 10;
+				// Reduce Clock
+				case SDLK_5:
+					if ( CPU_CLOCK >= pal_freq + 10) {
+						CPU_CLOCK -= 10;
 
-				// 		// Show Message
-				// 		sprintf(string_msg4, "Clock %d", CPU_CLOCK);
-				// 		font_update_msg4(renderer);
+						printf("Clock %d\n", CPU_CLOCK);
+					} else {
+						printf("Clock %d - Minimum Allowed\n", CPU_CLOCK);
+					}
 
-				// 	} else {
-				// 		// Show Message
-				// 		sprintf(string_msg4, "Clock %d", CPU_CLOCK);
-				// 		strcat(string_msg4, " - Minimum Allowed");
-				// 		font_update_msg4(renderer);
-				// 	}
-
-				// 	// Draw
-				// 	display_draw(frame_counter, &scene);
-				// 	message_slot4_timer = 3;
-
-				// 	break;
+					break;
 				
-				// // Increase Clock
-				// case SDLK_6:
-				// 	if ( CPU_CLOCK < Max_Overclock) {
-				// 		CPU_CLOCK += 10;
+				// Increase Clock
+				case SDLK_6:
+					if ( CPU_CLOCK < Max_Overclock) {
+						CPU_CLOCK += 10;
 
-				// 		// Show Message
-				// 		sprintf(string_msg4, "Clock %d", CPU_CLOCK);
-				// 		font_update_msg4(renderer);
+						printf("Clock %d\n", CPU_CLOCK);
 
-				// 	} else {
-				// 		// Show Message
-				// 		sprintf(string_msg4, "Clock %d", CPU_CLOCK);
-				// 		strcat(string_msg4, " - Maximum Allowed");
-				// 		font_update_msg4(renderer);
-				// 	}
+					} else {
+						printf("Clock %d - Maximum Allowed\n", CPU_CLOCK);
 
-				// 	// Draw
-				// 	display_draw(frame_counter, &scene);
-				// 	message_slot4_timer = 3;
+					}
 
-				// 	break;
+					break;
 					
-				// // Change Theme
-				// case SDLK_7: {
+				// Change Theme
+				case SDLK_7: {
 
-				// 	// Jump to next color theme
-				// 	if ( display_color_theme < 5 ) {
-				// 		display_color_theme ++;
-				// 	} else {
-				// 		display_color_theme = 0;
-				// 	}
+					// Jump to next color theme
+					if ( display_color_theme < 5 ) {
+						display_color_theme ++;
+					} else {
+						display_color_theme = 0;
+					}
 					
-				// 	//Select surfaces based on key press
-				// 	switch( display_color_theme )
-				// 	{
-				// 		// Black and White
-				// 		case 0:
-				// 			display_pixel_ON_color_alt	= 0xFFFFFFFF;
-				// 			display_pixel_OFF_color_alt	= 0xFF000000;
+					//Select surfaces based on key press
+					switch( display_color_theme )
+					{
+						// Black and White
+						case 0:
+							display_pixel_ON_color_alt	= 0xFFFFFFFF;
+							display_pixel_OFF_color_alt	= 0xFF000000;
 
-				// 			display_update_theme();
-				// 			break;
+							display_update_theme();
+							break;
 
-				// 		// White and Black
-				// 		case 1: {
-				// 			// New colors
-				// 			display_pixel_ON_color_alt	= 0xFF000000;
-				// 			display_pixel_OFF_color_alt	= 0xFFFFFFFF;
+						// White and Black
+						case 1: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF000000;
+							display_pixel_OFF_color_alt	= 0xFFFFFFFF;
 
-				// 			display_update_theme();
-				// 			break;
-				// 		}
+							display_update_theme();
+							break;
+						}
 
-				// 		// Grey Wolfand and Crystal Blue
-				// 		case 2: {
-				// 			// New colors
-				// 			display_pixel_ON_color_alt	= 0xFF5CB3FF;
-				// 			display_pixel_OFF_color_alt	= 0xFF504A4B;
+						// Grey Wolfand and Crystal Blue
+						case 2: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF5CB3FF;
+							display_pixel_OFF_color_alt	= 0xFF504A4B;
 
-				// 			display_update_theme();
-				// 			break;
-				// 		}
+							display_update_theme();
+							break;
+						}
 
-				// 		// Cloudy Gray and Emerald Green
-				// 		case 3: {
-				// 			// New colors
-				// 			display_pixel_ON_color_alt	= 0xFF50C878;
-				// 			display_pixel_OFF_color_alt	= 0xFF6D6968;
+						// Cloudy Gray and Emerald Green
+						case 3: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF50C878;
+							display_pixel_OFF_color_alt	= 0xFF6D6968;
 
-				// 			display_update_theme();
-				// 			break;
-				// 		}
+							display_update_theme();
+							break;
+						}
 
-				// 		// Night Black and Pastel Yellow
-				// 		case 4: {
-				// 			// New colors
-				// 			display_pixel_ON_color_alt	= 0xFFFAF884;
-				// 			display_pixel_OFF_color_alt	= 0xFF0C090A;
+						// Night Black and Pastel Yellow
+						case 4: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFFFAF884;
+							display_pixel_OFF_color_alt	= 0xFF0C090A;
 
-				// 			display_update_theme();
-				// 			break;
-				// 		}
+							display_update_theme();
+							break;
+						}
 
+						// Grey and LightCoral Pink
+						case 5: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFFF08080;
+							display_pixel_OFF_color_alt	= 0xFF1C1C1C;
 
-				// 		// Grey and LightCoral Pink
-				// 		case 5: {
-				// 			// New colors
-				// 			display_pixel_ON_color_alt	= 0xFFF08080;
-				// 			display_pixel_OFF_color_alt	= 0xFF1C1C1C;
+							display_update_theme();
+							break;
+						}
 
-				// 			display_update_theme();
-				// 			break;
-				// 		}
+					}
 
-				// 	}
+					// Show Message
+					printf("Theme %d\n", display_color_theme);
 
-				// 	// -------- Message slot 4 -------- //
-
-				// 	// Show Message
-				// 	sprintf(string_msg4, "Theme %d", display_color_theme);
-				// 	font_update_msg4(renderer);
-
-				// 	// Draw
-				// 	display_draw(frame_counter, &scene);
-				// 	message_slot4_timer = 3;
-
-				// 	break;
-				// }
+					break;
+				}
 
 				// // Show Emulator Information on screen
 				// case SDLK_8:
@@ -352,19 +290,11 @@ void input_keyboard(void) {
 					cpu_debug_mode = !cpu_debug_mode;
 					break;
 
-				// // Reset
-				// case SDLK_0:
-				// 	cpu_reset();
-
-				// 	// -------- Message slot 4 -------- //
-				// 	strcpy(string_msg4, "RESET");
-				// 	font_update_msg4(renderer);
-
-				// 	// Draw
-				// 	display_draw(frame_counter, &scene);
-				// 	message_slot4_timer = 3;
-
-				// 	break;
+				// Reset
+				case SDLK_0:
+					cpu_reset();
+					printf("RESET\n");
+					break;
 
 				case SDLK_ESCAPE:
 					quit = true;
@@ -485,6 +415,8 @@ void input_keyboard(void) {
 	nk_input_end(ctx);
 }
 
+
+// Emulator key remaps
 void input_keyboard_remaps(void) {
 	input_remap_flag = false;
 

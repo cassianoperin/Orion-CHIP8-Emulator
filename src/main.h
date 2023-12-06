@@ -104,6 +104,7 @@ float font_scale = 1;
 
 // Game path and ROM name
 char *filename;
+
 // Flag to indicate rom in hexadecimal format
 bool rom_format_hex;
 

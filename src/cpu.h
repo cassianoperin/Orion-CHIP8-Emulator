@@ -121,4 +121,4 @@ void cpu_initialize(void);
 void cpu_load_fonts(void);
 void cpu_debug_print(void);
 void cpu_interpreter(void);
-// void cpu_reset();
+void cpu_reset(void);

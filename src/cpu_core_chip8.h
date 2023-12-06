@@ -43,13 +43,14 @@
 
 // --------------------------------- External Variables --------------------------------- //
 // Display
-extern unsigned int display_pixel_ON_color;
-extern unsigned int display_pixel_OFF_color;
 extern unsigned int display_pixels[8192];
-// Screen Size
 extern unsigned char display_SCREEN_WIDTH_X;
 extern unsigned char display_SCREEN_HEIGHT_Y;
-// Legacy Opcodes and Quirks
+extern unsigned int display_pixel_ON_color;
+extern unsigned int display_pixel_OFF_color;
+extern bool debug_pixels;
+
+// Quirks
 extern bool quirk_Memory_legacy_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
 extern bool quirk_Spacefight2091_Fx1E;
@@ -62,8 +63,10 @@ extern bool quirk_LoRes_Wide_Sprite_Dxy0;
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_ClockProgram_fonts;
 extern bool quirk_display_wait;
-// File name
+
+// Main
 extern char *filename;
+
 // CPU
 extern unsigned short	PC;
 extern unsigned short	Stack[];
@@ -80,16 +83,13 @@ extern unsigned char	SoundTimer;
 extern bool             cpu_draw_flag;
 extern unsigned char    key_FX0A;
 extern bool             key_FX0A_pressed;
-// Debug Pixels
-extern bool             debug_pixels;
 
 // Input
 extern void input_keyboard(void);
 
-// Print the binary representation of a byte
+// Lib
 extern void print_bin(unsigned char value);
 
-// CPU
 
 // -------------------------------------- Functions ------------------------------------- //
 // CHIP-8

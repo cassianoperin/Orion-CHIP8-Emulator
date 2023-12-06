@@ -12,9 +12,7 @@
 // 	SP --;
 // 	if ( cpu_debug_mode )
 // 		sprintf(cpu_debug_message, "CHIP-8 00EE: Return from a subroutine (PC=0x%04X)", PC);
-
 // }
-
 
 
 // SCHIP - 00FF
@@ -69,8 +67,7 @@ void opc_schip_DXY0(void) {
 
 	if ( cpu_debug_mode )
 		// sprintf(cpu_debug_message, "CHIP-8 Dxy0: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
-	
-	printf("CHIP-8 Dxy0: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d\n", I, x, V[x], y, V[y], n);
+		printf("CHIP-8 Dxy0: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d\n", I, x, V[x], y, V[y], n);
 
 	// Clear the carry before start
 	V[0xF] = 0;

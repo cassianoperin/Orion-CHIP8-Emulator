@@ -617,7 +617,7 @@ void opc_chip8_EX9E(unsigned char x) {
 	// If Key number is bigger than 16, fix it (Ex.: Breakfree game)
 	if ( V[x] >= sizeof(Key) ) {
 		V[x] = V[x] - 16;
-		printf("\nPranned exit to test games that try to use values > 15 for keys in EX9E.\nValue: %d\n\n",x);
+		printf("\nPlanned exit to test games that try to use values > 15 for keys in EX9E.\nValue: %d\n\n",x);
 		exit(2);
 	}
 

@@ -9,7 +9,8 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/gui",
-      "args": [ "${workspaceFolder}/#Games/Chip-8/Games/Tank.ch8" ],
+      // "args": [ "${workspaceFolder}/#Games/Chip-8/Games/Tank.ch8" ],
+      "args": [ "${workspaceFolder}/#Games/Chip-8/Games/Pong (1 player).ch8" ],
       // "args": [ "${workspaceFolder}/#Games/SuperChip/Demos/Bounce [Les Harris].ch8" ],
       // "args": [ "${workspaceFolder}/Pong (1 player).hex", "--hex" ],
       // Test Suite v2

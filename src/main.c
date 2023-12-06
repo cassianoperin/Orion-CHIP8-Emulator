@@ -321,11 +321,6 @@ int main(int argc, char *argv[])
         menu(ctx);
 
 
-
-        // // --------------- Draw --------------- //
-        // display_draw(frame);
-
-
     }
 
 	//Free resources and close SDL

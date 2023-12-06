@@ -4,24 +4,24 @@
 #include <time.h>
 #include "cpu.h"
 
-// void cpu_reset(){
+void cpu_reset(void) {
 
-// 	// Initialize
-// 	cpu_initialize();
+	// Initialize
+	cpu_initialize();
 
-// 	// Load ROM into Memory
-// 	load_rom(filename,  Memory, sizeof(Memory));
-// 	printf("Loaded game: %s\n", filename);
+	// Load ROM into Memory
+	load_rom(filename,  Memory, sizeof(Memory));
+	printf("Loaded game: %s\n", filename);
 
-// 	// Check for Quirks
-// 	handle_quirks(game_signature);
+	// Check for Quirks
+	handle_quirks(game_signature);
 
 	// Load Fonts
-	// cpu_load_fonts(void);
+	cpu_load_fonts();
 
-// 	// Clean counters
-// 	cycle_cpu = 0;
-// }
+	// Clean counters
+	cycle_cpu = 0;
+}
 
 void cpu_initialize(void) {
 
