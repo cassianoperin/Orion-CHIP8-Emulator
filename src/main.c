@@ -77,6 +77,8 @@ int main(int argc, char *argv[])
 	// Seconds Counter
 	timeSecondStart = SDL_GetPerformanceCounter();
 
+	openfiledialog();
+
 	// ----------------------- Infinite Loop  ----------------------- //
     while ( !quit )
     {
@@ -311,14 +313,6 @@ int main(int argc, char *argv[])
 
 		// Seconds Counter
 		timeSecondLast = SDL_GetPerformanceCounter();
-
-
-
-
-
-
-        // ---------------- Menu -------------- //
-        menu(ctx);
 
 
     }

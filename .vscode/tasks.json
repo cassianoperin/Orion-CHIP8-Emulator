@@ -4,7 +4,7 @@
       "type": "cppbuild",
       "label": "build",
       "command": "make",
-      "args": [],
+      "args": ["ARCH=mac"],
       "options": {
         "cwd": "${workspaceFolder}"
       },

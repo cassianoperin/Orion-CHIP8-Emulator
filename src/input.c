@@ -2,8 +2,8 @@
 #include <string.h>
 #include "input.h"
 
-#include "../lib/nuklear.h"
-#include "../lib/nuklear_sdl_renderer.h"
+#include "nuklear.h"
+#include "nuklear_sdl_renderer.h"
 
 // Handle Inputs
 void input_keyboard(void) {
@@ -86,8 +86,8 @@ void input_keyboard(void) {
 					Key[0xF] = 1;
 					break;
 				
-				// Remap Keys
 
+				// ---------- Remap Keys ----------- //
 				case SDLK_UP:
 				if ( input_remap_flag )
 					Key[input_remap_btn_UP] = 1;
@@ -153,7 +153,21 @@ void input_keyboard(void) {
 					}
 
 					break;
-					
+
+				// Step Forward
+				case SDLK_g:
+					show_menu = !show_menu;
+
+					if (show_menu ) {
+						printf("Menu ENABLED\n");
+						cpu_pause = true;
+					} else {
+						printf("Menu DISABLED\n");
+						cpu_pause = false;
+					}
+
+					break;	
+
 				// Reduce Clock
 				case SDLK_5:
 					if ( CPU_CLOCK >= pal_freq + 10) {

@@ -1299,6 +1299,9 @@ int menu(struct nk_context *ctx)
 
 void gui_init(void)
 {
+    // Show Menu
+    show_menu = true;
+
     ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */
     /* Load Cursor: if you uncomment cursor loading please hide the cursor */

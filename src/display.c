@@ -88,6 +88,11 @@ bool display_draw(unsigned int frame)
 	// Draw
 	SDL_RenderPresent(renderer);
 
+	// Show Menu
+	if ( show_menu ) {
+		menu(ctx);
+	}
+	
 	// Draw to console
 	// draw_graphics_console();
 

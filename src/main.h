@@ -21,8 +21,8 @@
 #define NK_INCLUDE_DEFAULT_FONT
 #define NK_IMPLEMENTATION
 #define NK_SDL_RENDERER_IMPLEMENTATION
-#include "../lib/nuklear.h"
-#include "../lib/nuklear_sdl_renderer.h"
+#include "nuklear.h"
+#include "nuklear_sdl_renderer.h"
 
 
 // --------------------------------- External Variables --------------------------------- //
@@ -83,6 +83,8 @@ extern void sound_close(void);
 // GUI
 extern void gui_init(void);
 extern int menu(struct nk_context *ctx);
+// NFD Extended
+extern int openfiledialog(void);
 
 // ---------------------------------- Global Constants ---------------------------------- //
 // NTSC: 60hz, PAL: 50HZ

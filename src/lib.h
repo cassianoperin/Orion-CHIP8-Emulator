@@ -46,3 +46,6 @@ uint8_t strContains(char* string, char* toFind);
 
 // Print the binary representation of a byte
 void print_bin(unsigned char value);
+
+// File Open Dialog
+int openfiledialog(void);

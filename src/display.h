@@ -1,16 +1,22 @@
 #pragma once
 #include "typedef.h"
 
-#include "../lib/nuklear.h"
-#include "../lib/nuklear_sdl_renderer.h"
+#include "nuklear.h"
+#include "nuklear_sdl_renderer.h"
 
 // --------------------------------- External Variables --------------------------------- //
-// Main - SDL Video
+// Main
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Texture *texture;
+extern struct nk_context *ctx;
+// GUI
+extern bool show_menu;
 // Quirk
 extern bool quirk_display_wait;
+
+// --------------------------------- External Functions --------------------------------- //
+extern int menu(struct nk_context *ctx);
 
 // // ---------------------------------- Global Variables ---------------------------------- //
 // Display (Screen size)
