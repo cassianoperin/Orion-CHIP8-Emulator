@@ -11,13 +11,19 @@ void cpu_reset(void) {
 
 	// Load ROM into Memory
 	load_rom(filename,  Memory, sizeof(Memory));
-	printf("Loaded game: %s\n", filename);
+
+	// Get Game signature for Qwirks
+	game_signature = get_game_signature(filename);
+	printf("Signature:   %s\n", game_signature );
 
 	// Check for Quirks
 	handle_quirks(game_signature);
 
 	// Load Fonts
 	cpu_load_fonts();
+
+	// Keyboard remaps
+	input_keyboard_remaps();
 
 	// Clean counters
 	cycle_cpu = 0;

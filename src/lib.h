@@ -1,4 +1,6 @@
 #pragma once
+#include <SDL2/SDL.h>
+
 
 // Boolean Type for Vanilla C
 typedef int bool;
@@ -6,11 +8,18 @@ typedef int bool;
 #define false 0
 
 // --------------------------------- External Variables --------------------------------- //
+// Main
+extern SDL_Window *window;
+extern char *filename;
 // Display
 extern unsigned char display_FPS;
 extern unsigned char Memory[4096];
 // CPU
 extern unsigned int CPU_CLOCK;
+extern void cpu_reset(void);
+extern bool cpu_rom_loaded;
+// GUI
+extern bool show_menu;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks
@@ -48,4 +57,4 @@ uint8_t strContains(char* string, char* toFind);
 void print_bin(unsigned char value);
 
 // File Open Dialog
-int openfiledialog(void);
+int gui_loadrom(void);

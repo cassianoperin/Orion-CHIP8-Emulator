@@ -48,25 +48,24 @@ int main(int argc, char *argv[])
 	sound_init();
 
 	// // CLI and argument validation
-	command_line_interface(argc, argv);
+	// command_line_interface(argc, argv);
 
 	// Load Game into Memory
-	filename = argv[1];
-	load_rom(filename,  Memory, (sizeof(Memory) / sizeof(Memory[0])) );
-	printf("Loaded game: %s\n", filename);
+	// filename = argv[1];
+	// load_rom(filename,  Memory, (sizeof(Memory) / sizeof(Memory[0])) );
 
-	// Get Game signature for Qwirks
-	game_signature = get_game_signature(filename);
-	printf("Signature:   %s\n", game_signature );
+	// // Get Game signature for Qwirks
+	// game_signature = get_game_signature(filename);
+	// printf("Signature:   %s\n", game_signature );
 
-	// Check for Quirks
-	handle_quirks(game_signature);
+	// // Check for Quirks
+	// handle_quirks(game_signature);
 
 	// Load Fonts
-	cpu_load_fonts();
+	// cpu_load_fonts();
 
-	// Keyboard remaps
-	input_keyboard_remaps();
+	// // Keyboard remaps
+	// input_keyboard_remaps();
 
 	// -------------------------- SDL Init -------------------------- //
 	display_init();
@@ -77,12 +76,9 @@ int main(int argc, char *argv[])
 	// Seconds Counter
 	timeSecondStart = SDL_GetPerformanceCounter();
 
-	openfiledialog();
-
 	// ----------------------- Infinite Loop  ----------------------- //
     while ( !quit )
     {
-
 		// --------------------------------- START OF SECONDs COUNTER  --------------------------------- //
 		if ( timeSecondLast - timeSecondStart >= 1000000000 ){ 
 
@@ -197,7 +193,10 @@ int main(int argc, char *argv[])
 		for( int i = 0 ; i < ( (int)opcodesPerFrame ) ; i++) {
 			if ( !cpu_pause ) {
 
-				cpu_interpreter();
+				// Just run the interpreter if a rom was selected
+				if ( cpu_rom_loaded ) {
+					cpu_interpreter();
+				}
 				
 				// If in original draw mode, check for draw flag and draw to screen, not syncing with vsync
 				if ( !quirk_display_wait ) {
@@ -211,7 +210,11 @@ int main(int argc, char *argv[])
 
 				// Sum the residual to add an aditional frame if necessary
 				if ( opcodesPerFrameResidualSum > 1 ) {
-					cpu_interpreter();
+
+					// Just run the interpreter if a rom was selected
+					if ( cpu_rom_loaded ) {
+						cpu_interpreter();
+					}
 
 					if ( !quirk_display_wait ) {
 						if ( cpu_draw_flag ) {

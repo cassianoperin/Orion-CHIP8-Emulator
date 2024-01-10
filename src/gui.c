@@ -2,15 +2,14 @@
 
 int menu(struct nk_context *ctx)
 {
-    /* window flags */
-    static int show_menu = nk_true;
-    /* static nk_flags window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_SCALABLE|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE; */
     static nk_flags window_flags = NK_WINDOW_BORDER;
     nk_flags actual_window_flags;
 
     /* popups */
     static enum nk_style_header_align header_align = NK_HEADER_RIGHT;
     static int show_app_about = nk_false;
+    static int show_app_quirk_help = nk_false;
+
 
     ctx->style.window.header.align = header_align;
 
@@ -21,103 +20,244 @@ int menu(struct nk_context *ctx)
     {
         if (show_menu)
         {
-            /* menubar */
-            enum menu_states {MENU_DEFAULT, MENU_WINDOWS};
-            static nk_size mprog = 60;
-            static int mslider = 10;
-            static int mcheck = nk_true;
             nk_menubar_begin(ctx);
 
-            /* menu #1 */
+            // ------------------------------------- Menu FILE -------------------------------------- //
+            
+            // Start Menu Row
             nk_layout_row_begin(ctx, NK_STATIC, 25, 5);
+            
             nk_layout_row_push(ctx, 45);
-            if (nk_menu_begin_label(ctx, "MENU", NK_TEXT_LEFT, nk_vec2(120, 200)))
+            if (nk_menu_begin_label(ctx, "File", NK_TEXT_LEFT, nk_vec2(120, 200)))
             {
-                static size_t prog = 40;
-                static int slider = 10;
-                static int check = nk_true;
+
                 nk_layout_row_dynamic(ctx, 25, 1);
-                if (nk_menu_item_label(ctx, "Hide", NK_TEXT_LEFT))
-                    show_menu = nk_false;
-                if (nk_menu_item_label(ctx, "About", NK_TEXT_LEFT))
-                    show_app_about = nk_true;
-                nk_progress(ctx, &prog, 100, NK_MODIFIABLE);
-                nk_slider_int(ctx, 0, &slider, 16, 1);
-                nk_checkbox_label(ctx, "check", &check);
+                if (nk_menu_item_label(ctx, "Load ROM", NK_TEXT_LEFT)) {
+                    gui_loadrom();
+                }
+
+                if (nk_menu_item_label(ctx, "Exit", NK_TEXT_LEFT)) {
+                    printf("Exiting (from GUI)\n");
+                    quit = true;
+                }
+
                 nk_menu_end(ctx);
             }
-            /* menu #2 */
-            nk_layout_row_push(ctx, 60);
-            if (nk_menu_begin_label(ctx, "ADVANCED", NK_TEXT_LEFT, nk_vec2(200, 600)))
+
+
+            // ------------------------------------- Menu VIEW -------------------------------------- //
+            nk_layout_row_push(ctx, 45);
+            if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(220, 200)))
             {
-                enum menu_state {MENU_NONE,MENU_FILE, MENU_EDIT,MENU_VIEW,MENU_CHART};
-                static enum menu_state menu_state = MENU_NONE;
-                enum nk_collapse_states state;
 
-                state = (menu_state == MENU_FILE) ? NK_MAXIMIZED: NK_MINIMIZED;
-                if (nk_tree_state_push(ctx, NK_TREE_TAB, "FILE", &state)) {
-                    menu_state = MENU_FILE;
-                    nk_menu_item_label(ctx, "New", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Open", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Save", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Close", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Exit", NK_TEXT_LEFT);
-                    nk_tree_pop(ctx);
-                } else menu_state = (menu_state == MENU_FILE) ? MENU_NONE: menu_state;
+                static int property_int = 10;
 
-                state = (menu_state == MENU_EDIT) ? NK_MAXIMIZED: NK_MINIMIZED;
-                if (nk_tree_state_push(ctx, NK_TREE_TAB, "EDIT", &state)) {
-                    menu_state = MENU_EDIT;
-                    nk_menu_item_label(ctx, "Copy", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Delete", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Cut", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Paste", NK_TEXT_LEFT);
-                    nk_tree_pop(ctx);
-                } else menu_state = (menu_state == MENU_EDIT) ? MENU_NONE: menu_state;
+                nk_layout_row_dynamic(ctx, 25, 1);
+                if (nk_menu_item_label(ctx, "Theme", NK_TEXT_LEFT)) {
+                    // show_menu = nk_false;
+                    // gui_loadrom();
+                }
 
-                state = (menu_state == MENU_VIEW) ? NK_MAXIMIZED: NK_MINIMIZED;
-                if (nk_tree_state_push(ctx, NK_TREE_TAB, "VIEW", &state)) {
-                    menu_state = MENU_VIEW;
-                    nk_menu_item_label(ctx, "About", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Options", NK_TEXT_LEFT);
-                    nk_menu_item_label(ctx, "Customize", NK_TEXT_LEFT);
-                    nk_tree_pop(ctx);
-                } else menu_state = (menu_state == MENU_VIEW) ? MENU_NONE: menu_state;
+                static int current_weapon = 0;
+                static const char *weapons[] = {"Fist","Pistol","Shotgun","Plasma","BFG"};
 
-                state = (menu_state == MENU_CHART) ? NK_MAXIMIZED: NK_MINIMIZED;
-                if (nk_tree_state_push(ctx, NK_TREE_TAB, "CHART", &state)) {
-                    size_t i = 0;
-                    const float values[]={26.0f,13.0f,30.0f,15.0f,25.0f,10.0f,20.0f,40.0f,12.0f,8.0f,22.0f,28.0f};
-                    menu_state = MENU_CHART;
-                    nk_layout_row_dynamic(ctx, 150, 1);
-                    nk_chart_begin(ctx, NK_CHART_COLUMN, NK_LEN(values), 0, 50);
-                    for (i = 0; i < NK_LEN(values); ++i)
-                        nk_chart_push(ctx, values[i]);
-                    nk_chart_end(ctx);
-                    nk_tree_pop(ctx);
-                } else menu_state = (menu_state == MENU_CHART) ? MENU_NONE: menu_state;
+                /* default combobox */
+                nk_layout_row_static(ctx, 25, 200, 1);
+                current_weapon = nk_combo(ctx, weapons, NK_LEN(weapons), current_weapon, 25, nk_vec2(20,20));
+
+                static const float ratio[] = {80, 120};
+                nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+                nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
+                nk_property_int(ctx, "Scale:", 10, &property_int, 20, 1, 1);
+
+                if (nk_menu_item_label(ctx, "Fullscreen", NK_TEXT_LEFT)) {
+                    // printf("Exiting (from GUI)\n");
+                    // quit = true;
+                }
+
                 nk_menu_end(ctx);
             }
+
+            // ----------------------------------- Menu EMULATION ----------------------------------- //
+            nk_layout_row_push(ctx, 80);
+            if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
+            {
+
+                static int property_int = 500;
+                static int check1 = nk_true;
+                static int check2 = nk_true;
+                static int check3 = nk_true;
+                static int check4 = nk_true;
+                static int check5 = nk_false;
+                static int check6 = nk_true;
+
+                nk_layout_row_dynamic(ctx, 20, 1);
+                if ( nk_checkbox_label(ctx, "HEX ROM mode", &check1) ) {
+                    // quit = true;
+                }
+
+                if ( nk_checkbox_label(ctx, "Pause", &check2) ) {
+                    //
+                }
+
+                if ( nk_checkbox_label(ctx, "Debug", &check3) ) {
+                    //
+                }
+
+                if ( nk_checkbox_label(ctx, "Original DRAW Mode", &check4) ) {
+                    //
+                }
+
+                if ( nk_checkbox_label(ctx, "Sound", &check5) ) {
+                    //
+                }
+
+                if ( nk_checkbox_label(ctx, "Reset", &check6) ) {
+                    //
+                }
+
+                // Split
+                nk_layout_row_dynamic(ctx, 1, 1);
+                nk_rule_horizontal(ctx, nk_gray, nk_true);
+
+                static const float ratio[] = {80, 120};
+                nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+                nk_label(ctx, "CPU CLOCK:", NK_TEXT_LEFT);
+                nk_property_int(ctx, "Clock:", 60, &property_int, 2000, 10, 1);
+                
+                nk_menu_end(ctx);
+            }
+
+            // ------------------------------------ Menu QUIRKS ------------------------------------- //
+                        
+            nk_layout_row_push(ctx, 55);
+            if (nk_menu_begin_label(ctx, "Quirks", NK_TEXT_LEFT, nk_vec2(320, 200)))
+            {
+
+                /* CHIP-8 Quirks */
+                if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) {
+                
+                    static int checkbox;
+                    nk_layout_row_dynamic(ctx, 20, 2);
+                    nk_checkbox_label(ctx, "VF Reset", &checkbox);
+                    nk_checkbox_label(ctx, "Memory legacy", &checkbox);
+                    nk_checkbox_label(ctx, "Display Wait", &checkbox);
+                    nk_checkbox_label(ctx, "Clipping", &checkbox);
+                    nk_checkbox_label(ctx, "Shifting", &checkbox);
+                    nk_checkbox_label(ctx, "Jump with offset", &checkbox);
+                    nk_tree_pop(ctx);
+                }
+
+                // /* SCHIP Quirks */
+                // if (nk_tree_push(ctx, NK_TREE_TAB, "SCHIP", NK_MINIMIZED)) {
+                
+                //     static int checkbox;
+                //     nk_layout_row_dynamic(ctx, 30, 2);
+                //     nk_checkbox_label(ctx, "TBD1", &checkbox);
+                //     nk_checkbox_label(ctx, "TBD2", &checkbox);
+                //     nk_checkbox_label(ctx, "TBD3", &checkbox);
+                //     nk_checkbox_label(ctx, "TBD4", &checkbox);
+                //     nk_tree_pop(ctx);
+                // }
+
+
+                nk_menu_end(ctx);
+            }
+
+            // ------------------------------------- Menu HELP -------------------------------------- //
+            
+            nk_layout_row_push(ctx, 105);
+            if (nk_menu_begin_label(ctx, "Help", NK_TEXT_LEFT, nk_vec2(200, 100)))
+            {
+
+                nk_layout_row_dynamic(ctx, 25, 1);
+                if (nk_menu_item_label(ctx, "CHIP-8 Quirk Descriptions", NK_TEXT_LEFT)) {
+                    show_app_quirk_help = nk_true;
+                }
+
+                // Split
+                nk_layout_row_dynamic(ctx, 1, 1);
+                nk_rule_horizontal(ctx, nk_gray, nk_true);
+
+                nk_layout_row_dynamic(ctx, 25, 1);
+                if (nk_menu_item_label(ctx, "About", NK_TEXT_LEFT)) {
+                    show_app_about = nk_true;
+                }
+                
+
+                nk_menu_end(ctx);
+            }
+
+
             /* menu widgets */
-            nk_layout_row_push(ctx, 70);
-            nk_progress(ctx, &mprog, 100, NK_MODIFIABLE);
-            nk_slider_int(ctx, 0, &mslider, 16, 1);
-            nk_checkbox_label(ctx, "check", &mcheck);
+            // nk_layout_row_push(ctx, 70);
+            // nk_progress(ctx, &mprog, 100, NK_MODIFIABLE);
+            // nk_slider_int(ctx, 0, &mslider, 16, 1);
+            
             nk_menubar_end(ctx);
         }
 
+        /* about popup */
         if (show_app_about)
         {
-            /* about popup */
-            static struct nk_rect s = {20, 100, 300, 190};
-            if (nk_popup_begin(ctx, NK_POPUP_STATIC, "About", NK_WINDOW_CLOSABLE, s))
+            // Center popup
+            const int popup_size_x = 420;
+            const int popup_size_y = 140;
+            const int popup_size_header = 20;
+            const int popup_initial_x_pos = display_SCREEN_WIDTH_X * display_SCALE  / 2 - popup_size_x / 2;
+            const int popup_initial_y_pos = display_SCREEN_HEIGHT_Y * display_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+
+            struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
+            if (nk_popup_begin(ctx, NK_POPUP_STATIC, "About", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
             {
                 nk_layout_row_dynamic(ctx, 20, 1);
-                nk_label(ctx, "Nuklear", NK_TEXT_LEFT);
-                nk_label(ctx, "By Micha Mettke", NK_TEXT_LEFT);
-                nk_label(ctx, "nuklear is licensed under the public domain License.",  NK_TEXT_LEFT);
+                nk_label(ctx, "Orion CHIP-8 Emulator", NK_TEXT_CENTERED);
+                nk_label(ctx, "By Cassiano Perin", NK_TEXT_CENTERED);
+                nk_label(ctx, "Orion CHIP8 is licensed under the public domain License.",  NK_TEXT_CENTERED);
                 nk_popup_end(ctx);
             } else show_app_about = nk_false;
+        }
+
+        /* about popup */
+        if (show_app_quirk_help)
+        {
+            
+            // Center popup
+            const int popup_size_x = 500;
+            const int popup_size_y = 200;
+            const int popup_size_header = 20;
+            const int popup_initial_x_pos = display_SCREEN_WIDTH_X * display_SCALE  / 2 - popup_size_x / 2;
+            const int popup_initial_y_pos = display_SCREEN_HEIGHT_Y * display_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+
+            struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
+            if (nk_popup_begin(ctx, NK_POPUP_STATIC, "CHIP-8 Quirk Help", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
+            {
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "1. vF reset", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "The AND, OR and XOR opcodes (8xy1, 8xy2 and 8xy3) reset the register flag to zero.");
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "2. Memory", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "The save and load opcodes (Fx55 and Fx65) increment the index register.");
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "3. Display wait", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "Drawing sprites to the display waits for the vertical blank, limiting to max 60 FPS.");
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "4. Clipping", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen.");
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "5. Shifting", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "The shift opcodes (8xy6 and 8xyE) only operate on vX instead of storing the shifted version of vY in vX.");
+                nk_layout_row_dynamic(ctx, 20, 1);
+                nk_label_colored(ctx, "6. Jumping", NK_TEXT_LEFT, nk_blue);
+                nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
+                nk_label_wrap(ctx, "The \"jump to some address plus v0\" instruction (Bnnn) doesn't use v0, but vX instead where X is the highest nibble of nnn.");
+                nk_popup_end(ctx);
+            } else show_app_quirk_help = nk_false;
         }
 
         // /* window flags */

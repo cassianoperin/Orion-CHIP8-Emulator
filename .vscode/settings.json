@@ -56,7 +56,8 @@
         "ios": "c",
         "unordered_map": "c",
         "nuklear.h": "c",
-        "nuklear_sdl_renderer.h": "c"
+        "nuklear_sdl_renderer.h": "c",
+        "charconv": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "C_Cpp.errorSquiggles": "disabled"

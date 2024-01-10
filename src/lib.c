@@ -67,6 +67,9 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 		fread(&mem[PC], 1, mem_size - PC, rom);
 		fclose(rom);
 
+		// Tell CPU to start running the interpreter
+		cpu_rom_loaded = true;
+
 
 	} else {										 	// Rom in hexadecimal format
 
@@ -131,6 +134,9 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 			mem[PC+i+1] = v1;
 		}
 
+		// Tell CPU to start running the interpreter
+		cpu_rom_loaded = true;
+
 		// // Print Buffer (rom)
 		// printf("Buffer (rom):\n");
 		// for( int i = 0 ; i < rom_size ; i++ ) {
@@ -148,6 +154,8 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 		free(hexBuffer);
 		free(hexBufferValid);
 	}
+
+	printf("Loaded game: %s\n", filename);
 
 }
 
@@ -174,7 +182,7 @@ char *get_game_signature(char *filename) {
 	return signature;
 }
 
-int openfiledialog(void) {
+int gui_loadrom(void) {
     // initialize NFD
     // either call NFD_Init at the start of your program and NFD_Quit at the end of your program,
     // or before/after every time you want to show a file dialog.
@@ -183,22 +191,38 @@ int openfiledialog(void) {
     nfdchar_t* outPath;
 
     // prepare filters for the dialog
-    nfdfilteritem_t filterItem[2] = {{"Source code", "c,cpp,cc"}, {"Headers", "h,hpp"}};
+    nfdfilteritem_t filterItem[2] = {{"Chip8 Binary ROMs", "CH8,ch8"}, {"Chip8 Hexadecimal ROMs", "hex,HEX"}};
 
     // show the dialog
     nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 2, NULL);
     if (result == NFD_OKAY) {
-        puts("Success!");
-        puts(outPath);
+        // puts("Success!");
+        // puts(outPath);
+
+		// Hide Menu
+		show_menu = false;
+
+		// Set the selected ROM
+		filename = outPath;
+		// Reset CPU
+		cpu_reset();
+
         // remember to free the memory (since NFD_OKAY is returned)
-        NFD_FreePath(outPath);
+        // NFD_FreePath(outPath);
+
     } else if (result == NFD_CANCEL) {
-        puts("User pressed cancel.");
+        // puts("User pressed cancel.");
+		show_menu = true;
+
     } else {
-        printf("Error: %s\n", NFD_GetError());
+        printf("NFD Error: %s\n", NFD_GetError());
+		exit(2);
     }
 
-    // Quit NFD
+	// Bring main window to front after choosing the rom
+	SDL_RaiseWindow(window);
+
+	// Quit NFD
     NFD_Quit();
 
     return 0;

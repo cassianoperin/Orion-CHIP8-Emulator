@@ -123,6 +123,7 @@ void input_keyboard(void) {
 				// Pause
 				case SDLK_p:
 					cpu_pause = !cpu_pause;
+					show_menu = !show_menu;
 
 					if (cpu_pause ) {
 						printf("Pause: ENABLED\n");
@@ -311,7 +312,16 @@ void input_keyboard(void) {
 					break;
 
 				case SDLK_ESCAPE:
-					quit = true;
+
+					cpu_pause = !cpu_pause;
+					show_menu = !show_menu;
+
+					if (cpu_pause ) {
+						printf("Pause: ENABLED\n");
+					} else {
+						printf("Pause: DISABLED\n");
+					}
+					
 					break;
 			}
 

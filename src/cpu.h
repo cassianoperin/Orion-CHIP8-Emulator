@@ -38,6 +38,9 @@ extern bool sound_enabled;
 // Lib
 extern void handle_quirks(char *game_signature);
 extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
+extern char *get_game_signature(char *filename);
+// Input
+extern void input_keyboard_remaps(void);
 // CHIP-8
 // void opc_chip8_0NNN(); // Not needed by any game, just for documentation
 extern void opc_chip8_00E0(void);
@@ -114,6 +117,8 @@ unsigned int    CPU_CLOCK  = 0;             // CPU clock speed
 // Input
 unsigned char   key_FX0A = 0;                // Keep track of the first key pressed, to wait it to be released as necessary on FX0A
 bool            key_FX0A_pressed = false;    // keep track of the state of first key pressed to check when is released to update V[x]
+// GUI
+bool            cpu_rom_loaded;                  // Tell the main loop when to start running the cpu_interpreter()
 
 
 // -------------------------------------- Functions ------------------------------------- //
