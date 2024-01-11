@@ -50,25 +50,21 @@ int menu(struct nk_context *ctx)
             if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(220, 200)))
             {
 
-                static int property_int = 10;
+                if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
+                {
+                    // enum options {0,1,2,3,4,5};
+                    static int option;
 
-                nk_layout_row_dynamic(ctx, 25, 1);
-                if (nk_menu_item_label(ctx, "Theme", NK_TEXT_LEFT)) {
-                    // show_menu = nk_false;
-                    // gui_loadrom();
+                    nk_layout_row_static(ctx, 30, 80, 2);
+                    option = nk_option_label(ctx, "Theme 1", option == 0) ? 0 : option;
+                    option = nk_option_label(ctx, "Theme 2", option == 1) ? 1 : option;
+                    option = nk_option_label(ctx, "Theme 3", option == 2) ? 2 : option;
+                    option = nk_option_label(ctx, "Theme 4", option == 3) ? 3 : option;
+                    option = nk_option_label(ctx, "Theme 5", option == 4) ? 4 : option;
+                    option = nk_option_label(ctx, "Theme 6", option == 5) ? 5 : option;
+
+                    nk_tree_pop(ctx);
                 }
-
-                static int current_weapon = 0;
-                static const char *weapons[] = {"Fist","Pistol","Shotgun","Plasma","BFG"};
-
-                /* default combobox */
-                nk_layout_row_static(ctx, 25, 200, 1);
-                current_weapon = nk_combo(ctx, weapons, NK_LEN(weapons), current_weapon, 25, nk_vec2(20,20));
-
-                static const float ratio[] = {80, 120};
-                nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
-                nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
-                nk_property_int(ctx, "Scale:", 10, &property_int, 20, 1, 1);
 
                 if (nk_menu_item_label(ctx, "Fullscreen", NK_TEXT_LEFT)) {
                     // printf("Exiting (from GUI)\n");
