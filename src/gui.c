@@ -52,7 +52,6 @@ int menu(struct nk_context *ctx)
 
                 if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
                 {
-                    // enum options {0,1,2,3,4,5};
                     static int option;
 
                     nk_layout_row_static(ctx, 30, 80, 2);
@@ -62,6 +61,68 @@ int menu(struct nk_context *ctx)
                     option = nk_option_label(ctx, "Theme 4", option == 3) ? 3 : option;
                     option = nk_option_label(ctx, "Theme 5", option == 4) ? 4 : option;
                     option = nk_option_label(ctx, "Theme 6", option == 5) ? 5 : option;
+
+					switch( option )
+					{
+						// Black and White
+						case 0:
+							display_pixel_ON_color_alt	= 0xFFFFFFFF;
+							display_pixel_OFF_color_alt	= 0xFF000000;
+
+							display_update_theme();
+							break;
+
+						// White and Black
+						case 1: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF000000;
+							display_pixel_OFF_color_alt	= 0xFFFFFFFF;
+
+							display_update_theme();
+							break;
+						}
+
+						// Grey Wolfand and Crystal Blue
+						case 2: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF5CB3FF;
+							display_pixel_OFF_color_alt	= 0xFF504A4B;
+
+							display_update_theme();
+							break;
+						}
+
+						// Cloudy Gray and Emerald Green
+						case 3: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFF50C878;
+							display_pixel_OFF_color_alt	= 0xFF6D6968;
+
+							display_update_theme();
+							break;
+						}
+
+						// Night Black and Pastel Yellow
+						case 4: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFFFAF884;
+							display_pixel_OFF_color_alt	= 0xFF0C090A;
+
+							display_update_theme();
+							break;
+						}
+
+						// Grey and LightCoral Pink
+						case 5: {
+							// New colors
+							display_pixel_ON_color_alt	= 0xFFF08080;
+							display_pixel_OFF_color_alt	= 0xFF1C1C1C;
+
+							display_update_theme();
+							break;
+						}
+
+					}
 
                     nk_tree_pop(ctx);
                 }
@@ -78,48 +139,28 @@ int menu(struct nk_context *ctx)
             nk_layout_row_push(ctx, 80);
             if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
             {
-
-                static int property_int = 500;
-                static int check1 = nk_true;
-                static int check2 = nk_true;
-                static int check3 = nk_true;
-                static int check4 = nk_true;
-                static int check5 = nk_false;
-                static int check6 = nk_true;
-
                 nk_layout_row_dynamic(ctx, 20, 1);
-                if ( nk_checkbox_label(ctx, "HEX ROM mode", &check1) ) {
-                    // quit = true;
-                }
+                if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
 
-                if ( nk_checkbox_label(ctx, "Pause", &check2) ) {
-                    //
-                }
+                if ( nk_checkbox_label(ctx, "Pause", &cpu_pause) ) {}
 
-                if ( nk_checkbox_label(ctx, "Debug", &check3) ) {
-                    //
-                }
+                if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
 
-                if ( nk_checkbox_label(ctx, "Original DRAW Mode", &check4) ) {
-                    //
-                }
-
-                if ( nk_checkbox_label(ctx, "Sound", &check5) ) {
-                    //
-                }
-
-                if ( nk_checkbox_label(ctx, "Reset", &check6) ) {
-                    //
-                }
+                if ( nk_checkbox_label(ctx, "Sound", &sound_enabled) ) {}
 
                 // Split
                 nk_layout_row_dynamic(ctx, 1, 1);
                 nk_rule_horizontal(ctx, nk_gray, nk_true);
 
+                nk_layout_row_dynamic(ctx, 20, 1);
+                if (nk_menu_item_label(ctx, "Reset", NK_TEXT_LEFT)) {
+                    cpu_reset();
+                }
+
                 static const float ratio[] = {80, 120};
                 nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
                 nk_label(ctx, "CPU CLOCK:", NK_TEXT_LEFT);
-                nk_property_int(ctx, "Clock:", 60, &property_int, 2000, 10, 1);
+                nk_property_int(ctx, "Clock:", 60, (int *)&CPU_CLOCK, 2000, 10, 1);
                 
                 nk_menu_end(ctx);
             }
@@ -133,14 +174,13 @@ int menu(struct nk_context *ctx)
                 /* CHIP-8 Quirks */
                 if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) {
                 
-                    static int checkbox;
                     nk_layout_row_dynamic(ctx, 20, 2);
-                    nk_checkbox_label(ctx, "VF Reset", &checkbox);
-                    nk_checkbox_label(ctx, "Memory legacy", &checkbox);
-                    nk_checkbox_label(ctx, "Display Wait", &checkbox);
-                    nk_checkbox_label(ctx, "Clipping", &checkbox);
-                    nk_checkbox_label(ctx, "Shifting", &checkbox);
-                    nk_checkbox_label(ctx, "Jump with offset", &checkbox);
+                    nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3);
+                    nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_legacy_Fx55_Fx65);
+                    nk_checkbox_label(ctx, "Display Wait", &quirk_display_wait);
+                    nk_checkbox_label(ctx, "Clipping", &quirk_Clipping_Dxyn);
+                    nk_checkbox_label(ctx, "Shifting", &quirk_Shifting_legacy_8xy6_8xyE);
+                    nk_checkbox_label(ctx, "Jump with offset", &quirk_Jump_with_offset_Bnnn);
                     nk_tree_pop(ctx);
                 }
 
