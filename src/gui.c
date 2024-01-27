@@ -172,15 +172,9 @@ int menu(struct nk_context *ctx)
             if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) {
             
                 nk_layout_row_dynamic(ctx, 20, 2);
-                if ( nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3) ) {
-                    printf("CLICK!!!!\n");
-                    printf("VF Reset: %d\n", quirk_VF_Reset_8xy1_8xy2_8xy3);
-                }
+                nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3);
                 nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_legacy_Fx55_Fx65);
-                if ( nk_checkbox_label(ctx, "Display Wait", &quirk_display_wait) ) { 
-                    printf("CLICK!!!!\n");
-                    printf("Display wait: %d\n", quirk_display_wait);
-                }
+                nk_checkbox_label(ctx, "Display Wait", &quirk_display_wait);
                 nk_checkbox_label(ctx, "Clipping", &quirk_Clipping_Dxyn);
                 nk_checkbox_label(ctx, "Shifting", &quirk_Shifting_legacy_8xy6_8xyE);
                 nk_checkbox_label(ctx, "Jump with offset", &quirk_Jump_with_offset_Bnnn);

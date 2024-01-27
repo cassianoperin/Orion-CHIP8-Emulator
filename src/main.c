@@ -179,15 +179,14 @@ int main(int argc, char *argv[])
 			// Draw
 			display_draw(frame);
 
+		} else { // Ensure draw @60 when menu is being showed
+			if ( gui_show_menu ) {
+				// Draw
+				display_draw(frame);
+			}
+
 		}
 
-		// If original draw mode, if menu enabled, return to 60hz
-		if ( !quirk_display_wait && gui_show_menu ) {
-			// Draw
-			display_draw(frame);
-		}
-
-		// AI QUANDO VOLT PRO MENU, COM ROM CARREGDA, NAO RENDERIA o MENU
 
 
 		// --------------- CPU --------------- //
