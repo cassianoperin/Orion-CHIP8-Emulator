@@ -56,7 +56,7 @@ extern void display_update_theme(void);
 extern void cpu_reset(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
-bool show_menu; // Show Menu Flag
+bool gui_show_menu; // Show Menu Flag
 
 // -------------------------------------- Functions ------------------------------------- //
 void gui_init(void);

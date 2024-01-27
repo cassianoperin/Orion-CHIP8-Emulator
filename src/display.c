@@ -89,9 +89,19 @@ bool display_draw(unsigned int frame)
 	SDL_RenderPresent(renderer);
 
 	// Show Menu
-	if ( show_menu ) {
+	if ( gui_show_menu ) {
+		SDL_RenderSetVSync(renderer, 1);
 		menu(ctx);
+	} else {
+		if ( quirk_display_wait ) {
+			SDL_RenderSetVSync(renderer, 1);
+		} else {
+			SDL_RenderSetVSync(renderer, 0);
+		}
 	}
+
+
+
 	
 	// Draw to console
 	// draw_graphics_console();

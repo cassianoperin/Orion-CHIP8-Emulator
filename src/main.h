@@ -84,6 +84,7 @@ extern void sound_close(void);
 // GUI
 extern void gui_init(void);
 extern int menu(struct nk_context *ctx);
+extern bool gui_show_menu;
 
 // ---------------------------------- Global Constants ---------------------------------- //
 // NTSC: 60hz, PAL: 50HZ

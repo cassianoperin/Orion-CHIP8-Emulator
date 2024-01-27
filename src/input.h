@@ -34,7 +34,7 @@ extern unsigned int CPU_CLOCK;
 // Sound
 extern bool sound_enabled;
 // GUI
-extern bool show_menu;
+extern bool gui_show_menu;
 
 // --------------------------------- External Functions --------------------------------- //
 // CPU

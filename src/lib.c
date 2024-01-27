@@ -200,7 +200,7 @@ int gui_loadrom(void) {
         // puts(outPath);
 
 		// Hide Menu
-		show_menu = false;
+		gui_show_menu = false;
 
 		// Set the selected ROM
 		filename = outPath;
@@ -212,7 +212,7 @@ int gui_loadrom(void) {
 
     } else if (result == NFD_CANCEL) {
         // puts("User pressed cancel.");
-		show_menu = true;
+		gui_show_menu = true;
 
     } else {
         printf("NFD Error: %s\n", NFD_GetError());

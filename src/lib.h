@@ -19,7 +19,7 @@ extern unsigned int CPU_CLOCK;
 extern void cpu_reset(void);
 extern bool cpu_rom_loaded;
 // GUI
-extern bool show_menu;
+extern bool gui_show_menu;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks

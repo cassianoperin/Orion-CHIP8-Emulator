@@ -173,13 +173,22 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		// Draw screen (game and text messages)
+		// Draw screen @60hz
 		if ( quirk_display_wait ) {
 
 			// Draw
 			display_draw(frame);
 
 		}
+
+		// If original draw mode, if menu enabled, return to 60hz
+		if ( !quirk_display_wait && gui_show_menu ) {
+			// Draw
+			display_draw(frame);
+		}
+
+		// AI QUANDO VOLT PRO MENU, COM ROM CARREGDA, NAO RENDERIA o MENU
+
 
 		// --------------- CPU --------------- //
 		float opcodesPerFrame = (float)CPU_CLOCK / pal_freq;					// Opcodes per frame (float)

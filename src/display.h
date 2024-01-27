@@ -11,7 +11,7 @@ extern SDL_Renderer *renderer;
 extern SDL_Texture *texture;
 extern struct nk_context *ctx;
 // GUI
-extern bool show_menu;
+extern bool gui_show_menu;
 // Quirk
 extern bool quirk_display_wait;
 
