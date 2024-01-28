@@ -326,8 +326,11 @@ int status_bar(struct nk_context *ctx)
     {
         nk_menubar_begin(ctx);
 
+        
+
         nk_layout_row_dynamic(ctx, 15, 1);
-        nk_label_colored(ctx, "No ROM loaded.", NK_TEXT_LEFT, nk_gray);
+        // nk_label_colored(ctx, "No ROM loaded.", NK_TEXT_LEFT, nk_gray);
+        nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_LEFT, nk_gray);
         
         nk_menubar_end(ctx);        
     }
@@ -344,6 +347,9 @@ void gui_init(void)
 
     // Disable Quirks Menu until a rom is loaded
     gui_menu_quirks_inactive = true;
+
+    // Initialize msg string
+    strcpy(gui_statusbar_msg, "No ROM loaded.");
 
     ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */

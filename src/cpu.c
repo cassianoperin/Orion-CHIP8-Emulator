@@ -175,9 +175,10 @@ void cpu_interpreter(void) {
 
 						// 00FB (SCHIP)
 						case 0x00FB:
-							// opc_schip_00FB();
-								printf("Opcode 00FB not implemented yet\n");
-								exit(2);
+								// opc_schip_00FB();
+								// printf("Opcode 00FB not implemented yet\n");
+								// exit(2);
+								cpu_invalid_opcode(Opcode);
 							break;
 
 						// 00FC (SCHIP)
@@ -191,23 +192,26 @@ void cpu_interpreter(void) {
 							// // SCHIP Opcode
 							// } else {
 								// opc_schip_00FC();
-								printf("Opcode 00FC not implemented yet\n");
-								exit(2);
+								// printf("Opcode 00FC not implemented yet\n");
+								// exit(2);
+								cpu_invalid_opcode(Opcode);
 								break;
 							// }
 
 						// 00FD (SCHIP)
 						case 0x00FD:
 							// opc_schip_00FD();
-							printf("0x00FD not implemented yet\n");
-							exit(2);
+							// printf("0x00FD not implemented yet\n");
+							// exit(2);
+							cpu_invalid_opcode(Opcode);
 							break;
 
 						// 00FE (SCHIP)
 						case 0x00FE:
 							// opc_schip_00FE();
-							printf("0x00FE not implemented yet\n");
-							exit(2);
+							// printf("0x00FE not implemented yet\n");
+							// exit(2);
+							cpu_invalid_opcode(Opcode);
 							break;
 
 						// 00FF (SCHIP)
@@ -228,8 +232,9 @@ void cpu_interpreter(void) {
 							// }
 
 						default:
-							printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-							exit(0);
+							// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
+							// exit(0);
+							cpu_invalid_opcode(Opcode);
 					}
 
 					switch ( Opcode & 0x00F0 ){ //00N0
@@ -237,8 +242,9 @@ void cpu_interpreter(void) {
 						case 0x00C0:
 							// n := Opcode & 0x000F;
 							// opc_schip_00CN(n);
-							printf("00CN not implemented yet\n");
-							exit(2);
+							// printf("00CN not implemented yet\n");
+							// exit(2);
+							cpu_invalid_opcode(Opcode);
 
 							break;
 					}
@@ -265,8 +271,9 @@ void cpu_interpreter(void) {
 				break;
 
 				default:
-					printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					exit(0);
+					// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
+					// exit(0);
+					cpu_invalid_opcode(Opcode);
 			}
 			break;
 		
@@ -361,8 +368,9 @@ void cpu_interpreter(void) {
 					break;
 
 				default:
-					printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					exit(0);
+					// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
+					// exit(0);
+					cpu_invalid_opcode(Opcode);
 			}
 			break;
 		}
@@ -439,8 +447,7 @@ void cpu_interpreter(void) {
 					break;
 
 				default:
-					printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					exit(2);
+					cpu_invalid_opcode(Opcode);
 			}	
 
 			break;
@@ -488,8 +495,9 @@ void cpu_interpreter(void) {
 				// Fx30 (SCHIP)
 				case 0x0030:
 					// opc_schip_FX30(x);
-					printf("Opcode Fx30 not implemented yet!\n ");
-					exit(2); 
+					// printf("Opcode Fx30 not implemented yet!\n ");
+					// exit(2);
+					cpu_invalid_opcode(Opcode);
 					break;
 
 				// Fx33 (CHIP-8)
@@ -510,15 +518,17 @@ void cpu_interpreter(void) {
 				// FX75 (SCHIP)
 				case 0x0075:
 					// opc_schip_FX75(x);
-					printf("Opcode FX75 not implemented yet!\n ");
-					exit(2); 
+					// printf("Opcode FX75 not implemented yet!\n ");
+					// exit(2);
+					cpu_invalid_opcode(Opcode);
 					break;
 
 				// FX85 (SCHIP)
 				case 0x0085:
 					// opc_schip_FX85(x);
-					printf("Opcode FX85 not implemented yet!\n ");
-					exit(2); 
+					// printf("Opcode FX85 not implemented yet!\n ");
+					// exit(2);
+					cpu_invalid_opcode(Opcode);
 					break;
 
 				// // Fx00 (ETI-660)
@@ -527,14 +537,18 @@ void cpu_interpreter(void) {
 				// 	break;
 
 				default:
-					printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					exit(2);
+					// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
+					//     // strcpy(gui_statusbar_msg, "NOT IMPLEMENTED.");
+					// exit(2);
+					cpu_invalid_opcode(Opcode);	
 			}
 			break;
 		}
 
 		default :
-			printf ("Not implemented!\n");
+			// printf ("Not implemented!\n");
+			// exit(2);
+			cpu_invalid_opcode(Opcode);
   	}
 
 	// Print all opcode debug messages
@@ -542,4 +556,15 @@ void cpu_interpreter(void) {
 		printf("\t\t%s\n\n" , cpu_debug_message);
 	}
 
+}
+
+void cpu_invalid_opcode(unsigned short opc) {
+		char str[100];
+		sprintf(str, "Invalid ROM (Opcode 0x%04X not implemented.)", opc);
+		// printf("\t\tOpcode  NOT IMPLEMENTED!!!!\n", opc);
+		strcpy(gui_statusbar_msg, str);
+		cpu_rom_loaded = false;
+		quirk_display_wait = true;
+		gui_show_menu = true;
+		gui_menu_quirks_inactive = true;
 }

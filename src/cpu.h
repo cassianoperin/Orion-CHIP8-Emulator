@@ -33,6 +33,8 @@ extern char *game_signature;
 extern char *filename;
 // GUI
 extern bool gui_menu_quirks_inactive;
+extern char gui_statusbar_msg[100];
+extern bool gui_show_menu;
 
 // --------------------------------- External Functions --------------------------------- //
 // Lib
@@ -127,3 +129,4 @@ void cpu_load_fonts(void);
 void cpu_debug_print(void);
 void cpu_interpreter(void);
 void cpu_reset(void);
+void cpu_invalid_opcode(unsigned short opc);
