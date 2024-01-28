@@ -70,6 +70,145 @@ bool display_draw(unsigned int frame)
 	//Initialization flag
 	bool success = true;
 
+	// -------------------- LOGO --------------------//
+	// Letter O
+	// Line 1
+	display_pixels[776]  = display_pixel_ON_color;
+	display_pixels[777] = display_pixel_ON_color;
+	display_pixels[778]  = display_pixel_ON_color;
+	display_pixels[779]  = display_pixel_ON_color;
+	// Line 2
+	display_pixels[840]  = display_pixel_ON_color;
+	display_pixels[843]  = display_pixel_ON_color;
+	// Line 3
+	display_pixels[904]  = display_pixel_ON_color;
+	display_pixels[907]  = display_pixel_ON_color;
+	// Line 4
+	display_pixels[968]  = display_pixel_ON_color;
+	display_pixels[971]  = display_pixel_ON_color;
+	// Line 5
+	display_pixels[1032] = display_pixel_ON_color;
+	display_pixels[1035] = display_pixel_ON_color;
+	// Line 6
+	display_pixels[1096] = display_pixel_ON_color;
+	display_pixels[1099] = display_pixel_ON_color;
+	// Line 7
+	display_pixels[1160] = display_pixel_ON_color;
+	display_pixels[1163] = display_pixel_ON_color;
+	// Line 8
+	display_pixels[1224] = display_pixel_ON_color;
+	display_pixels[1225] = display_pixel_ON_color;
+	display_pixels[1226] = display_pixel_ON_color;
+	display_pixels[1227] = display_pixel_ON_color;
+
+	// Letter R
+	// Line 1
+	display_pixels[781]  = display_pixel_ON_color;
+	display_pixels[782]  = display_pixel_ON_color;
+	display_pixels[783]  = display_pixel_ON_color;
+	// Line 2
+	display_pixels[845]  = display_pixel_ON_color;
+	display_pixels[848]  = display_pixel_ON_color;
+	// Line 3
+	display_pixels[909]  = display_pixel_ON_color;
+	display_pixels[912]  = display_pixel_ON_color;
+	// Line 4
+	display_pixels[973]  = display_pixel_ON_color;
+	display_pixels[975]  = display_pixel_ON_color;
+	// Line 5
+	display_pixels[1037] = display_pixel_ON_color;
+	display_pixels[1038] = display_pixel_ON_color;
+	// Line 6
+	display_pixels[1101] = display_pixel_ON_color;
+	display_pixels[1103] = display_pixel_ON_color;
+	// Line 7
+	display_pixels[1165] = display_pixel_ON_color;
+	display_pixels[1168] = display_pixel_ON_color;
+	// Line 8
+	display_pixels[1229] = display_pixel_ON_color;
+	display_pixels[1232] = display_pixel_ON_color;
+
+	// Letter I
+	// Line 1
+	display_pixels[786]  = display_pixel_ON_color;
+	// Line 2
+	display_pixels[850]  = display_pixel_ON_color;
+	// Line 3
+	display_pixels[914]  = display_pixel_ON_color;
+	// Line 4
+	display_pixels[978]  = display_pixel_ON_color;
+	// Line 5
+	display_pixels[1042] = display_pixel_ON_color;
+	// Line 6
+	display_pixels[1106] = display_pixel_ON_color;
+	// Line 7
+	display_pixels[1170] = display_pixel_ON_color;
+	// Line 8
+	display_pixels[1234] = display_pixel_ON_color;
+
+	// Letter O
+	// Line 1
+	display_pixels[788]  = display_pixel_ON_color;
+	display_pixels[789] = display_pixel_ON_color;
+	display_pixels[790]  = display_pixel_ON_color;
+	display_pixels[791]  = display_pixel_ON_color;
+	// Line 2
+	display_pixels[852]  = display_pixel_ON_color;
+	display_pixels[855]  = display_pixel_ON_color;
+	// Line 3
+	display_pixels[916]  = display_pixel_ON_color;
+	display_pixels[919]  = display_pixel_ON_color;
+	// Line 4
+	display_pixels[980]  = display_pixel_ON_color;
+	display_pixels[983]  = display_pixel_ON_color;
+	// Line 5
+	display_pixels[1044] = display_pixel_ON_color;
+	display_pixels[1047] = display_pixel_ON_color;
+	// Line 6
+	display_pixels[1108] = display_pixel_ON_color;
+	display_pixels[1111] = display_pixel_ON_color;
+	// Line 7
+	display_pixels[1172] = display_pixel_ON_color;
+	display_pixels[1175] = display_pixel_ON_color;
+	// Line 8
+	display_pixels[1236] = display_pixel_ON_color;
+	display_pixels[1237] = display_pixel_ON_color;
+	display_pixels[1238] = display_pixel_ON_color;
+	display_pixels[1239] = display_pixel_ON_color;
+
+	// Letter N
+	// Line 1
+	display_pixels[793]  = display_pixel_ON_color;
+	display_pixels[797] = display_pixel_ON_color;
+	// Line 2
+	display_pixels[857]  = display_pixel_ON_color;
+	display_pixels[858]  = display_pixel_ON_color;
+	display_pixels[861]  = display_pixel_ON_color;
+	// Line 3
+	display_pixels[921]  = display_pixel_ON_color;
+	display_pixels[922]  = display_pixel_ON_color;
+	display_pixels[925]  = display_pixel_ON_color;
+	// Line 4
+	display_pixels[985]  = display_pixel_ON_color;
+	display_pixels[987]  = display_pixel_ON_color;
+	display_pixels[989]  = display_pixel_ON_color;
+	// Line 5
+	display_pixels[1049] = display_pixel_ON_color;
+	display_pixels[1051] = display_pixel_ON_color;
+	display_pixels[1053] = display_pixel_ON_color;
+	// Line 6
+	display_pixels[1113] = display_pixel_ON_color;
+	display_pixels[1116] = display_pixel_ON_color;
+	display_pixels[1117] = display_pixel_ON_color;
+	// Line 7
+	display_pixels[1177] = display_pixel_ON_color;
+	display_pixels[1180] = display_pixel_ON_color;
+	display_pixels[1181] = display_pixel_ON_color;
+	// Line 8
+	display_pixels[1241] = display_pixel_ON_color;
+	display_pixels[1245] = display_pixel_ON_color;
+
+
 	// Increment total frame counter
 	frame ++;
 
@@ -101,9 +240,6 @@ bool display_draw(unsigned int frame)
 			SDL_RenderSetVSync(renderer, 0);
 		}
 	}
-
-
-
 	
 	// Draw to console
 	// draw_graphics_console();
@@ -183,6 +319,7 @@ void draw_graphics_console(void) {
 
 	// Space between screens
 	printf("\n\n\n");
+
 }
 
 void display_updateWindowSize(unsigned int pixel_scale)
