@@ -27,7 +27,7 @@ bool display_init(void)
 	{
 		// Create window
 		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI );
-		window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN );
+		window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if( window == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -181,4 +181,9 @@ void draw_graphics_console(void) {
 
 	// Space between screens
 	printf("\n\n\n");
+}
+
+void display_updateWindowSize(unsigned int pixel_scale)
+{
+	SDL_SetWindowSize(window, display_SCREEN_WIDTH_X * pixel_scale , display_SCREEN_HEIGHT_Y * pixel_scale);
 }

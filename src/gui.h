@@ -28,7 +28,6 @@ extern SDL_Texture  *texture;
 extern struct nk_context *ctx;
 extern float font_scale; // GUI Font
 // CPU
-extern bool cpu_pause;
 extern bool cpu_debug_mode;
 extern unsigned int CPU_CLOCK;
 // Sound
@@ -36,7 +35,7 @@ extern bool sound_enabled;
 // Display
 extern unsigned char display_SCREEN_WIDTH_X;
 extern unsigned char display_SCREEN_HEIGHT_Y;
-extern unsigned char display_SCALE;
+extern unsigned int display_SCALE;
 extern unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
 extern unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
 // Quirks
@@ -52,12 +51,15 @@ extern bool quirk_Jump_with_offset_Bnnn;
 extern int gui_loadrom(void);
 // Display
 extern void display_update_theme(void);
+extern void display_updateWindowSize(unsigned int pixel_scale);
 // CPU
 extern void cpu_reset(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool gui_show_menu; // Show Menu Flag
+bool gui_menu_quirks_inactive; // Enable/Disable Quirks Menu
 
 // -------------------------------------- Functions ------------------------------------- //
 void gui_init(void);
 int menu(struct nk_context *ctx);
+

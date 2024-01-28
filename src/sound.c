@@ -20,6 +20,9 @@ void audio_callback(void *userdata, uint8_t *stream, int len)
 
 void sound_init(void)
 {
+    // Sound
+	sound_enabled = true;
+
     // Initialize Varibles;
     sound_enabled = true;
 	playing_sound = false;

@@ -22,7 +22,7 @@ extern int menu(struct nk_context *ctx);
 // Display (Screen size)
 unsigned char display_SCREEN_WIDTH_X;
 unsigned char display_SCREEN_HEIGHT_Y;
-unsigned char display_SCALE;
+unsigned int display_SCALE;
 // Colors
 unsigned int  display_pixel_ON_color;
 unsigned int  display_pixel_OFF_color;
@@ -46,3 +46,4 @@ bool display_draw(unsigned int frame);
 void SDL_close(void);
 void display_update_theme(void);
 void draw_graphics_console(void);
+void display_updateWindowSize(unsigned int pixel_scale);

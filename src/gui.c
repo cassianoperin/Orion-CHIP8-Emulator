@@ -16,7 +16,7 @@ int menu(struct nk_context *ctx)
     actual_window_flags = window_flags;
     if (!(actual_window_flags & NK_WINDOW_TITLE))
         actual_window_flags &= ~(NK_WINDOW_MINIMIZABLE|NK_WINDOW_CLOSABLE);
-    if (nk_begin(ctx, "Overview", nk_rect(0, 0, 1200, 36), actual_window_flags))
+    if (nk_begin(ctx, "Overview", nk_rect(0, 0, display_SCREEN_WIDTH_X * display_SCALE, 35), actual_window_flags))
     {
         nk_menubar_begin(ctx);
 
@@ -44,20 +44,21 @@ int menu(struct nk_context *ctx)
 
         // ------------------------------------- Menu VIEW -------------------------------------- //
         nk_layout_row_push(ctx, 45);
-        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(220, 200)))
+        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(180, 220)))
         {
 
             if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
             {
                 static int option;
 
-                nk_layout_row_static(ctx, 30, 80, 2);
-                option = nk_option_label(ctx, "Theme 1", option == 0) ? 0 : option;
-                option = nk_option_label(ctx, "Theme 2", option == 1) ? 1 : option;
-                option = nk_option_label(ctx, "Theme 3", option == 2) ? 2 : option;
-                option = nk_option_label(ctx, "Theme 4", option == 3) ? 3 : option;
-                option = nk_option_label(ctx, "Theme 5", option == 4) ? 4 : option;
-                option = nk_option_label(ctx, "Theme 6", option == 5) ? 5 : option;
+                // nk_layout_row_static(ctx, 30, 80, 2);
+                nk_layout_row_static(ctx, 20, 160, 1);
+                option = nk_option_label(ctx, "1: Black and White", option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: White and Black", option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "3: Gray and Blue", option == 2) ? 2 : option;
+                option = nk_option_label(ctx, "4: Gray and Green", option == 3) ? 3 : option;
+                option = nk_option_label(ctx, "5: Black and Yellow", option == 4) ? 4 : option;
+                option = nk_option_label(ctx, "6: Gray and Pink", option == 5) ? 5 : option;
 
                 switch( option )
                 {
@@ -124,6 +125,16 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
+            static const float ratio[] = {80, 80};
+            int initial_scale_value = display_SCALE;
+            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+            nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
+            nk_property_int(ctx, "", 10, (int *)&display_SCALE, 40, 5, 1);
+            // Check if the scale was changed and update the window size
+            if ( initial_scale_value != display_SCALE) {
+                display_updateWindowSize(display_SCALE);
+            }
+
             if (nk_menu_item_label(ctx, "Fullscreen", NK_TEXT_LEFT)) {
                 // printf("Exiting (from GUI)\n");
                 // quit = true;
@@ -138,8 +149,6 @@ int menu(struct nk_context *ctx)
         {
             nk_layout_row_dynamic(ctx, 20, 1);
             if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
-
-            if ( nk_checkbox_label(ctx, "Pause", &cpu_pause) ) {}
 
             if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
 
@@ -163,14 +172,17 @@ int menu(struct nk_context *ctx)
         }
 
         // ------------------------------------ Menu QUIRKS ------------------------------------- //
-                    
+                                 
         nk_layout_row_push(ctx, 55);
         if (nk_menu_begin_label(ctx, "Quirks", NK_TEXT_LEFT, nk_vec2(320, 200)))
         {
+            // Disable Quirks menu before rom loading
+            if ( gui_menu_quirks_inactive ) {
+                nk_widget_disable_begin(ctx);
+            }
 
             /* CHIP-8 Quirks */
-            if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) {
-            
+            if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) { 
                 nk_layout_row_dynamic(ctx, 20, 2);
                 nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3);
                 nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_legacy_Fx55_Fx65);
@@ -180,6 +192,8 @@ int menu(struct nk_context *ctx)
                 nk_checkbox_label(ctx, "Jump with offset", &quirk_Jump_with_offset_Bnnn);
                 nk_tree_pop(ctx);
             }
+
+            nk_widget_disable_end(ctx);
 
             nk_menu_end(ctx);
         }
@@ -284,6 +298,9 @@ void gui_init(void)
 {
     // Show Menu
     gui_show_menu = true;
+
+    // Disable Quirks Menu until a rom is loaded
+    gui_menu_quirks_inactive = true;
 
     ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */

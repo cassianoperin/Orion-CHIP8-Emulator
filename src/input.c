@@ -131,6 +131,21 @@ void input_keyboard(void) {
 						printf("Pause: DISABLED\n");
 					}
 
+						// display_pixel_ON_color_alt	= 0xFFF08080;
+                        // display_pixel_OFF_color_alt	= 0xFF1C1C1C;
+
+                        // display_update_theme();
+
+					// cpu_pause = !cpu_pause;
+
+					// if (cpu_pause ) {
+					// 	printf("Pause: ENABLED\n");
+					// 	gui_show_menu = true;
+					// } else {
+					// 	printf("Pause: DISABLED\n");
+					// 	gui_show_menu = false;
+					// }
+
 					break;
 
 				// Sound

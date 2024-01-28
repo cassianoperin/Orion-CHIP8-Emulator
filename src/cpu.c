@@ -89,11 +89,11 @@ void cpu_initialize(void) {
 	// Initialize random generator
 	srand(time(NULL));
 
-	// Sound
-	sound_enabled = true;
+	// GUI
+	gui_menu_quirks_inactive = false; // Enable Quirks menu
 
 	// Debug
-	cpu_debug_mode	= false;
+	// cpu_debug_mode	= false;
 	cpu_pause		= false;
 }
 

@@ -31,8 +31,8 @@ extern bool quirk_display_wait;
 // Main
 extern char *game_signature;
 extern char *filename;
-// Sound
-extern bool sound_enabled;
+// GUI
+extern bool gui_menu_quirks_inactive;
 
 // --------------------------------- External Functions --------------------------------- //
 // Lib

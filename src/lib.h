@@ -20,6 +20,7 @@ extern void cpu_reset(void);
 extern bool cpu_rom_loaded;
 // GUI
 extern bool gui_show_menu;
+extern bool gui_menu_quirks_inactive;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks

@@ -137,6 +137,10 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 		// Tell CPU to start running the interpreter
 		cpu_rom_loaded = true;
 
+		// Enable the quirk menu
+		gui_menu_quirks_inactive = false;
+		
+
 		// // Print Buffer (rom)
 		// printf("Buffer (rom):\n");
 		// for( int i = 0 ; i < rom_size ; i++ ) {
