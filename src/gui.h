@@ -63,4 +63,5 @@ bool gui_menu_quirks_inactive; // Enable/Disable Quirks Menu
 // -------------------------------------- Functions ------------------------------------- //
 void gui_init(void);
 int menu(struct nk_context *ctx);
+int status_bar(struct nk_context *ctx);
 

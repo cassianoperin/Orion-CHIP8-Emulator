@@ -16,7 +16,9 @@ extern bool gui_show_menu;
 extern bool quirk_display_wait;
 
 // --------------------------------- External Functions --------------------------------- //
+// Display
 extern int menu(struct nk_context *ctx);
+extern int status_bar(struct nk_context *ctx);
 
 // // ---------------------------------- Global Variables ---------------------------------- //
 // Display (Screen size)

@@ -138,26 +138,24 @@ int menu(struct nk_context *ctx)
             // Check if the scale was changed and update the window size
             if ( initial_scale_value != display_SCALE) {
                 display_updateWindowSize(display_SCALE);
+                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
             }
 
             nk_widget_disable_end(ctx);
 
             if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
 
-					// display_fullscreen = !display_fullscreen;
-
-					if ( display_fullscreen ) {
-						display_SCALE = 20; // To ensure that will fill entire screen
-						display_updateWindowSize(display_SCALE);
-						SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-						
-					} else {
-						display_SCALE = 10; // To ensure that will fill entire screen
-						display_updateWindowSize(display_SCALE);
-						SDL_SetWindowFullscreen(window, 0);
-						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-					}
-
+                if ( display_fullscreen ) {
+                    display_SCALE = 20; // To ensure that will fill entire screen
+                    display_updateWindowSize(display_SCALE);
+                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+                    
+                } else {
+                    display_SCALE = 10; // To ensure that will fill entire screen
+                    display_updateWindowSize(display_SCALE);
+                    SDL_SetWindowFullscreen(window, 0);
+                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                }
 
             }
 
@@ -312,6 +310,30 @@ int menu(struct nk_context *ctx)
 
     nk_end(ctx);
     return !nk_window_is_closed(ctx, "Overview");
+}
+
+int status_bar(struct nk_context *ctx)
+{
+    static nk_flags window_flags = NK_WINDOW_NO_SCROLLBAR;
+
+    int windows_x_size = 0;
+    int windows_y_size = 0;
+
+    // Get the window size to add the status bar correctly on the botton
+	SDL_GetWindowSize(window,&windows_x_size,&windows_y_size);
+
+    if (nk_begin(ctx, "StatusBar", nk_rect(0, windows_y_size -25, windows_x_size, 25), window_flags))
+    {
+        nk_menubar_begin(ctx);
+
+        nk_layout_row_dynamic(ctx, 15, 1);
+        nk_label_colored(ctx, "No ROM loaded.", NK_TEXT_LEFT, nk_gray);
+        
+        nk_menubar_end(ctx);        
+    }
+
+    nk_end(ctx);
+    return !nk_window_is_closed(ctx, "StatusBar");
 }
 
 
