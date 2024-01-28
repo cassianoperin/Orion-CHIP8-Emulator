@@ -44,14 +44,13 @@ int menu(struct nk_context *ctx)
 
         // ------------------------------------- Menu VIEW -------------------------------------- //
         nk_layout_row_push(ctx, 45);
-        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(180, 220)))
+        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(190, 220)))
         {
 
             if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
             {
                 static int option;
 
-                // nk_layout_row_static(ctx, 30, 80, 2);
                 nk_layout_row_static(ctx, 20, 160, 1);
                 option = nk_option_label(ctx, "1: Black and White", option == 0) ? 0 : option;
                 option = nk_option_label(ctx, "2: White and Black", option == 1) ? 1 : option;
@@ -125,7 +124,13 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
-            static const float ratio[] = {80, 80};
+
+            // Disable Pixel Scale menu before rom loading
+            if ( display_fullscreen ) {
+                nk_widget_disable_begin(ctx);
+            }
+
+            static const float ratio[] = {100, 80};
             int initial_scale_value = display_SCALE;
             nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
             nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
@@ -135,9 +140,25 @@ int menu(struct nk_context *ctx)
                 display_updateWindowSize(display_SCALE);
             }
 
-            if (nk_menu_item_label(ctx, "Fullscreen", NK_TEXT_LEFT)) {
-                // printf("Exiting (from GUI)\n");
-                // quit = true;
+            nk_widget_disable_end(ctx);
+
+            if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
+
+					// display_fullscreen = !display_fullscreen;
+
+					if ( display_fullscreen ) {
+						display_SCALE = 20; // To ensure that will fill entire screen
+						display_updateWindowSize(display_SCALE);
+						SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+						
+					} else {
+						display_SCALE = 10; // To ensure that will fill entire screen
+						display_updateWindowSize(display_SCALE);
+						SDL_SetWindowFullscreen(window, 0);
+						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+					}
+
+
             }
 
             nk_menu_end(ctx);

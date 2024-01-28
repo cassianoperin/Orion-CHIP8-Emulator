@@ -170,7 +170,7 @@ void input_keyboard(void) {
 
 					break;
 
-				// Step Forward
+				// Show Menu
 				case SDLK_g:
 					gui_show_menu = !gui_show_menu;
 
@@ -180,6 +180,25 @@ void input_keyboard(void) {
 					} else {
 						printf("Menu DISABLED\n");
 						cpu_pause = false;
+					}
+
+					break;	
+				
+				// Fullscreen
+				case SDLK_RIGHTBRACKET:
+					
+					display_fullscreen = !display_fullscreen;
+
+					if ( display_fullscreen ) {
+						display_SCALE = 20; // To ensure that will fill entire screen
+						display_updateWindowSize(display_SCALE);
+						SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+						
+					} else {
+						display_SCALE = 10; // To ensure that will fill entire screen
+						display_updateWindowSize(display_SCALE);
+						SDL_SetWindowFullscreen(window, 0);
+						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 					}
 
 					break;	

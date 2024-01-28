@@ -38,6 +38,7 @@ extern unsigned char display_SCREEN_HEIGHT_Y;
 extern unsigned int display_SCALE;
 extern unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
 extern unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
+extern bool display_fullscreen;
 // Quirks
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_Memory_legacy_Fx55_Fx65;

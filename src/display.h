@@ -23,6 +23,7 @@ extern int menu(struct nk_context *ctx);
 unsigned char display_SCREEN_WIDTH_X;
 unsigned char display_SCREEN_HEIGHT_Y;
 unsigned int display_SCALE;
+bool display_fullscreen;
 // Colors
 unsigned int  display_pixel_ON_color;
 unsigned int  display_pixel_OFF_color;
