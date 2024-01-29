@@ -560,7 +560,7 @@ void cpu_interpreter(void) {
 
 void cpu_invalid_opcode(unsigned short opc) {
 		char str[100];
-		sprintf(str, "Invalid ROM (Opcode 0x%04X not implemented.)", opc);
+		sprintf(str, "Invalid ROM (Opcode 0x%04X not existent or not implemented.)", opc);
 		strcpy(gui_statusbar_msg, str);
 		cpu_rom_loaded = false;
 		quirk_display_wait = true;

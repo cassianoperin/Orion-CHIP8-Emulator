@@ -16,6 +16,7 @@ extern unsigned char display_FPS;
 extern unsigned char Memory[4096];
 extern unsigned int  display_pixels[8192];
 extern unsigned int  display_pixel_ON_color;
+// extern unsigned int frame;
 // CPU
 extern unsigned int CPU_CLOCK;
 extern void cpu_reset(void);
@@ -26,6 +27,11 @@ extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[100];
 // Font
 extern const int font_logo[165];
+
+// --------------------------------- External Functions --------------------------------- //
+// Display
+extern bool display_draw(void);
+
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks
@@ -63,7 +69,7 @@ uint8_t strContains(char* string, char* toFind);
 void print_bin(unsigned char value);
 
 // File Open Dialog
-int gui_loadrom(void);
+int lib_gui_loadrom(void);
 
 // Show Logo
 void showLogo(void);

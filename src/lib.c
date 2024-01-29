@@ -186,7 +186,7 @@ char *get_game_signature(char *filename) {
 	return signature;
 }
 
-int gui_loadrom(void) {
+int lib_gui_loadrom(void) {
     // initialize NFD
     // either call NFD_Init at the start of your program and NFD_Quit at the end of your program,
     // or before/after every time you want to show a file dialog.
@@ -213,8 +213,13 @@ int gui_loadrom(void) {
 
 		// Update StatusBar message
 		char str[100];
-		sprintf(str, "Game loaded: %s", filename);
+		sprintf(str, "ROM loaded.");
 		strcpy(gui_statusbar_msg, str);
+
+		// Draw to ensure that the menu will be updated
+		// When quirk_display_wait is disables, because some games
+		// don't call the draw instruction in some ocasions
+		display_draw();
 
         // remember to free the memory (since NFD_OKAY is returned)
         // NFD_FreePath(outPath);

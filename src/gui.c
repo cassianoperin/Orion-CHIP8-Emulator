@@ -30,7 +30,7 @@ int menu(struct nk_context *ctx)
         {
             nk_layout_row_dynamic(ctx, 25, 1);
             if (nk_menu_item_label(ctx, "Load ROM", NK_TEXT_LEFT)) {
-                gui_loadrom();
+                lib_gui_loadrom();
             }
 
             if (nk_menu_item_label(ctx, "Exit", NK_TEXT_LEFT)) {
@@ -327,7 +327,8 @@ int status_bar(struct nk_context *ctx)
         nk_menubar_begin(ctx);
         
         nk_layout_row_dynamic(ctx, 15, 1);
-        nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_LEFT, nk_gray);
+        nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_gray);
+        // nk_label(ctx, gui_statusbar_msg, NK_TEXT_CENTERED);
         
         nk_menubar_end(ctx);        
     }

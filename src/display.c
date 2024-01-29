@@ -65,7 +65,7 @@ bool display_init(void)
 }
 
 
-bool display_draw(unsigned int frame)
+bool display_draw(void)
 {
 	//Initialization flag
 	bool success = true;
@@ -75,19 +75,6 @@ bool display_draw(unsigned int frame)
 
 	// Increment Frame Counter for FPS
 	frame_counter++;
-
-	// Update the Screen
-	SDL_UpdateTexture(texture, NULL, display_pixels, display_SCREEN_WIDTH_X * sizeof(uint32_t));
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	// SDL_RenderPresent(renderer);
-
-	// Draw GUI
-	// SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
-	// SDL_RenderClear(renderer);
-	nk_sdl_render(NK_ANTI_ALIASING_ON);
-
-	// Draw
-	SDL_RenderPresent(renderer);
 
 	// Show Menu
 	if ( gui_show_menu ) {
@@ -101,6 +88,35 @@ bool display_draw(unsigned int frame)
 			SDL_RenderSetVSync(renderer, 0);
 		}
 	}
+
+	// Update the Screen
+	SDL_UpdateTexture(texture, NULL, display_pixels, display_SCREEN_WIDTH_X * sizeof(uint32_t));
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	// SDL_RenderPresent(renderer);
+
+	// Draw GUI
+	// SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
+	// SDL_RenderClear(renderer);
+	nk_sdl_render(NK_ANTI_ALIASING_ON);
+
+	// // Draw
+	// SDL_RenderPresent(renderer);
+
+	// // Show Menu
+	// if ( gui_show_menu ) {
+	// 	SDL_RenderSetVSync(renderer, 1);
+	// 	menu(ctx);
+	// 	status_bar(ctx);
+	// } else {
+	// 	if ( quirk_display_wait ) {
+	// 		SDL_RenderSetVSync(renderer, 1);
+	// 	} else {
+	// 		SDL_RenderSetVSync(renderer, 0);
+	// 	}
+	// }
+
+	// Draw
+	SDL_RenderPresent(renderer);
 	
 	// Draw to console
 	// draw_graphics_console();

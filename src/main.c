@@ -91,37 +91,13 @@ int main(int argc, char *argv[])
 			sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, pal_freq, timeFrameDurationSum);
 			SDL_SetWindowTitle(window, title_msg);
 
-			// if ( msg_emuinfo ) {
-			// 	// -------- Message slot 1 -------- //
-			// 	showCPS(cycle_counter); 	// Update string_msg1	
-			// 	font_update_msg1(renderer);
-
-			// 	// -------- Message slot 2 -------- //
-			// 	showCPU_CPS(cycle_counter_cpu);
-			// 	font_update_msg2(renderer);
-
-			// 	// -------- Message slot 3 -------- //
-			// 	showFPS(frame_counter);
-			// 	font_update_msg3(renderer);
-			// }
-
-			// // Message slot 4 timer
-			// // if ( !cpu_pause) {
-			// 	if ( message_slot4_timer > 0 ) {
-			// 		message_slot4_timer --;
-
-			// 		// When reach zero, clear
-			// 		if ( message_slot4_timer == 0 ) {
-			// 			// strcpy(string_msg4, "");
-			// 		}
-			// 	}	
-			// // }
 
 			// --------- Reset Counters ---------- //
 			// Main cycle
 			cycle_counter = 0;
 			// Frame
 			frame = 0;
+			// Clean the frame_counter
 			frame_counter = 0;
 			timeFrameDurationSum = 0;
 			// CPU
@@ -177,16 +153,15 @@ int main(int argc, char *argv[])
 		if ( quirk_display_wait ) {
 
 			// Draw
-			display_draw(frame);
+			display_draw();
 
 		} else { // Ensure draw @60 when menu is being showed
 			if ( gui_show_menu ) {
 				// Draw
-				display_draw(frame);
+				display_draw();
 			}
 
 		}
-
 
 
 		// --------------- CPU --------------- //
@@ -210,7 +185,7 @@ int main(int argc, char *argv[])
 				if ( !quirk_display_wait ) {
 					if ( cpu_draw_flag ) {
 						// Draw
-						display_draw(frame);
+						display_draw();
 						// Reset the draw flag
 						cpu_draw_flag = false;
 					}
@@ -227,7 +202,7 @@ int main(int argc, char *argv[])
 					if ( !quirk_display_wait ) {
 						if ( cpu_draw_flag ) {
 							// Draw
-							display_draw(frame);
+							display_draw();
 							// Reset the draw flag
 							cpu_draw_flag = false;
 						}

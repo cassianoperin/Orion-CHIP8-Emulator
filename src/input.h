@@ -11,7 +11,6 @@ extern bool quit;
 extern SDL_Window *window;
 // extern SDL_Renderer *renderer;
 // extern SDL_Texture *texture;
-// extern unsigned int cycle_counter;
 extern const int pal_freq;
 // Display
 extern unsigned int display_pixel_ON_color;
@@ -22,9 +21,8 @@ extern unsigned int display_pixel_ON_color_tmp;
 extern unsigned int display_pixel_OFF_color_tmp;
 extern bool display_fullscreen;
 extern unsigned int display_SCALE;
-// extern unsigned int  display_pixels[8192]; 
 extern unsigned char display_color_theme;
-// extern unsigned int  frame_counter;
+// extern unsigned int frame;
 // Lib
 extern char *game_signature;
 // CPU
@@ -32,14 +30,12 @@ extern unsigned char   Key[];
 extern bool cpu_pause;
 extern bool cpu_debug_mode;
 extern bool cpu_rom_loaded;
-// extern unsigned int    cycle_counter_cpu;
 extern unsigned int CPU_CLOCK;
-// // Font
-// extern bool msg_emuinfo;
 // Sound
 extern bool sound_enabled;
 // GUI
 extern bool gui_show_menu;
+extern char gui_statusbar_msg[100];
 
 // --------------------------------- External Functions --------------------------------- //
 // CPU
@@ -48,6 +44,7 @@ extern void cpu_interpreter(void);
 // Display
 extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
+extern bool display_draw(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool            input_remap_flag;

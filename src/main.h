@@ -43,8 +43,6 @@ extern unsigned int             frame_counter;
 extern SDL_AudioDeviceID        audio_device_id;
 extern bool                     playing_sound;
 extern bool                     sound_enabled;
-// // Font
-// extern bool                     msg_emuinfo;
 // Quirks
 extern bool                     quirk_display_wait;
 
@@ -76,7 +74,7 @@ extern void input_keyboard(void);
 // extern void input_keyboard_remaps(void);
 // Display
 extern bool display_init(void);
-extern bool display_draw(unsigned int frame);
+extern bool display_draw(void);
 extern void SDL_close(void);
 // Audio
 extern void sound_init(void);

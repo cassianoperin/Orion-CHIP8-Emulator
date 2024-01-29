@@ -49,7 +49,7 @@ extern bool quirk_Jump_with_offset_Bnnn;
 
 // --------------------------------- External Functions --------------------------------- //
 // NFD Extended
-extern int gui_loadrom(void);
+extern int lib_gui_loadrom(void);
 // Display
 extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);

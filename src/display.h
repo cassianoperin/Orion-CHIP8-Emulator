@@ -48,7 +48,7 @@ unsigned int frame_counter = 0;              // Frame per second
 
 // -------------------------------------- Functions ------------------------------------- //
 bool display_init(void);
-bool display_draw(unsigned int frame);
+bool display_draw(void);
 void SDL_close(void);
 void display_update_theme(void);
 void draw_graphics_console(void);

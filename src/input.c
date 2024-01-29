@@ -140,6 +140,11 @@ void input_keyboard(void) {
 							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
 							display_update_theme();
 						}
+
+						// Draw to ensure that the menu will be updated
+						// When quirk_display_wait is disables, because some games
+						// don't call the draw instruction in some ocasions
+						display_draw();
 					}
 
 					break;
@@ -340,14 +345,26 @@ void input_keyboard(void) {
 							display_pixel_ON_color_alt	= 0xFFf2f2f2;
 							display_pixel_OFF_color_alt	= 0xFFcccccc;
 							display_update_theme();
+							// Update the status bar message
+							char str[100];
+							sprintf(str, "PAUSED!");
+							strcpy(gui_statusbar_msg, str);
 						} else {
 							// Return the original Theme
 							display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
 							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
 							display_update_theme();
+							// Update the status bar message
+							char str[100];
+							sprintf(str, "ROM loaded.");
+							strcpy(gui_statusbar_msg, str);
 						}
+
+						// Draw to ensure that the menu will be updated
+						// When quirk_display_wait is disables, because some games
+						// don't call the draw instruction in some ocasions
+						display_draw();
 					}
-					
 					
 					break;
 			}
