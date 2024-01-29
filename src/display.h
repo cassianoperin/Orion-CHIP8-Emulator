@@ -15,8 +15,6 @@ extern bool gui_show_menu;
 // Quirk
 extern bool quirk_display_wait;
 
-extern const int font_logo[165];
-
 // --------------------------------- External Functions --------------------------------- //
 // Display
 extern int menu(struct nk_context *ctx);
@@ -34,6 +32,9 @@ unsigned int  display_pixel_OFF_color;
 unsigned char display_color_theme;          // Theme number
 unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
 unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
+unsigned int  display_pixel_ON_color_tmp;   // keep the theme color on pause
+unsigned int  display_pixel_OFF_color_tmp;  // keep the theme color on pause
+
 // Display Array
 // unsigned int  display_pixels[2048];
 unsigned int  display_pixels[8192];

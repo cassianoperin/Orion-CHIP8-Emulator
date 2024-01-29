@@ -377,4 +377,7 @@ void gui_init(void)
         /*nk_style_load_all_cursors(ctx, atlas->cursors);*/
         nk_style_set_font(ctx, &font->handle);
     }
+
+    // Load the emulator Logo
+    showLogo();
 }

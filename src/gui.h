@@ -55,6 +55,8 @@ extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
 // CPU
 extern void cpu_reset(void);
+// Font
+extern void showLogo(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool gui_show_menu; // Show Menu Flag

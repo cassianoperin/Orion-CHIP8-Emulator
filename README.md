@@ -13,3 +13,4 @@ Port of chip8 emulator to use nuklear GUI.
 
 7) Atualizar o nuklear a framework pra ver se para de sumir o mouse quando aumenta o clock
 8) Quando aperta a primeira tecla está travando
+9) ESC ta pausando no menu inicial (trava menu)

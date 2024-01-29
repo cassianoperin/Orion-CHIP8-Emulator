@@ -13,11 +13,13 @@ extern SDL_Window *window;
 // extern SDL_Texture *texture;
 // extern unsigned int cycle_counter;
 extern const int pal_freq;
-// // Display
-extern unsigned int  display_pixel_ON_color;
-extern unsigned int  display_pixel_OFF_color;
-extern unsigned int  display_pixel_ON_color_alt;
-extern unsigned int  display_pixel_OFF_color_alt;
+// Display
+extern unsigned int display_pixel_ON_color;
+extern unsigned int display_pixel_OFF_color;
+extern unsigned int display_pixel_ON_color_alt;
+extern unsigned int display_pixel_OFF_color_alt;
+extern unsigned int display_pixel_ON_color_tmp;
+extern unsigned int display_pixel_OFF_color_tmp;
 extern bool display_fullscreen;
 extern unsigned int display_SCALE;
 // extern unsigned int  display_pixels[8192]; 

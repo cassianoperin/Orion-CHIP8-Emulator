@@ -567,4 +567,5 @@ void cpu_invalid_opcode(unsigned short opc) {
 		quirk_display_wait = true;
 		gui_show_menu = true;
 		gui_menu_quirks_inactive = true;
+
 }

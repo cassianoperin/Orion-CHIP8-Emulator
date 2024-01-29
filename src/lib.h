@@ -14,6 +14,8 @@ extern char *filename;
 // Display
 extern unsigned char display_FPS;
 extern unsigned char Memory[4096];
+extern unsigned int  display_pixels[8192];
+extern unsigned int  display_pixel_ON_color;
 // CPU
 extern unsigned int CPU_CLOCK;
 extern void cpu_reset(void);
@@ -21,6 +23,8 @@ extern bool cpu_rom_loaded;
 // GUI
 extern bool gui_show_menu;
 extern bool gui_menu_quirks_inactive;
+// Font
+extern const int font_logo[165];
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks
@@ -59,3 +63,6 @@ void print_bin(unsigned char value);
 
 // File Open Dialog
 int gui_loadrom(void);
+
+// Show Logo
+void showLogo(void);
