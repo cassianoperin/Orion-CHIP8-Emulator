@@ -15,6 +15,8 @@ extern bool gui_show_menu;
 // Quirk
 extern bool quirk_display_wait;
 
+extern const int font_logo[165];
+
 // --------------------------------- External Functions --------------------------------- //
 // Display
 extern int menu(struct nk_context *ctx);
