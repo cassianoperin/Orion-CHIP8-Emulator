@@ -31,6 +31,7 @@ extern char *game_signature;
 extern unsigned char   Key[];
 extern bool cpu_pause;
 extern bool cpu_debug_mode;
+extern bool cpu_rom_loaded;
 // extern unsigned int    cycle_counter_cpu;
 extern unsigned int CPU_CLOCK;
 // // Font

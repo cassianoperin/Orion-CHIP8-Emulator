@@ -23,6 +23,7 @@ extern bool cpu_rom_loaded;
 // GUI
 extern bool gui_show_menu;
 extern bool gui_menu_quirks_inactive;
+extern char gui_statusbar_msg[100];
 // Font
 extern const int font_logo[165];
 

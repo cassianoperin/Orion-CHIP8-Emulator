@@ -211,6 +211,11 @@ int gui_loadrom(void) {
 		// Reset CPU
 		cpu_reset();
 
+		// Update StatusBar message
+		char str[100];
+		sprintf(str, "Game loaded: %s", filename);
+		strcpy(gui_statusbar_msg, str);
+
         // remember to free the memory (since NFD_OKAY is returned)
         // NFD_FreePath(outPath);
 

@@ -325,11 +325,8 @@ int status_bar(struct nk_context *ctx)
     if (nk_begin(ctx, "StatusBar", nk_rect(0, windows_y_size -25, windows_x_size, 25), window_flags))
     {
         nk_menubar_begin(ctx);
-
         
-
         nk_layout_row_dynamic(ctx, 15, 1);
-        // nk_label_colored(ctx, "No ROM loaded.", NK_TEXT_LEFT, nk_gray);
         nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_LEFT, nk_gray);
         
         nk_menubar_end(ctx);        

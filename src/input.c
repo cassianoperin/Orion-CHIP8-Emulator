@@ -122,22 +122,24 @@ void input_keyboard(void) {
 
 				// Pause
 				case SDLK_p:
-					cpu_pause = !cpu_pause;
-					gui_show_menu = !gui_show_menu;
+					if ( cpu_rom_loaded ) {
+						cpu_pause = !cpu_pause;
+						gui_show_menu = !gui_show_menu;
 
-					if (cpu_pause ) {
-						// Keep the current Theme
-						display_pixel_ON_color_tmp = display_pixel_ON_color;
-						display_pixel_OFF_color_tmp = display_pixel_OFF_color;
-						printf("Pause: ENABLED\n");
-                        display_pixel_ON_color_alt	= 0xFFf2f2f2;
-                        display_pixel_OFF_color_alt	= 0xFFcccccc;
-						display_update_theme();
-					} else {
-						printf("Pause: DISABLED\n");
-						display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-						display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-						display_update_theme();
+						if (cpu_pause ) {
+							// Keep the current Theme
+							display_pixel_ON_color_tmp = display_pixel_ON_color;
+							display_pixel_OFF_color_tmp = display_pixel_OFF_color;
+							// Update the Theme
+							display_pixel_ON_color_alt	= 0xFFf2f2f2;
+							display_pixel_OFF_color_alt	= 0xFFcccccc;
+							display_update_theme();
+						} else {
+							// Return the original Theme
+							display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+							display_update_theme();
+						}
 					}
 
 					break;
@@ -326,25 +328,26 @@ void input_keyboard(void) {
 					break;
 
 				case SDLK_ESCAPE:
+					if ( cpu_rom_loaded ) {
+						cpu_pause = !cpu_pause;
+						gui_show_menu = !gui_show_menu;
 
-					cpu_pause = !cpu_pause;
-					gui_show_menu = !gui_show_menu;
-
-					if (cpu_pause ) {
-						// Keep the current Theme
-						display_pixel_ON_color_tmp = display_pixel_ON_color;
-						display_pixel_OFF_color_tmp = display_pixel_OFF_color;
-
-						printf("Pause: ENABLED\n");
-                        display_pixel_ON_color_alt	= 0xFFf2f2f2;
-                        display_pixel_OFF_color_alt	= 0xFFcccccc;
-						display_update_theme();
-					} else {
-						printf("Pause: DISABLED\n");
-						display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-						display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-						display_update_theme();
+						if (cpu_pause ) {
+							// Keep the current Theme
+							display_pixel_ON_color_tmp = display_pixel_ON_color;
+							display_pixel_OFF_color_tmp = display_pixel_OFF_color;
+							// Update the Theme
+							display_pixel_ON_color_alt	= 0xFFf2f2f2;
+							display_pixel_OFF_color_alt	= 0xFFcccccc;
+							display_update_theme();
+						} else {
+							// Return the original Theme
+							display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+							display_update_theme();
+						}
 					}
+					
 					
 					break;
 			}
