@@ -52,12 +52,12 @@ int menu(struct nk_context *ctx)
                 static int option;
 
                 nk_layout_row_static(ctx, 20, 160, 1);
-                option = nk_option_label(ctx, "1: Black and White", option == 0) ? 0 : option;
-                option = nk_option_label(ctx, "2: White and Black", option == 1) ? 1 : option;
-                option = nk_option_label(ctx, "3: Gray and Blue", option == 2) ? 2 : option;
-                option = nk_option_label(ctx, "4: Gray and Green", option == 3) ? 3 : option;
+                option = nk_option_label(ctx, "1: Black and White",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: White and Black",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "3: Gray and Blue",    option == 2) ? 2 : option;
+                option = nk_option_label(ctx, "4: Gray and Green",   option == 3) ? 3 : option;
                 option = nk_option_label(ctx, "5: Black and Yellow", option == 4) ? 4 : option;
-                option = nk_option_label(ctx, "6: Gray and Pink", option == 5) ? 5 : option;
+                option = nk_option_label(ctx, "6: Gray and Pink",    option == 5) ? 5 : option;
 
                 switch( option )
                 {
@@ -74,7 +74,10 @@ int menu(struct nk_context *ctx)
                         // New colors
                         display_pixel_ON_color_alt	= 0xFF000000;
                         display_pixel_OFF_color_alt	= 0xFFFFFFFF;
-
+                        // Update the colors after Pause if theme has changed
+                        display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
+                        display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
+                        // Update Theme
                         display_update_theme();
                         break;
                     }
@@ -84,7 +87,10 @@ int menu(struct nk_context *ctx)
                         // New colors
                         display_pixel_ON_color_alt	= 0xFF5CB3FF;
                         display_pixel_OFF_color_alt	= 0xFF504A4B;
-
+                        // Update the colors after Pause if theme has changed
+                        display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
+                        display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
+                        // Update Theme
                         display_update_theme();
                         break;
                     }
@@ -94,7 +100,10 @@ int menu(struct nk_context *ctx)
                         // New colors
                         display_pixel_ON_color_alt	= 0xFF50C878;
                         display_pixel_OFF_color_alt	= 0xFF6D6968;
-
+                        // Update the colors after Pause if theme has changed
+                        display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
+                        display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
+                        // Update Theme
                         display_update_theme();
                         break;
                     }
@@ -104,7 +113,10 @@ int menu(struct nk_context *ctx)
                         // New colors
                         display_pixel_ON_color_alt	= 0xFFFAF884;
                         display_pixel_OFF_color_alt	= 0xFF0C090A;
-
+                        // Update the colors after Pause if theme has changed
+                        display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
+                        display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
+                        // Update Theme
                         display_update_theme();
                         break;
                     }
@@ -114,7 +126,10 @@ int menu(struct nk_context *ctx)
                         // New colors
                         display_pixel_ON_color_alt	= 0xFFF08080;
                         display_pixel_OFF_color_alt	= 0xFF1C1C1C;
-
+                        // Update the colors after Pause if theme has changed
+                        display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
+                        display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
+                        // Update Theme
                         display_update_theme();
                         break;
                     }
@@ -180,6 +195,15 @@ int menu(struct nk_context *ctx)
             nk_layout_row_dynamic(ctx, 20, 1);
             if (nk_menu_item_label(ctx, "Reset", NK_TEXT_LEFT)) {
                 cpu_reset();
+
+                gui_show_menu = false;
+
+                // Return the original Theme (before Pause)
+                if ( cpu_rom_loaded ) {
+                    display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+                    display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+                    display_update_theme();
+                }
             }
 
             static const float ratio[] = {80, 120};

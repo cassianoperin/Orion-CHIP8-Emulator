@@ -2,16 +2,28 @@
 
 Port of chip8 emulator to use nuklear GUI.
 
-1) Rever opc_chip8_0NNN, colocar um exit
-2) Review: msg_emuinfo
-3) Review: cycle_counter_cpu
-4) Change it to popup
-    // Show Emulator Information on screen (input)
-	// case SDLK_8:
-5) Criar status bar na parte de baixo da tela
-6) atualizar quirks
+## Improvements
+1) Test games again (quirks and tests)
+2) Update Nuklear and Framework to check if mouse missing problem is fixed
+3) Create a way to show Emulator Information
+4) Add a Pause popup on screen
+5) Insert the name of game loaded in the status bar OR window
+6) Reduce the number of global variables
 
-7) Atualizar o nuklear a framework pra ver se para de sumir o mouse quando aumenta o clock
-8) Quando aperta a primeira tecla está travando
-9) gui_statusbar_msg -> o=lib, loadrom, maior que 100, quebrando
-    listar sem path? contar? cortar?
+## Problems
+
+* INPUT: When the first key is pressed, freeze the emulation by a second
+* Emulation -> Reset bagunça pause e cores
+* Cycles per second locked to 60 when quirk_display_wait is ENABLED
+* Unify the PAUSE function with all requirements
+* Breakout Camelo Cortez quirk problem ingame
+
+* ESC no load_rom está deixando o statusbar na tela até próximo draw - FIXED
+* Problema no ESC -> LOAD ROM 2x, na segunda o fica com o tema do pause - FIXED
+
+
+hide emulation reset menu before rom is loaded
+
+button 0 (reset berak everything)
+
+remove keyboard shortcuts?

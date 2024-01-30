@@ -71,7 +71,7 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 		cpu_rom_loaded = true;
 
 
-	} else {										 	// Rom in hexadecimal format
+	} else { // Rom in hexadecimal format
 
 		const int buffer_size = (sizeof(char) * 8192); // 8192
 
@@ -206,6 +206,13 @@ int lib_gui_loadrom(void) {
 		// Hide Menu
 		gui_show_menu = false;
 
+		// Return the original Theme (before Pause)
+		if ( cpu_rom_loaded ) {
+			display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+			display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+			display_update_theme();
+		}
+
 		// Set the selected ROM
 		filename = outPath;
 		// Reset CPU
@@ -216,10 +223,11 @@ int lib_gui_loadrom(void) {
 		sprintf(str, "ROM loaded.");
 		strcpy(gui_statusbar_msg, str);
 
-		// Draw to ensure that the menu will be updated
-		// When quirk_display_wait is disables, because some games
-		// don't call the draw instruction in some ocasions
-		display_draw();
+		// Hack to force the draw on first frame to hide menu when quirk_display_wait is false
+		// Some games take some time to draw
+		if ( !quirk_display_wait ) {
+			cpu_draw_flag = true;
+		}
 
         // remember to free the memory (since NFD_OKAY is returned)
         // NFD_FreePath(outPath);

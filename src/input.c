@@ -329,7 +329,17 @@ void input_keyboard(void) {
 				// Reset
 				case SDLK_0:
 					cpu_reset();
-					printf("RESET\n");
+
+					// gui_show_menu = false;
+
+					// // Return the original Theme (before Pause)
+					// if ( cpu_rom_loaded ) {
+					// 	display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+					// 	display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+					// 	display_update_theme();
+					// }
+
+					// printf("RESET\n");
 					break;
 
 				case SDLK_ESCAPE:

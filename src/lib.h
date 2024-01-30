@@ -21,17 +21,23 @@ extern unsigned int  display_pixel_ON_color;
 extern unsigned int CPU_CLOCK;
 extern void cpu_reset(void);
 extern bool cpu_rom_loaded;
+extern bool cpu_draw_flag;
+extern bool quirk_display_wait;
 // GUI
 extern bool gui_show_menu;
 extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[100];
 // Font
 extern const int font_logo[165];
+// Input
+extern unsigned int display_pixel_ON_color_alt;
+extern unsigned int display_pixel_OFF_color_alt;
+extern unsigned int display_pixel_ON_color_tmp;
+extern unsigned int display_pixel_OFF_color_tmp;
 
 // --------------------------------- External Functions --------------------------------- //
 // Display
-extern bool display_draw(void);
-
+extern void display_update_theme(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks

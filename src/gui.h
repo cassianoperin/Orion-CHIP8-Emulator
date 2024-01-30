@@ -27,6 +27,7 @@ extern SDL_Texture  *texture;
 // GUI
 extern struct nk_context *ctx;
 extern float font_scale; // GUI Font
+extern bool cpu_rom_loaded;
 // CPU
 extern bool cpu_debug_mode;
 extern unsigned int CPU_CLOCK;
@@ -38,6 +39,8 @@ extern unsigned char display_SCREEN_HEIGHT_Y;
 extern unsigned int display_SCALE;
 extern unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
 extern unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
+extern unsigned int display_pixel_ON_color_tmp;    // Keep the new theme if choosen in Pause Menu
+extern unsigned int display_pixel_OFF_color_tmp;   // Keep the new theme if choosen in Pause Menu
 extern bool display_fullscreen;
 // Quirks
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
