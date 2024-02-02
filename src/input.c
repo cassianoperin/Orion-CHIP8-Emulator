@@ -89,10 +89,9 @@ void input_keyboard(void) {
 
 				// ---------- Remap Keys ----------- //
 				case SDLK_UP:
-				if ( input_remap_flag )
+				// if ( input_remap_flag )
 					Key[input_remap_btn_UP] = 1;
-
-				break;
+					break;
 				
 				case SDLK_DOWN:
 					if ( input_remap_flag )
@@ -328,18 +327,11 @@ void input_keyboard(void) {
 
 				// Reset
 				case SDLK_0:
-					cpu_reset();
 
-					// gui_show_menu = false;
+					if ( cpu_rom_loaded && !gui_show_menu ) {
+						cpu_reset();
+					}
 
-					// // Return the original Theme (before Pause)
-					// if ( cpu_rom_loaded ) {
-					// 	display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-					// 	display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-					// 	display_update_theme();
-					// }
-
-					// printf("RESET\n");
 					break;
 
 				case SDLK_ESCAPE:
@@ -450,8 +442,8 @@ void input_keyboard(void) {
 
 				// Remap Keys
 				case SDLK_UP:
-					if ( input_remap_flag )
-						Key[input_remap_btn_UP] = 0;
+					// if ( input_remap_flag )
+					Key[input_remap_btn_UP] = 0;
 					
 					break;
 				
@@ -497,7 +489,6 @@ void input_keyboard(void) {
 // Emulator key remaps
 void input_keyboard_remaps(void) {
 	input_remap_flag = false;
-
 
 	// ---------------------- CHIP8 ---------------------- //
 

@@ -188,21 +188,23 @@ int menu(struct nk_context *ctx)
 
             if ( nk_checkbox_label(ctx, "Sound", &sound_enabled) ) {}
 
-            // Split
+            // --- Split Menu --- //
             nk_layout_row_dynamic(ctx, 1, 1);
             nk_rule_horizontal(ctx, nk_gray, nk_true);
 
             nk_layout_row_dynamic(ctx, 20, 1);
             if (nk_menu_item_label(ctx, "Reset", NK_TEXT_LEFT)) {
-                cpu_reset();
-
-                gui_show_menu = false;
-
-                // Return the original Theme (before Pause)
                 if ( cpu_rom_loaded ) {
-                    display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-                    display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-                    display_update_theme();
+                    cpu_reset();
+
+                    gui_show_menu = false;
+
+                    // Return the original Theme (before Pause)
+                    if ( cpu_rom_loaded ) {
+                        display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
+                        display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
+                        display_update_theme();
+                    }
                 }
             }
 
