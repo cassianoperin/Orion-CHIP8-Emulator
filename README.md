@@ -13,3 +13,5 @@ Port of chip8 emulator to use nuklear GUI.
 ## Problems
 
 * INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
+* POPUP TOOK CONTROL OF MRNU
+* When returning from fullscreen (click again), strange window size

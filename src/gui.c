@@ -1,4 +1,5 @@
 #include "gui.h"
+#include "../lib/nuklear/style.c"
 
 int menu(struct nk_context *ctx)
 {
@@ -16,7 +17,7 @@ int menu(struct nk_context *ctx)
     actual_window_flags = window_flags;
     if (!(actual_window_flags & NK_WINDOW_TITLE))
         actual_window_flags &= ~(NK_WINDOW_MINIMIZABLE|NK_WINDOW_CLOSABLE);
-    if (nk_begin(ctx, "Overview", nk_rect(0, 0, display_SCREEN_WIDTH_X * display_SCALE, 35), actual_window_flags))
+    if (nk_begin(ctx, "Chip8", nk_rect(0, 0, display_SCREEN_WIDTH_X * display_SCALE, 35), actual_window_flags))
     {
         nk_menubar_begin(ctx);
 
@@ -46,8 +47,76 @@ int menu(struct nk_context *ctx)
         nk_layout_row_push(ctx, 45);
         if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(190, 220)))
         {
+             
+            if (nk_tree_push(ctx, NK_TREE_NODE, "Window Theme", NK_MINIMIZED))
+            {
+                static int option;
 
-            if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
+                nk_layout_row_static(ctx, 20, 160, 1);
+                option = nk_option_label(ctx, "1: White",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: Black",  option == 1) ? 1 : option;
+
+                switch( option )
+                {
+                    // White
+                    case 0:
+                        set_style(ctx, THEME_WHITE);
+                        break;
+
+                    // Black
+                    case 1: {
+                       	set_style(ctx, THEME_BLACK);
+                        break;
+                    }
+                }
+
+                nk_tree_pop(ctx);
+            }
+
+            // Disable Pixel Scale menu before rom loading
+            if ( display_fullscreen ) {
+                nk_widget_disable_begin(ctx);
+            }
+
+            static const float ratio[] = {100, 80};
+            int initial_scale_value = display_SCALE;
+            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+            nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
+            nk_property_int(ctx, "", 10, (int *)&display_SCALE, 40, 5, 1);
+            // Check if the scale was changed and update the window size
+            if ( initial_scale_value != display_SCALE) {
+                display_updateWindowSize(display_SCALE);
+                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+            }
+
+            nk_widget_disable_end(ctx);
+
+            if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
+
+                if ( display_fullscreen ) {
+                    display_SCALE = 20; // To ensure that will fill entire screen
+                    display_updateWindowSize(display_SCALE);
+                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+                    
+                } else {
+                    display_SCALE = 10; // To ensure that will fill entire screen
+                    display_updateWindowSize(display_SCALE);
+                    SDL_SetWindowFullscreen(window, 0);
+                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                }
+
+            }
+
+            nk_menu_end(ctx);
+        }
+
+        // ----------------------------------- Menu EMULATION ----------------------------------- //
+        nk_layout_row_push(ctx, 80);
+        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
+        {
+            // nk_layout_row_dynamic(ctx, 20, 1);
+
+ if (nk_tree_push(ctx, NK_TREE_NODE, "Emulator Theme", NK_MINIMIZED))
             {
                 static int option;
 
@@ -140,48 +209,8 @@ int menu(struct nk_context *ctx)
             }
 
 
-            // Disable Pixel Scale menu before rom loading
-            if ( display_fullscreen ) {
-                nk_widget_disable_begin(ctx);
-            }
 
-            static const float ratio[] = {100, 80};
-            int initial_scale_value = display_SCALE;
-            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
-            nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
-            nk_property_int(ctx, "", 10, (int *)&display_SCALE, 40, 5, 1);
-            // Check if the scale was changed and update the window size
-            if ( initial_scale_value != display_SCALE) {
-                display_updateWindowSize(display_SCALE);
-                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-            }
 
-            nk_widget_disable_end(ctx);
-
-            if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
-
-                if ( display_fullscreen ) {
-                    display_SCALE = 20; // To ensure that will fill entire screen
-                    display_updateWindowSize(display_SCALE);
-                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-                    
-                } else {
-                    display_SCALE = 10; // To ensure that will fill entire screen
-                    display_updateWindowSize(display_SCALE);
-                    SDL_SetWindowFullscreen(window, 0);
-                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-                }
-
-            }
-
-            nk_menu_end(ctx);
-        }
-
-        // ----------------------------------- Menu EMULATION ----------------------------------- //
-        nk_layout_row_push(ctx, 80);
-        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
-        {
-            nk_layout_row_dynamic(ctx, 20, 1);
             if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
 
             if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
@@ -400,6 +429,7 @@ void gui_init(void)
         font->handle.height /= font_scale;
         /*nk_style_load_all_cursors(ctx, atlas->cursors);*/
         nk_style_set_font(ctx, &font->handle);
+
     }
 
     // Load the emulator Logo

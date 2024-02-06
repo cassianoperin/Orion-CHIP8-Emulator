@@ -1,6 +1,8 @@
 /* SDL2 */
 #include <SDL2/SDL.h>
 #include "main.h"
+#include "../lib/nuklear/style.c"
+
 
 /* ===============================================================
  *
@@ -72,6 +74,10 @@ int main(int argc, char *argv[])
 
  	// -------------------------- GUI Init -------------------------- //
     gui_init();
+
+	// Window Theme
+	// THEME_BLACK, THEME_WHITE, THEME_RED, THEME_BLUE, THEME_DARK
+	set_style(ctx, THEME_WHITE);
 
 	// Seconds Counter
 	timeSecondStart = SDL_GetPerformanceCounter();
