@@ -94,14 +94,13 @@ int menu(struct nk_context *ctx)
             if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
 
                 if ( display_fullscreen ) {
+                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);       
                     display_SCALE = 20; // To ensure that will fill entire screen
                     display_updateWindowSize(display_SCALE);
-                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-                    
                 } else {
-                    display_SCALE = 10; // To ensure that will fill entire screen
-                    display_updateWindowSize(display_SCALE);
                     SDL_SetWindowFullscreen(window, 0);
+                    display_SCALE = 10;
+                    display_updateWindowSize(display_SCALE);
                     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
                 }
 

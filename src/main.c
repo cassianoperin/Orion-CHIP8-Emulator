@@ -49,26 +49,6 @@ int main(int argc, char *argv[])
     // Initialize Audio System
 	sound_init();
 
-	// // CLI and argument validation
-	// command_line_interface(argc, argv);
-
-	// Load Game into Memory
-	// filename = argv[1];
-	// load_rom(filename,  Memory, (sizeof(Memory) / sizeof(Memory[0])) );
-
-	// // Get Game signature for Qwirks
-	// game_signature = get_game_signature(filename);
-	// printf("Signature:   %s\n", game_signature );
-
-	// // Check for Quirks
-	// handle_quirks(game_signature);
-
-	// Load Fonts
-	// cpu_load_fonts();
-
-	// // Keyboard remaps
-	// input_keyboard_remaps();
-
 	// -------------------------- SDL Init -------------------------- //
 	display_init();
 
@@ -87,10 +67,6 @@ int main(int argc, char *argv[])
     {
 		// --------------------------------- START OF SECONDs COUNTER  --------------------------------- //
 		if ( timeSecondLast - timeSecondStart >= 1000000000 ){ 
-
-			// // Seconds Ticker validation
-			// printf("Second: %lld\n", timeSecondLast - timeSecondStart );
-			// printf ("FINAL 60FPS time: %llu\n\n", timeFrameDurationSum);
 
 			// Window Title Message update
 			char title_msg[80];
@@ -300,13 +276,8 @@ int main(int argc, char *argv[])
 		// // Increment frame counter
 		frame ++;
 
-		// Increment Main Loop Cycle
-		// cycle++;
-
 		// Seconds Counter
 		timeSecondLast = SDL_GetPerformanceCounter();
-
-
     }
 
 	//Free resources and close SDL
