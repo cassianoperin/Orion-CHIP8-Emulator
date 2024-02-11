@@ -23,7 +23,9 @@ extern bool rom_format_hex;
 // SDL Video
 extern SDL_Window   *window;
 extern SDL_Renderer *renderer;
-extern SDL_Texture  *texture;
+// extern SDL_Texture  *texture;
+extern SDL_Window   *window_debug;
+extern SDL_Renderer *renderer_debug;
 // GUI
 extern struct nk_context *ctx;
 extern float font_scale; // GUI Font
@@ -56,6 +58,7 @@ extern int lib_gui_loadrom(void);
 // Display
 extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
+bool display_debug_init(void);
 // CPU
 extern void cpu_reset(void);
 // Font

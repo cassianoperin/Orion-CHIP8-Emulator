@@ -60,10 +60,15 @@ extern bool gui_show_menu;
 const int   pal_freq   = 60; 					
 
 // ---------------------------------- Global Variables ---------------------------------- //
-// SDL Video
+// Main Window
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
+
+// Window Debug
+SDL_Window *window_debug;
+SDL_Renderer *renderer_debug;
+SDL_Texture *texture_debug;
 
 // --- Nuklear --- //
 /* GUI */

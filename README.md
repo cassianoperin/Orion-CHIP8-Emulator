@@ -9,6 +9,7 @@ Port of chip8 emulator to use nuklear GUI.
 2) Create a way to show Emulator Information
 3) Insert the name of game loaded in the status bar OR window
 4) Reduce the number of global variables
+5) Debug Window
 
 ## Problems
 

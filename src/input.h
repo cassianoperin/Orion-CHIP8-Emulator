@@ -9,7 +9,9 @@ extern struct nk_context    *ctx;   // Nuklear
 extern struct nk_font_atlas *atlas; // Nuklear font
 extern bool quit;
 extern SDL_Window *window;
-// extern SDL_Renderer *renderer;
+extern SDL_Window *window_debug;
+extern SDL_Renderer *renderer;
+extern SDL_Renderer *renderer_debug;
 // extern SDL_Texture *texture;
 extern const int pal_freq;
 // Display
