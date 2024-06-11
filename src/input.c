@@ -478,10 +478,20 @@ void input_keyboard(void) {
 			if (SDL_GetWindowID(window) == event.window.windowID)
 			{
 				// Close Main Window
+				SDL_DestroyTexture( texture );
 				SDL_DestroyRenderer( renderer );
 				SDL_DestroyWindow( window );
 				window = NULL;
 				renderer = NULL;
+				texture = NULL;
+
+				// Close Debug window
+				SDL_DestroyTexture( texture_debug );
+				SDL_DestroyRenderer( renderer_debug );
+				SDL_DestroyWindow( window_debug );
+				window_debug = NULL;
+				renderer_debug = NULL;
+				texture_debug = NULL;
 
 			} else if (SDL_GetWindowID(window_debug) == event.window.windowID)
 			{

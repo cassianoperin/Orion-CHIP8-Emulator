@@ -95,13 +95,6 @@ int main(int argc, char *argv[])
 
 		// Increment Cycle per second counter
 		cycle_counter++;
-
-		// int x,y = 0;
-        //             SDL_GetWindowPosition(window_debug,&x,&y);
-
-        //             printf("X: %d\tY:%d\n",x,y);
-
-
 		// ---------------------------------- END OF SECONDs COUNTER  ---------------------------------- //
 
 

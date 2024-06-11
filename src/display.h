@@ -6,12 +6,13 @@
 
 // --------------------------------- External Variables --------------------------------- //
 // Main
-extern SDL_Window *window;          // Main Window
+extern SDL_Window   *window;
 extern SDL_Renderer *renderer;
-extern SDL_Texture *texture;
-extern SDL_Window *window_debug;    // Debug Window
+extern SDL_Texture  *texture;
+extern SDL_Window   *window_debug;
 extern SDL_Renderer *renderer_debug;
-extern SDL_Texture *texture_debug;
+extern SDL_Texture  *texture_debug;
+// Nuklear
 extern struct nk_context *ctx;
 // GUI
 extern bool gui_show_menu;
@@ -23,16 +24,16 @@ extern bool quirk_display_wait;
 extern int menu(struct nk_context *ctx);
 extern int status_bar(struct nk_context *ctx);
 
-// // ---------------------------------- Global Variables ---------------------------------- //
-// Main screen size
+// ---------------------------------- Global Variables ---------------------------------- //
+// Display (Screen size)
 unsigned char display_SCREEN_WIDTH_X;
 unsigned char display_SCREEN_HEIGHT_Y;
 unsigned int display_SCALE;
-// Debug screen size
+bool display_fullscreen;
+// Display Debug (Screen size)
 unsigned char display_debug_SCREEN_WIDTH_X;
 unsigned char display_debug_SCREEN_HEIGHT_Y;
 unsigned int display_debug_SCALE;
-bool display_fullscreen;
 // Colors
 unsigned int  display_pixel_ON_color;
 unsigned int  display_pixel_OFF_color;
@@ -55,9 +56,9 @@ unsigned int frame_counter = 0;              // Frame per second
 
 // -------------------------------------- Functions ------------------------------------- //
 bool display_init(void);
-bool display_debug_init(void);
 bool display_draw(void);
 void SDL_close(void);
 void display_update_theme(void);
 void draw_graphics_console(void);
 void display_updateWindowSize(unsigned int pixel_scale);
+bool display_debug_init(void);

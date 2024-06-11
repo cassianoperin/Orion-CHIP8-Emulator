@@ -207,6 +207,9 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
+
+
+
             if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
 
             if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {
@@ -214,14 +217,23 @@ int menu(struct nk_context *ctx)
                 if ( cpu_debug_mode ) {
                     // Create the debug Window
                     display_debug_init();
+                    
+                    // Return the focus to Main emulator window
+                    SDL_RaiseWindow(window);
+
+                    //
+                    // gui_debug_init();
+
                     // Return the focus to Main emulator window
                     SDL_RaiseWindow(window);
                 } else {
                     // Close Debug window
+                    SDL_DestroyTexture( texture_debug );
                     SDL_DestroyRenderer( renderer_debug );
                     SDL_DestroyWindow( window_debug );
                     window_debug = NULL;
                     renderer_debug = NULL;
+                    texture_debug = NULL;
                 }    
             }
 

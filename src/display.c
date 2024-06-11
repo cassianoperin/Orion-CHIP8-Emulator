@@ -7,17 +7,12 @@ bool display_init(void)
 	bool success = true;
 
 	// Variables
-	// Main Window
 	display_SCREEN_WIDTH_X  = 64;
 	display_SCREEN_HEIGHT_Y = 32;
 	display_SCALE			= 10;
 	display_pixel_ON_color	= 0xFFFFFFFF;
 	display_pixel_OFF_color	= 0xFF000000;
 	display_color_theme		= 0;
-	// Debug Window
-	display_debug_SCREEN_WIDTH_X  = 32;
-	display_debug_SCREEN_HEIGHT_Y = 64;
-	display_debug_SCALE			  = 10;
 
 	// Debug
 	debug_pixels			= false;
@@ -65,74 +60,6 @@ bool display_init(void)
 			}
 		}
 	}
-
-	return success;
-}
-
-bool display_debug_init(void)
-{
-	// Initialization flag
-	bool success = true;
-
-	// Variables
-	display_debug_SCREEN_WIDTH_X  = 32;
-	display_debug_SCREEN_HEIGHT_Y = 64;
-	display_debug_SCALE		      = 10;
-	
-	// Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-		success = false;
-	}
-	else
-	{
-		// Get the position of Main Window
-		int x,y = 0;
-		SDL_GetWindowPosition(window,&x,&y);
-		// printf("X: %d\tY:%d\n",x,y);
-
-		// Define the X position reducing the position of main window and the size of debug windoe
-		int debug_X = x - (display_debug_SCREEN_WIDTH_X * display_debug_SCALE) - 1;
-		// Create window
-		window_debug = SDL_CreateWindow( "DEBUG", debug_X, SDL_WINDOWPOS_CENTERED, display_debug_SCREEN_WIDTH_X * display_debug_SCALE, display_debug_SCREEN_HEIGHT_Y * display_debug_SCALE, SDL_WINDOW_SHOWN);
-		if( window_debug == NULL )
-		{
-			printf( "Window Debug could not be created! SDL Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
-			// --- Create renderer for window --- //
-			// Display wait quirk enabled, enable vsync
-			if ( quirk_display_wait ) {
-				renderer_debug = SDL_CreateRenderer( window_debug, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			} else {
-				renderer_debug = SDL_CreateRenderer( window_debug, -1, SDL_RENDERER_ACCELERATED );
-			}
-
-			// Check for errors
-			if( renderer_debug == NULL )
-			{
-				printf( "Renderer Debug could not be created! SDL Error: %s\n", SDL_GetError() );
-				success = false;
-			} else {
-				// Create texture
-				texture_debug = SDL_CreateTexture(renderer_debug, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, display_SCREEN_WIDTH_X, display_SCREEN_HEIGHT_Y);
-				if( renderer == NULL )
-				{
-					printf( "Texture Debug could not be created! SDL Error: %s\n", SDL_GetError() );
-					success = false;
-				}
-			}
-		}
-	}
-
-
-
-
-		
-
 
 	return success;
 }
@@ -200,11 +127,21 @@ bool display_draw(void)
 
 void SDL_close(void)
 {
-	// // Destroy window
-	// SDL_DestroyRenderer( renderer );
-	// SDL_DestroyWindow( window );
-	// window = NULL;
-	// renderer = NULL;
+	// Destroy window
+	SDL_DestroyTexture( texture );
+	SDL_DestroyRenderer( renderer );
+	SDL_DestroyWindow( window );
+	window = NULL;
+	renderer = NULL;
+	texture = NULL;
+
+	// Close Debug window
+	SDL_DestroyTexture( texture_debug );
+	SDL_DestroyRenderer( renderer_debug );
+	SDL_DestroyWindow( window_debug );
+	window_debug = NULL;
+	renderer_debug = NULL;
+	texture_debug = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -275,4 +212,70 @@ void draw_graphics_console(void) {
 void display_updateWindowSize(unsigned int pixel_scale)
 {
 	SDL_SetWindowSize(window, display_SCREEN_WIDTH_X * pixel_scale , display_SCREEN_HEIGHT_Y * pixel_scale);
+}
+
+
+bool display_debug_init(void)
+{
+	// Initialization flag
+	bool success = true;
+
+	// Variables
+	display_debug_SCREEN_WIDTH_X  = 64;
+	display_debug_SCREEN_HEIGHT_Y = 32;
+	display_debug_SCALE			  = 10;
+
+
+
+	// Initialize SDL
+	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	{
+		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+		success = false;
+	}
+	else
+	{
+		// Get the position of Main Window
+		int x,y = 0;
+		SDL_GetWindowPosition(window,&x,&y);
+		// printf("X: %d\tY:%d\n",x,y);
+
+		// Define the X position reducing the position of main window and the size of debug windoe
+		int debug_X = x - (display_debug_SCREEN_WIDTH_X * display_debug_SCALE) - 1;
+
+		// Create window
+		window_debug = SDL_CreateWindow( "DEBUG", debug_X, SDL_WINDOWPOS_CENTERED, display_debug_SCREEN_WIDTH_X * display_debug_SCALE, display_debug_SCREEN_HEIGHT_Y * display_debug_SCALE, SDL_WINDOW_SHOWN);
+		if( window_debug == NULL )
+		{
+			printf( "Debug Window: Window could not be created! SDL Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		else
+		{
+			// --- Create renderer for window --- //
+			// Display wait quirk enabled, enable vsync
+			if ( quirk_display_wait ) {
+				renderer_debug = SDL_CreateRenderer( window_debug, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+			} else {
+				renderer_debug = SDL_CreateRenderer( window_debug, -1, SDL_RENDERER_ACCELERATED );
+			}
+
+			// Check for errors
+			if( renderer_debug == NULL )
+			{
+				printf( "Debug Window: Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+				success = false;
+			} else {
+				// Create texture
+				texture_debug = SDL_CreateTexture(renderer_debug, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, display_debug_SCREEN_WIDTH_X, display_debug_SCREEN_HEIGHT_Y);
+				if( renderer == NULL )
+				{
+					printf( "Debug Window: Texture could not be created! SDL Error: %s\n", SDL_GetError() );
+					success = false;
+				}
+			}
+		}
+	}
+
+	return success;
 }
