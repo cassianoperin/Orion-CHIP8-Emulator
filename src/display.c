@@ -97,18 +97,17 @@ bool display_draw(void)
 	// Future Debug Window
 	overview(ctx);
 
-	// Update the Screen
-	SDL_UpdateTexture(texture, NULL, display_pixels, display_EMULATOR_RES_X * sizeof(uint32_t));
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	// SDL_RenderPresent(renderer);
-
-	// Draw GUI
-	// SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
+	// Set background color
+	// SDL_SetRenderDrawColor(renderer, 204, 255, 255, 255);
+	// // Clear the entire screen to our selected color.
 	// SDL_RenderClear(renderer);
-	nk_sdl_render(NK_ANTI_ALIASING_ON);
 
-	// // Draw
-	// SDL_RenderPresent(renderer);
+	// Update the Screen
+	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+	// GUI flags
+	nk_sdl_render(NK_ANTI_ALIASING_ON);
 
 	// Draw
 	SDL_RenderPresent(renderer);

@@ -13,8 +13,9 @@ extern char *filename;
 // Display
 extern unsigned char display_FPS;
 extern unsigned char Memory[4096];
-extern unsigned int  display_pixels[8192];
-extern unsigned int  display_pixel_ON_color;
+// extern unsigned int  display_pixels[8192];
+// extern unsigned int  display_pixel_ON_color;
+// extern unsigned int  display_pixel_OFF_color;
 // extern unsigned int frame;
 // CPU
 extern unsigned int CPU_CLOCK;
@@ -25,13 +26,10 @@ extern bool quirk_display_wait;
 // GUI
 extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[100];
+extern unsigned int gui_pixels_logo[2048];
+extern unsigned int gui_pixel_logo_ON_color;
 // Font
 extern const int font_logo[165];
-// Input
-extern unsigned int display_pixel_ON_color_alt;
-extern unsigned int display_pixel_OFF_color_alt;
-extern unsigned int display_pixel_ON_color_tmp;
-extern unsigned int display_pixel_OFF_color_tmp;
 
 // --------------------------------- External Functions --------------------------------- //
 

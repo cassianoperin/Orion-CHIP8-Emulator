@@ -16,10 +16,6 @@ extern const int pal_freq;
 // Display
 extern unsigned int display_pixel_ON_color;
 extern unsigned int display_pixel_OFF_color;
-extern unsigned int display_pixel_ON_color_alt;
-extern unsigned int display_pixel_OFF_color_alt;
-extern unsigned int display_pixel_ON_color_tmp;
-extern unsigned int display_pixel_OFF_color_tmp;
 extern bool display_fullscreen;
 extern unsigned int display_EMULATOR_RES_SCALE;
 extern unsigned char display_color_theme;

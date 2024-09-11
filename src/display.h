@@ -26,6 +26,8 @@ extern SDL_Texture  *texture;
 extern struct nk_context *ctx;
 // Quirk
 extern bool quirk_display_wait;
+// GUI
+unsigned int gui_pixels_logo[2048];
 
 // --------------------------------- External Functions --------------------------------- //
 // Display
@@ -47,10 +49,6 @@ bool display_fullscreen;
 unsigned int  display_pixel_ON_color;
 unsigned int  display_pixel_OFF_color;
 unsigned char display_color_theme;          // Theme number
-unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
-unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
-unsigned int  display_pixel_ON_color_tmp;   // keep the theme color on pause
-unsigned int  display_pixel_OFF_color_tmp;  // keep the theme color on pause
 
 // Display Array
 // unsigned int  display_pixels[2048];

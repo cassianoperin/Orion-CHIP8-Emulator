@@ -241,10 +241,13 @@ int lib_gui_loadrom(void) {
 
 // Show logo on initial screen (no rom loaded)
 void showLogo(void) {
+
 	for ( int i = 0; i < sizeof(font_logo) / sizeof(font_logo[0]); i++ ) {
-		display_pixels[ font_logo[i] ] = display_pixel_ON_color;
+		gui_pixels_logo[ font_logo[i] ] = gui_pixel_logo_ON_color;
 	}
+
 }
+
 
 
 // // Show Emulator Cycles Per Second

@@ -85,8 +85,13 @@ int menu(struct nk_context *ctx)
             nk_property_int(ctx, "", 10, (int *)&display_EMULATOR_RES_SCALE, 40, 5, 1);
             // Check if the scale was changed and update the window size
             if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
-                display_updateWindowSize(display_EMULATOR_RES_SCALE);
-                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                // Update the main window if desired
+                // display_updateWindowSize(display_EMULATOR_RES_SCALE);
+                // SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                // Update Emulator Window
+                // Resize Emulator Window
+                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) );
             }
 
             nk_widget_disable_end(ctx);
@@ -385,6 +390,10 @@ int status_bar(struct nk_context *ctx)
 
 void gui_init(void)
 {
+    // Variables
+    gui_pixel_logo_ON_color  = 0xFFFFFFFF; // White
+	gui_pixel_logo_OFF_color = 0xFF00FFAA; // Green
+
     // Disable Quirks Menu until a rom is loaded
     gui_menu_quirks_inactive = true;
 
@@ -418,6 +427,11 @@ void gui_init(void)
         nk_style_set_font(ctx, &font->handle);
 
     }
+
+    // Initialization - Clean logo pixels array
+	for ( int i = 0 ; i < (int)( sizeof(gui_pixels_logo) / sizeof(gui_pixels_logo[0])) ; i++ ) {
+			gui_pixels_logo[i] = gui_pixel_logo_OFF_color;
+	}
 
     // Load the emulator Logo
     showLogo();

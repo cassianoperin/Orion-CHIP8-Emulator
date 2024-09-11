@@ -40,10 +40,6 @@ extern bool sound_enabled;
 extern unsigned char display_EMULATOR_RES_X;
 extern unsigned char display_EMULATOR_RES_Y;
 extern unsigned int display_EMULATOR_RES_SCALE;
-extern unsigned int  display_pixel_ON_color_alt;   // New color of enabled pixels
-extern unsigned int  display_pixel_OFF_color_alt;  // New color of disabled pixels
-extern unsigned int display_pixel_ON_color_tmp;    // Keep the new theme if choosen in Pause Menu
-extern unsigned int display_pixel_OFF_color_tmp;   // Keep the new theme if choosen in Pause Menu
 extern bool display_fullscreen;
 // Quirks
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
@@ -66,6 +62,9 @@ extern void showLogo(void);
 // ---------------------------------- Global Variables ---------------------------------- //
 bool gui_menu_quirks_inactive; // Enable/Disable Quirks Menu
 char gui_statusbar_msg[100];
+unsigned int gui_pixels_logo[2048];
+unsigned int gui_pixel_logo_ON_color;
+unsigned int gui_pixel_logo_OFF_color;
 
 // -------------------------------------- Functions ------------------------------------- //
 void gui_init(void);
