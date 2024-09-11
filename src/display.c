@@ -81,18 +81,16 @@ bool display_draw(void)
 	// Increment Frame Counter for FPS
 	frame_counter++;
 
-	// Show Menu
-	if ( gui_show_menu ) {
+	// Draw
+	if ( quirk_display_wait ) {
 		SDL_RenderSetVSync(renderer, 1);
-		menu(ctx);
-		status_bar(ctx);
 	} else {
-		if ( quirk_display_wait ) {
-			SDL_RenderSetVSync(renderer, 1);
-		} else {
-			SDL_RenderSetVSync(renderer, 0);
-		}
+		SDL_RenderSetVSync(renderer, 0);
 	}
+
+	// Show Menus
+	menu(ctx);
+	status_bar(ctx);
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, display_pixels, display_EMULATOR_RES_X * sizeof(uint32_t));

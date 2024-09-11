@@ -34,7 +34,6 @@ extern char *filename;
 // GUI
 extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[100];
-extern bool gui_show_menu;
 
 // --------------------------------- External Functions --------------------------------- //
 // Lib

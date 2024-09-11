@@ -203,9 +203,6 @@ int lib_gui_loadrom(void) {
         // puts("Success!");
         // puts(outPath);
 
-		// Hide Menu
-		gui_show_menu = false;
-
 		// Return the original Theme (before Pause)
 		if ( cpu_rom_loaded ) {
 			display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
@@ -234,7 +231,6 @@ int lib_gui_loadrom(void) {
 
     } else if (result == NFD_CANCEL) {
         // puts("User pressed cancel.");
-		gui_show_menu = true;
 
     } else {
         printf("NFD Error: %s\n", NFD_GetError());

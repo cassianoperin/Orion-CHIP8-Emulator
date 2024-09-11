@@ -15,3 +15,9 @@ Port of chip8 emulator to use nuklear GUI.
 ## Problems
 
 * INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
+
+# Reestruturação de janelas:
+
+1) quirk_display_wait quebrado, draw todo errado
+2) Draw para a main window remover
+3) show_logo

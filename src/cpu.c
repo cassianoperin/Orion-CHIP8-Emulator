@@ -556,7 +556,6 @@ void cpu_invalid_opcode(unsigned short opc) {
 		cpu_rom_loaded = false;
 		// Return to original menu state
 		quirk_display_wait = true;
-		gui_show_menu = true;
 		gui_menu_quirks_inactive = true;
 
 }

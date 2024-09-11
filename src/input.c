@@ -123,7 +123,6 @@ void input_keyboard(void) {
 				case SDLK_p:
 					if ( cpu_rom_loaded ) {
 						cpu_pause = !cpu_pause;
-						gui_show_menu = !gui_show_menu;
 
 						if (cpu_pause ) {
 							// Keep the current Theme
@@ -328,7 +327,7 @@ void input_keyboard(void) {
 				// Reset
 				case SDLK_0:
 
-					if ( cpu_rom_loaded && !gui_show_menu ) {
+					if ( cpu_rom_loaded ) {
 						cpu_reset();
 					}
 
@@ -337,7 +336,6 @@ void input_keyboard(void) {
 				case SDLK_ESCAPE:
 					if ( cpu_rom_loaded ) {
 						cpu_pause = !cpu_pause;
-						gui_show_menu = !gui_show_menu;
 
 						if (cpu_pause ) {
 							// Keep the current Theme

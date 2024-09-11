@@ -151,13 +151,14 @@ int main(int argc, char *argv[])
 			// Draw
 			display_draw();
 
-		} else { // Ensure draw @60 when menu is being showed
-			if ( gui_show_menu ) {
-				// Draw
-				display_draw();
-			}
-
 		}
+		// } else { // Ensure draw @60 when menu is being showed
+		// 	if ( gui_show_menu ) {
+		// 		// Draw
+		// 		display_draw();
+		// 	}
+
+		// }
 
 
 		// --------------- CPU --------------- //

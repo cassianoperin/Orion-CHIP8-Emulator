@@ -62,7 +62,6 @@ extern void cpu_reset(void);
 extern void showLogo(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
-bool gui_show_menu; // Show Menu Flag
 bool gui_menu_quirks_inactive; // Enable/Disable Quirks Menu
 char gui_statusbar_msg[100];
 

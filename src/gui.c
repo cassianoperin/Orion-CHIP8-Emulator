@@ -225,8 +225,6 @@ int menu(struct nk_context *ctx)
                 if ( cpu_rom_loaded ) {
                     cpu_reset();
 
-                    gui_show_menu = false;
-
                     // Return the original Theme (before Pause)
                     if ( cpu_rom_loaded ) {
                         display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
@@ -394,9 +392,6 @@ int status_bar(struct nk_context *ctx)
 
 void gui_init(void)
 {
-    // Show Menu
-    gui_show_menu = true;
-
     // Disable Quirks Menu until a rom is loaded
     gui_menu_quirks_inactive = true;
 
