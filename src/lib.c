@@ -203,13 +203,6 @@ int lib_gui_loadrom(void) {
         // puts("Success!");
         // puts(outPath);
 
-		// Return the original Theme (before Pause)
-		if ( cpu_rom_loaded ) {
-			display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-			display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-			display_update_theme();
-		}
-
 		// Set the selected ROM
 		filename = outPath;
 		// Reset CPU

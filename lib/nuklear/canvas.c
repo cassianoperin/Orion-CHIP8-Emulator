@@ -1,8 +1,8 @@
 // --------------------------------- External Variables --------------------------------- //
 /* Display */ 
-extern unsigned char display_SCREEN_WIDTH_X;
-extern unsigned char display_SCREEN_HEIGHT_Y;
-extern unsigned int  display_SCALE;
+extern unsigned char display_EMULATOR_RES_X;
+extern unsigned char display_EMULATOR_RES_Y;
+extern unsigned int  display_EMULATOR_RES_SCALE;
 extern unsigned int  display_pixels[8192];
 extern unsigned int  display_pixel_ON_color;
 
@@ -64,11 +64,11 @@ canvas(struct nk_context *ctx)
         // if (canvas_begin(ctx, &canvas, NK_WINDOW_MOVABLE, 0, 36, 640, 320, nk_rgb(250,250,250)))
 
 
-        if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER|NK_WINDOW_MOVABLE, 0, 36, display_SCREEN_WIDTH_X * (display_SCALE), display_SCREEN_HEIGHT_Y * (display_SCALE), nk_rgb(250,250,250)))
+        if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER|NK_WINDOW_MOVABLE, 0, 36, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE), display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE), nk_rgb(250,250,250)))
         {
             float x = canvas.painter->clip.x, y = canvas.painter->clip.y;
 
-            int rect_size = display_SCALE;
+            int rect_size = display_EMULATOR_RES_SCALE;
 
             nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1,   y + 0, rect_size, rect_size), 0, nk_rgb(247, 230, 154));
             nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2,  y + 0, rect_size, rect_size), 0, nk_rgb(247, 0, 154));

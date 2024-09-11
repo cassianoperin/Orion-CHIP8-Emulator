@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
 	// Window Theme
 	// THEME_BLACK, THEME_WHITE, THEME_RED, THEME_BLUE, THEME_DARK
-	set_style(ctx, THEME_WHITE);
+	set_style(ctx, THEME_BLACK);
 
 	// Seconds Counter
 	timeSecondStart = SDL_GetPerformanceCounter();
@@ -104,20 +104,6 @@ int main(int argc, char *argv[])
 		// ------------- Keyboard ------------ //
 		input_keyboard();
 
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
 		// ----------- Delay Timer ----------- //
 		if ( DelayTimer > 0 ) {
 			DelayTimer--;
@@ -150,8 +136,8 @@ int main(int argc, char *argv[])
 
 			// Draw
 			display_draw();
-
 		}
+
 		// } else { // Ensure draw @60 when menu is being showed
 		// 	if ( gui_show_menu ) {
 		// 		// Draw

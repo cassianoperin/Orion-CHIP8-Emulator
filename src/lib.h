@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
 
-
 // Boolean Type for Vanilla C
 typedef int bool;
 #define true 1
@@ -35,8 +34,6 @@ extern unsigned int display_pixel_ON_color_tmp;
 extern unsigned int display_pixel_OFF_color_tmp;
 
 // --------------------------------- External Functions --------------------------------- //
-// Display
-extern void display_update_theme(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char *game_signature;           // Game signature to apply quirks

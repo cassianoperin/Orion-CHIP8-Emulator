@@ -42,7 +42,6 @@ extern char gui_statusbar_msg[100];
 extern void cpu_reset(void);
 extern void cpu_interpreter(void);
 // Display
-extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
 extern bool display_draw(void);
 

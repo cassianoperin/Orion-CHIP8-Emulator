@@ -1,8 +1,21 @@
 #pragma once
 #include "typedef.h"
 
+/* Nuklear Flags */
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+// #define NK_INCLUDE_DEFAULT_ALLOCATOR
+// #define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+// #define NK_INCLUDE_FONT_BAKING
+// #define NK_INCLUDE_DEFAULT_FONT
+// #define NK_IMPLEMENTATION
+// #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
+#include "canvas.c"
+// #include "overview.c"
+
 
 // --------------------------------- External Variables --------------------------------- //
 // Main
@@ -18,6 +31,7 @@ extern bool quirk_display_wait;
 // Display
 extern int menu(struct nk_context *ctx);
 extern int status_bar(struct nk_context *ctx);
+extern int overview(struct nk_context *ctx);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // Window size
@@ -53,6 +67,6 @@ unsigned int frame_counter = 0;              // Frame per second
 bool display_init(void);
 bool display_draw(void);
 void SDL_close(void);
-void display_update_theme(void);
+// void display_update_theme(void);
 void draw_graphics_console(void);
 void display_updateWindowSize(unsigned int pixel_scale);

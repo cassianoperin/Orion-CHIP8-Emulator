@@ -121,29 +121,8 @@ void input_keyboard(void) {
 
 				// Pause
 				case SDLK_p:
-					if ( cpu_rom_loaded ) {
+					if ( cpu_rom_loaded )
 						cpu_pause = !cpu_pause;
-
-						if (cpu_pause ) {
-							// Keep the current Theme
-							display_pixel_ON_color_tmp = display_pixel_ON_color;
-							display_pixel_OFF_color_tmp = display_pixel_OFF_color;
-							// Update the Theme
-							display_pixel_ON_color_alt	= 0xFFf2f2f2;
-							display_pixel_OFF_color_alt	= 0xFFcccccc;
-							display_update_theme();
-						} else {
-							// Return the original Theme
-							display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-							display_update_theme();
-						}
-
-						// Draw to ensure that the menu will be updated
-						// When quirk_display_wait is disables, because some games
-						// don't call the draw instruction in some ocasions
-						display_draw();
-					}
 
 					break;
 
@@ -214,84 +193,84 @@ void input_keyboard(void) {
 
 					break;
 					
-				// Change Theme
-				case SDLK_7: {
+				// // Change Theme
+				// case SDLK_7: {
 
-					// Jump to next color theme
-					if ( display_color_theme < 5 ) {
-						display_color_theme ++;
-					} else {
-						display_color_theme = 0;
-					}
+				// 	// Jump to next color theme
+				// 	if ( display_color_theme < 5 ) {
+				// 		display_color_theme ++;
+				// 	} else {
+				// 		display_color_theme = 0;
+				// 	}
 					
-					//Select surfaces based on key press
-					switch( display_color_theme )
-					{
-						// Black and White
-						case 0:
-							display_pixel_ON_color_alt	= 0xFFFFFFFF;
-							display_pixel_OFF_color_alt	= 0xFF000000;
+				// 	//Select surfaces based on key press
+				// 	switch( display_color_theme )
+				// 	{
+				// 		// Black and White
+				// 		case 0:
+				// 			display_pixel_ON_color_alt	= 0xFFFFFFFF;
+				// 			display_pixel_OFF_color_alt	= 0xFF000000;
 
-							display_update_theme();
-							break;
+				// 			display_update_theme();
+				// 			break;
 
-						// White and Black
-						case 1: {
-							// New colors
-							display_pixel_ON_color_alt	= 0xFF000000;
-							display_pixel_OFF_color_alt	= 0xFFFFFFFF;
+				// 		// White and Black
+				// 		case 1: {
+				// 			// New colors
+				// 			display_pixel_ON_color_alt	= 0xFF000000;
+				// 			display_pixel_OFF_color_alt	= 0xFFFFFFFF;
 
-							display_update_theme();
-							break;
-						}
+				// 			display_update_theme();
+				// 			break;
+				// 		}
 
-						// Grey Wolfand and Crystal Blue
-						case 2: {
-							// New colors
-							display_pixel_ON_color_alt	= 0xFF5CB3FF;
-							display_pixel_OFF_color_alt	= 0xFF504A4B;
+				// 		// Grey Wolfand and Crystal Blue
+				// 		case 2: {
+				// 			// New colors
+				// 			display_pixel_ON_color_alt	= 0xFF5CB3FF;
+				// 			display_pixel_OFF_color_alt	= 0xFF504A4B;
 
-							display_update_theme();
-							break;
-						}
+				// 			display_update_theme();
+				// 			break;
+				// 		}
 
-						// Cloudy Gray and Emerald Green
-						case 3: {
-							// New colors
-							display_pixel_ON_color_alt	= 0xFF50C878;
-							display_pixel_OFF_color_alt	= 0xFF6D6968;
+				// 		// Cloudy Gray and Emerald Green
+				// 		case 3: {
+				// 			// New colors
+				// 			display_pixel_ON_color_alt	= 0xFF50C878;
+				// 			display_pixel_OFF_color_alt	= 0xFF6D6968;
 
-							display_update_theme();
-							break;
-						}
+				// 			display_update_theme();
+				// 			break;
+				// 		}
 
-						// Night Black and Pastel Yellow
-						case 4: {
-							// New colors
-							display_pixel_ON_color_alt	= 0xFFFAF884;
-							display_pixel_OFF_color_alt	= 0xFF0C090A;
+				// 		// Night Black and Pastel Yellow
+				// 		case 4: {
+				// 			// New colors
+				// 			display_pixel_ON_color_alt	= 0xFFFAF884;
+				// 			display_pixel_OFF_color_alt	= 0xFF0C090A;
 
-							display_update_theme();
-							break;
-						}
+				// 			display_update_theme();
+				// 			break;
+				// 		}
 
-						// Grey and LightCoral Pink
-						case 5: {
-							// New colors
-							display_pixel_ON_color_alt	= 0xFFF08080;
-							display_pixel_OFF_color_alt	= 0xFF1C1C1C;
+				// 		// Grey and LightCoral Pink
+				// 		case 5: {
+				// 			// New colors
+				// 			display_pixel_ON_color_alt	= 0xFFF08080;
+				// 			display_pixel_OFF_color_alt	= 0xFF1C1C1C;
 
-							display_update_theme();
-							break;
-						}
+				// 			display_update_theme();
+				// 			break;
+				// 		}
 
-					}
+				// 	}
 
-					// Show Message
-					printf("Theme %d\n", display_color_theme);
+				// 	// Show Message
+				// 	printf("Theme %d\n", display_color_theme);
 
-					break;
-				}
+				// 	break;
+				// }
 
 				// // Show Emulator Information on screen
 				// case SDLK_8:
@@ -338,32 +317,16 @@ void input_keyboard(void) {
 						cpu_pause = !cpu_pause;
 
 						if (cpu_pause ) {
-							// Keep the current Theme
-							display_pixel_ON_color_tmp = display_pixel_ON_color;
-							display_pixel_OFF_color_tmp = display_pixel_OFF_color;
-							// Update the Theme
-							display_pixel_ON_color_alt	= 0xFFf2f2f2;
-							display_pixel_OFF_color_alt	= 0xFFcccccc;
-							display_update_theme();
 							// Update the status bar message
 							char str[100];
 							sprintf(str, "PAUSED!");
 							strcpy(gui_statusbar_msg, str);
 						} else {
-							// Return the original Theme
-							display_pixel_ON_color_alt	= display_pixel_ON_color_tmp;
-							display_pixel_OFF_color_alt	= display_pixel_OFF_color_tmp;
-							display_update_theme();
 							// Update the status bar message
 							char str[100];
 							sprintf(str, "ROM loaded.");
 							strcpy(gui_statusbar_msg, str);
 						}
-
-						// Draw to ensure that the menu will be updated
-						// When quirk_display_wait is disables, because some games
-						// don't call the draw instruction in some ocasions
-						display_draw();
 					}
 					
 					break;

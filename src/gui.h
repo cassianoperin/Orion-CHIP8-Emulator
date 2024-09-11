@@ -2,8 +2,11 @@
 #include "typedef.h"
 
 /* Nuklear Flags */
+#define INT_MAX 50
+#define INT_MIN 0
 #define NK_INCLUDE_FONT_BAKING
 #define NK_INCLUDE_DEFAULT_FONT
+#define NK_INCLUDE_STANDARD_VARARGS
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
 
@@ -54,7 +57,6 @@ extern bool quirk_Jump_with_offset_Bnnn;
 // NFD Extended
 extern int lib_gui_loadrom(void);
 // Display
-extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
 // CPU
 extern void cpu_reset(void);
@@ -69,4 +71,5 @@ char gui_statusbar_msg[100];
 void gui_init(void);
 int menu(struct nk_context *ctx);
 int status_bar(struct nk_context *ctx);
+int overview(struct nk_context *ctx);
 

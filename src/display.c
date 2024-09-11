@@ -8,15 +8,15 @@ bool display_init(void)
 
 	// Variables
 	// Main Window
-	display_WINDOW_WIDTH_X	= 1024;
-	display_WINDOW_HEIGHT_Y =  768;
+	display_WINDOW_WIDTH_X		= 1024;
+	display_WINDOW_HEIGHT_Y 	=  768;
 	// Emulator screen
-	display_EMULATOR_RES_X  = 64;
-	display_EMULATOR_RES_Y  = 32;
-	display_EMULATOR_RES_SCALE			= 10;
-	display_pixel_ON_color	= 0xFFFFFFFF;
-	display_pixel_OFF_color	= 0xFF000000;
-	display_color_theme		= 0;
+	display_EMULATOR_RES_X  	= 64;
+	display_EMULATOR_RES_Y		= 32;
+	display_EMULATOR_RES_SCALE	= 10;
+	display_pixel_ON_color		= 0xFFFFFFFF;
+	display_pixel_OFF_color		= 0xFF000000;
+	display_color_theme			= 0;
 
 	// Debug
 	debug_pixels			= false;
@@ -81,16 +81,21 @@ bool display_draw(void)
 	// Increment Frame Counter for FPS
 	frame_counter++;
 
-	// Draw
+	// Show Menu
 	if ( quirk_display_wait ) {
 		SDL_RenderSetVSync(renderer, 1);
+
 	} else {
 		SDL_RenderSetVSync(renderer, 0);
 	}
 
-	// Show Menus
+	// Load Menus
 	menu(ctx);
 	status_bar(ctx);
+	// Emulator Window
+	canvas(ctx);
+	// Future Debug Window
+	overview(ctx);
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, display_pixels, display_EMULATOR_RES_X * sizeof(uint32_t));
@@ -104,19 +109,6 @@ bool display_draw(void)
 
 	// // Draw
 	// SDL_RenderPresent(renderer);
-
-	// // Show Menu
-	// if ( gui_show_menu ) {
-	// 	SDL_RenderSetVSync(renderer, 1);
-	// 	menu(ctx);
-	// 	status_bar(ctx);
-	// } else {
-	// 	if ( quirk_display_wait ) {
-	// 		SDL_RenderSetVSync(renderer, 1);
-	// 	} else {
-	// 		SDL_RenderSetVSync(renderer, 0);
-	// 	}
-	// }
 
 	// Draw
 	SDL_RenderPresent(renderer);
@@ -142,22 +134,22 @@ void SDL_close(void)
 	SDL_Quit();
 }
 
-void display_update_theme(void){
-	unsigned int i;
+// void display_update_theme(void){
+// 	unsigned int i;
 
-	// Update graphics vector with new colors
-	for ( i = 0 ; i < 2048 ; i++ ) {
-		if ( display_pixels[i] == display_pixel_ON_color ) {
-			display_pixels[i] = display_pixel_ON_color_alt;
-		} else {
-			display_pixels[i] = display_pixel_OFF_color_alt;
-		}
-	}
+// 	// Update graphics vector with new colors
+// 	for ( i = 0 ; i < 2048 ; i++ ) {
+// 		if ( display_pixels[i] == display_pixel_ON_color ) {
+// 			display_pixels[i] = display_pixel_ON_color_alt;
+// 		} else {
+// 			display_pixels[i] = display_pixel_OFF_color_alt;
+// 		}
+// 	}
 
-	// Update the colors
-	display_pixel_ON_color	= display_pixel_ON_color_alt;
-	display_pixel_OFF_color	= display_pixel_OFF_color_alt;
-}
+// 	// Update the colors
+// 	display_pixel_ON_color	= display_pixel_ON_color_alt;
+// 	display_pixel_OFF_color	= display_pixel_OFF_color_alt;
+// }
 
 // Print Graphics on Console
 void draw_graphics_console(void) {
