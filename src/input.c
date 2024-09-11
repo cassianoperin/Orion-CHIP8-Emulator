@@ -176,13 +176,13 @@ void input_keyboard(void) {
 					display_fullscreen = !display_fullscreen;
 
 					if ( display_fullscreen ) {
-						display_SCALE = 20; // To ensure that will fill entire screen
-						display_updateWindowSize(display_SCALE);
+						display_EMULATOR_RES_SCALE = 20; // To ensure that will fill entire screen
+						display_updateWindowSize(display_EMULATOR_RES_SCALE);
 						SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 						
 					} else {
-						display_SCALE = 10; // To ensure that will fill entire screen
-						display_updateWindowSize(display_SCALE);
+						display_EMULATOR_RES_SCALE = 10; // To ensure that will fill entire screen
+						display_updateWindowSize(display_EMULATOR_RES_SCALE);
 						SDL_SetWindowFullscreen(window, 0);
 						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 					}

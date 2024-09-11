@@ -104,6 +104,20 @@ int main(int argc, char *argv[])
 		// ------------- Keyboard ------------ //
 		input_keyboard();
 
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
 		// ----------- Delay Timer ----------- //
 		if ( DelayTimer > 0 ) {
 			DelayTimer--;

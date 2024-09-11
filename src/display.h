@@ -22,15 +22,15 @@ extern int menu(struct nk_context *ctx);
 extern int status_bar(struct nk_context *ctx);
 
 // ---------------------------------- Global Variables ---------------------------------- //
+// Window size
+unsigned int display_WINDOW_WIDTH_X;
+unsigned int display_WINDOW_HEIGHT_Y;
+
 // Display (Screen size)
-unsigned char display_SCREEN_WIDTH_X;
-unsigned char display_SCREEN_HEIGHT_Y;
-unsigned int display_SCALE;
+unsigned char display_EMULATOR_RES_X;
+unsigned char display_EMULATOR_RES_Y;
+unsigned int  display_EMULATOR_RES_SCALE;
 bool display_fullscreen;
-// Display Debug (Screen size)
-unsigned char display_debug_SCREEN_WIDTH_X;
-unsigned char display_debug_SCREEN_HEIGHT_Y;
-unsigned int display_debug_SCALE;
 // Colors
 unsigned int  display_pixel_ON_color;
 unsigned int  display_pixel_OFF_color;

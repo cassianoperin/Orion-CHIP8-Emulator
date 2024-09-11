@@ -78,8 +78,8 @@ void handle_quirks(char *game_signature) {
 	// if ( !strcmp(game_signature, "6A026B0C6C3F6D0CA6EA+25121") ) {
 	// 	quirk_ETI660_64x32_screen = true;
 	// 	printf("ETI-660 Quirk 64 x 32 resolution Enabled.\n");
-	// 	display_SCREEN_WIDTH_X = 64;
-	// 	display_SCREEN_HEIGHT_Y = 32;
+	// 	display_EMULATOR_RES_X = 64;
+	// 	display_EMULATOR_RES_Y = 32;
 	// }
 
 	// Bnnn behavior in some CHIP-48 and SUPER-CHIP that sum the value of V[x] instead of V[0]

@@ -71,8 +71,8 @@ void cpu_initialize(void) {
 	cpu_SCHIP_LORES_mode = false;
 
 	// Screen Size
-	display_SCREEN_WIDTH_X  = 64;		// Number of Columns in Graphics
-	display_SCREEN_HEIGHT_Y = 32;		// Number of Lines in Graphics
+	display_EMULATOR_RES_X = 64;		// Number of Columns in Graphics
+	display_EMULATOR_RES_Y = 32;		// Number of Lines in Graphics
 	
 	// Keyboard
 	memset(Key, 0x00, sizeof(Key));

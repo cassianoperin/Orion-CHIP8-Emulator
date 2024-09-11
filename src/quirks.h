@@ -1,11 +1,8 @@
 #pragma once
 #include "typedef.h"
 
-// // --------------------------------- External Variables --------------------------------- //
-// // Display
-// extern unsigned char display_SCREEN_WIDTH_X;
-// extern unsigned char display_SCREEN_HEIGHT_Y;
-// // CPU
+// --------------------------------- External Variables --------------------------------- //
+// CPU
 // extern unsigned int  CPU_CLOCK;
 
 // ---------------------------------- Global Variables ---------------------------------- //

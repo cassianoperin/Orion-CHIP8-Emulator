@@ -578,7 +578,7 @@ void opc_chip8_DXYN(void) {
 			}
 
 			// Translate the x and Y to the Graphics Vector
-			gpx_position = (row * display_SCREEN_WIDTH_X) + column; 
+			gpx_position = (row * display_EMULATOR_RES_X) + column; 
 
 			// If bit=1, test current graphics[index], if is already set, mark v[F]=1 (collision)
 			if ( bit_value  == 1 ) {

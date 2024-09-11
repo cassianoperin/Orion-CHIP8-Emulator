@@ -40,9 +40,9 @@ extern bool             cpu_draw_flag;
 extern bool            cpu_pause;
 
 // Display
-extern unsigned char display_SCREEN_WIDTH_X;
-extern unsigned char display_SCREEN_HEIGHT_Y;
-extern unsigned int display_SCALE;
+extern unsigned char display_EMULATOR_RES_X;
+extern unsigned char display_EMULATOR_RES_Y;
+extern unsigned int  display_EMULATOR_RES_SCALE;
 extern unsigned int  display_pixel_ON_color;
 extern unsigned int  display_pixel_OFF_color;
 extern unsigned int  display_pixels[8192];

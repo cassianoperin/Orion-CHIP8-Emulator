@@ -27,15 +27,15 @@ void opc_schip_00FF(void) {
 	CPU_CLOCK = 1500;
 
 	// Set SCHIP Resolution
-	display_SCREEN_WIDTH_X = 128;
-	display_SCREEN_HEIGHT_Y = 64;
+	display_EMULATOR_RES_X = 128;
+	display_EMULATOR_RES_Y = 64;
 
 	// if Resize_Quirk_00FE_00FF {
 	// 	// Clear the screen when changing graphic mode
 	// 	Graphics = [128 * 64]byte{}
 	// }
 
-    SDL_SetWindowSize (window, display_SCREEN_WIDTH_X * display_SCALE, display_SCREEN_HEIGHT_Y * display_SCALE);
+    SDL_SetWindowSize (window, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE);
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
 	PC += 2;
@@ -92,7 +92,7 @@ void opc_schip_DXY0(void) {
 		// } else {
 		// 	// Slit the sprite between screen top and down
 			// if line (y) plus n bytes > 31
-			row = (V[y] + byte) % display_SCREEN_HEIGHT_Y;
+			row = (V[y] + byte) % display_EMULATOR_RES_Y;
 		// }
 
 		// Always print 8 bits of the byte
@@ -110,11 +110,11 @@ void opc_schip_DXY0(void) {
 			// 		bit_value = 0;
 			// 	}
 			// } else {
-				column = (V[x] + bit) % display_SCREEN_WIDTH_X;
+				column = (V[x] + bit) % display_EMULATOR_RES_X;
 			// }
 
 			// Translate the x and Y to the Graphics Vector
-			gpx_position = (row * display_SCREEN_WIDTH_X) + column; 
+			gpx_position = (row * display_EMULATOR_RES_X) + column; 
 
 			if ( gpx_position > 8192 ) {
 				printf("gpx_position: %d\trow: %d\tcolumn: %d\n\n\n\n", gpx_position, row, column);

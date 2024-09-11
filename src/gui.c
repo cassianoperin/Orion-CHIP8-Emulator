@@ -17,7 +17,7 @@ int menu(struct nk_context *ctx)
     actual_window_flags = window_flags;
     if (!(actual_window_flags & NK_WINDOW_TITLE))
         actual_window_flags &= ~(NK_WINDOW_MINIMIZABLE|NK_WINDOW_CLOSABLE);
-    if (nk_begin(ctx, "Chip8", nk_rect(0, 0, display_SCREEN_WIDTH_X * display_SCALE, 35), actual_window_flags))
+    if (nk_begin(ctx, "Chip8", nk_rect(0, 0, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, 35), actual_window_flags))
     {
         nk_menubar_begin(ctx);
 
@@ -79,13 +79,13 @@ int menu(struct nk_context *ctx)
             }
 
             static const float ratio[] = {100, 80};
-            int initial_scale_value = display_SCALE;
+            int initial_scale_value = display_EMULATOR_RES_SCALE;
             nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
             nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
-            nk_property_int(ctx, "", 10, (int *)&display_SCALE, 40, 5, 1);
+            nk_property_int(ctx, "", 10, (int *)&display_EMULATOR_RES_SCALE, 40, 5, 1);
             // Check if the scale was changed and update the window size
-            if ( initial_scale_value != display_SCALE) {
-                display_updateWindowSize(display_SCALE);
+            if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
+                display_updateWindowSize(display_EMULATOR_RES_SCALE);
                 SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
             }
 
@@ -95,12 +95,12 @@ int menu(struct nk_context *ctx)
 
                 if ( display_fullscreen ) {
                     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);       
-                    display_SCALE = 20; // To ensure that will fill entire screen
-                    display_updateWindowSize(display_SCALE);
+                    display_EMULATOR_RES_SCALE = 20; // To ensure that will fill entire screen
+                    display_updateWindowSize(display_EMULATOR_RES_SCALE);
                 } else {
                     SDL_SetWindowFullscreen(window, 0);
-                    display_SCALE = 10;
-                    display_updateWindowSize(display_SCALE);
+                    display_EMULATOR_RES_SCALE = 10;
+                    display_updateWindowSize(display_EMULATOR_RES_SCALE);
                     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
                 }
 
@@ -306,8 +306,8 @@ int menu(struct nk_context *ctx)
         const int popup_size_x = 420;
         const int popup_size_y = 140;
         const int popup_size_header = 20;
-        const int popup_initial_x_pos = display_SCREEN_WIDTH_X * display_SCALE  / 2 - popup_size_x / 2;
-        const int popup_initial_y_pos = display_SCREEN_HEIGHT_Y * display_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+        const int popup_initial_x_pos = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE / 2 - popup_size_x / 2;
+        const int popup_initial_y_pos = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
 
         struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
         if (nk_popup_begin(ctx, NK_POPUP_STATIC, "About", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
@@ -328,8 +328,8 @@ int menu(struct nk_context *ctx)
         const int popup_size_x = 500;
         const int popup_size_y = 200;
         const int popup_size_header = 20;
-        const int popup_initial_x_pos = display_SCREEN_WIDTH_X * display_SCALE  / 2 - popup_size_x / 2;
-        const int popup_initial_y_pos = display_SCREEN_HEIGHT_Y * display_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+        const int popup_initial_x_pos = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE  / 2 - popup_size_x / 2;
+        const int popup_initial_y_pos = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
 
         struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
         if (nk_popup_begin(ctx, NK_POPUP_STATIC, "CHIP-8 Quirk Help", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
