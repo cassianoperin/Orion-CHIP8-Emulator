@@ -47,8 +47,6 @@ extern void input_keyboard(void);
 extern bool display_init(void);
 extern bool display_draw(void);
 extern void SDL_close(void);
-// Display Degug
-extern void display_debug_init(void);
 // Audio
 extern void sound_init(void);
 extern void sound_close(void);
@@ -66,10 +64,6 @@ const int   pal_freq   = 60;
 SDL_Window   *window;
 SDL_Renderer *renderer;
 SDL_Texture  *texture;
-// SDL Video (Debug Window)
-SDL_Window   *window_debug;
-SDL_Renderer *renderer_debug;
-SDL_Texture  *texture_debug;
 
 // --- Nuklear --- //
 /* GUI */

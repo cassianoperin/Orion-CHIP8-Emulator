@@ -20,9 +20,6 @@ const struct nk_color nk_yellow = {255,255,0,255};
 // Main
 extern bool quit;
 extern bool rom_format_hex;
-extern SDL_Window   *window_debug;
-extern SDL_Renderer *renderer_debug;
-extern SDL_Texture  *texture_debug;
 // SDL Video
 extern SDL_Window   *window;
 extern SDL_Renderer *renderer;
@@ -59,7 +56,6 @@ extern int lib_gui_loadrom(void);
 // Display
 extern void display_update_theme(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
-extern bool display_debug_init(void);
 // CPU
 extern void cpu_reset(void);
 // Font

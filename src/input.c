@@ -471,37 +471,6 @@ void input_keyboard(void) {
 					
 					break;
 			}
-
-		} else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
-		{
-			// Handle window close for each window 
-			if (SDL_GetWindowID(window) == event.window.windowID)
-			{
-				// Close Main Window
-				SDL_DestroyTexture( texture );
-				SDL_DestroyRenderer( renderer );
-				SDL_DestroyWindow( window );
-				window = NULL;
-				renderer = NULL;
-				texture = NULL;
-
-				// Close Debug window
-				SDL_DestroyTexture( texture_debug );
-				SDL_DestroyRenderer( renderer_debug );
-				SDL_DestroyWindow( window_debug );
-				window_debug = NULL;
-				renderer_debug = NULL;
-				texture_debug = NULL;
-
-			} else if (SDL_GetWindowID(window_debug) == event.window.windowID)
-			{
-				// Close Debug window
-				SDL_DestroyRenderer( renderer_debug );
-				SDL_DestroyWindow( window_debug );
-				window_debug = NULL;
-				renderer_debug = NULL;
-
-			}
 		} else if (event.type == SDL_QUIT)
 		{
 			// When last window is closed, the SDL_QUIT is triggered

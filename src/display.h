@@ -9,9 +9,6 @@
 extern SDL_Window   *window;
 extern SDL_Renderer *renderer;
 extern SDL_Texture  *texture;
-extern SDL_Window   *window_debug;
-extern SDL_Renderer *renderer_debug;
-extern SDL_Texture  *texture_debug;
 // Nuklear
 extern struct nk_context *ctx;
 // GUI
@@ -61,4 +58,3 @@ void SDL_close(void);
 void display_update_theme(void);
 void draw_graphics_console(void);
 void display_updateWindowSize(unsigned int pixel_scale);
-bool display_debug_init(void);
