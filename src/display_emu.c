@@ -1,12 +1,5 @@
-// --------------------------------- External Variables --------------------------------- //
-/* Display */ 
-extern unsigned char display_EMULATOR_RES_X;
-extern unsigned char display_EMULATOR_RES_Y;
-extern unsigned int  display_EMULATOR_RES_SCALE;
-extern unsigned int  display_pixels[8192];
-extern unsigned int  display_pixel_ON_color;
+#include "display_emu.h"
 
-/* nuklear - v1.05 - public domain */
 struct nk_canvas {
     struct nk_command_buffer *painter;
     struct nk_vec2 item_spacing;
@@ -54,8 +47,7 @@ canvas_end(struct nk_context *ctx, struct nk_canvas *canvas)
     ctx->style.window.fixed_background = canvas->window_background;
 }
 
-static void
-canvas(struct nk_context *ctx)
+void canvas(struct nk_context *ctx)
 {
         struct nk_canvas canvas;
         /*if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_SCALABLE|

@@ -13,7 +13,7 @@
 // #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
-#include "canvas.c"
+#include "display_emu.h"
 // #include "overview.c"
 
 
