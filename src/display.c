@@ -8,8 +8,8 @@ bool display_init(void)
 
 	// Variables
 	// Main Window
-	display_WINDOW_WIDTH_X		= 1024;
-	display_WINDOW_HEIGHT_Y 	=  768;
+	display_WINDOW_WIDTH_X		= 1280;
+	display_WINDOW_HEIGHT_Y 	=  720;
 	// Emulator screen
 	display_EMULATOR_RES_X  	= 64;
 	display_EMULATOR_RES_Y		= 32;

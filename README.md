@@ -16,8 +16,11 @@ Port of chip8 emulator to use nuklear GUI.
 
 * INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
-# Reestruturação de janelas:
 
-1) quirk_display_wait quebrado, draw todo errado
-2) Draw para a main window remover
-3) show_logo
+## REFORMA
+
+1) gui.c: gui_init:
+    // Load the emulator Logo
+    showLogo();
+
+2) quirk_display_wait: quebrado, rever todo draw 

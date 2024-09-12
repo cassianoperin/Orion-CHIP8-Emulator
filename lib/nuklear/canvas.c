@@ -30,7 +30,7 @@ canvas_begin(struct nk_context *ctx, struct nk_canvas *canvas, nk_flags flags,
 
     /* create/update window and set position + size */
     // if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR|flags))
-    if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR|flags))
+    if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE | flags))
         return nk_false;
 
     /* allocate the complete window space for drawing */

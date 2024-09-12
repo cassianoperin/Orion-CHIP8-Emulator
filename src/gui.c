@@ -48,24 +48,24 @@ int menu(struct nk_context *ctx)
         if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(190, 220)))
         {
              
-            if (nk_tree_push(ctx, NK_TREE_NODE, "Window Theme", NK_MINIMIZED))
+            if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
             {
                 static int option;
 
                 nk_layout_row_static(ctx, 20, 160, 1);
-                option = nk_option_label(ctx, "1: White",  option == 0) ? 0 : option;
-                option = nk_option_label(ctx, "2: Black",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "1: Black",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: White",  option == 1) ? 1 : option;
 
                 switch( option )
                 {
                     // White
                     case 0:
-                        set_style(ctx, THEME_WHITE);
+                        set_style(ctx, THEME_BLACK);
                         break;
 
                     // Black
                     case 1: {
-                       	set_style(ctx, THEME_BLACK);
+                       	set_style(ctx, THEME_WHITE);
                         break;
                     }
                 }
@@ -73,26 +73,69 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
+            // Update the main window resolution
+            if (nk_tree_push(ctx, NK_TREE_NODE, "Resolution", NK_MINIMIZED))
+            {
+                static int option;
+
+                nk_layout_row_static(ctx, 20, 180, 1);
+                option = nk_option_label(ctx, "1:  720p (1280 x  720)",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: 1080p (1920 x 1080)",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "3: 1440p (2560 x 1440)",  option == 2) ? 2 : option;
+                option = nk_option_label(ctx, "4: 2160p (3840 x 2160)",  option == 3) ? 3 : option;
+
+                switch( option )
+                {
+                    // 720p (1280 x  720)
+                    case 0:
+                    	display_WINDOW_WIDTH_X		= 1280;
+	                    display_WINDOW_HEIGHT_Y 	=  720;
+                        SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                        SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                        break;
+
+                    // 1080p (1920 x 1080)
+                    case 1: {
+                    	display_WINDOW_WIDTH_X		= 1920;
+	                    display_WINDOW_HEIGHT_Y 	= 1080;
+                        SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                        SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                        break;
+                    }
+
+                    // 1440p (2560 x 1440)
+                    case 2: {
+                        display_WINDOW_WIDTH_X		= 2560;
+                        display_WINDOW_HEIGHT_Y 	= 1440;
+                        SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                        SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                        break;
+                    }
+
+                    // 2160p (3840 x 2160)
+                    case 3: {
+                        display_WINDOW_WIDTH_X		= 3840;
+                        display_WINDOW_HEIGHT_Y 	= 2160;
+                        SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                        SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                        break;
+                    }
+
+                }
+
+                nk_tree_pop(ctx);
+            }
+
+
             // Disable Pixel Scale menu before rom loading
             if ( display_fullscreen ) {
                 nk_widget_disable_begin(ctx);
             }
 
-            static const float ratio[] = {100, 80};
-            int initial_scale_value = display_EMULATOR_RES_SCALE;
-            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
-            nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
-            nk_property_int(ctx, "", 10, (int *)&display_EMULATOR_RES_SCALE, 40, 5, 1);
-            // Check if the scale was changed and update the window size
-            if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
-                // Update the main window if desired
-                // display_updateWindowSize(display_EMULATOR_RES_SCALE);
-                // SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
-                // Update Emulator Window
-                // Resize Emulator Window
-                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) );
-            }
 
             nk_widget_disable_end(ctx);
 
@@ -118,7 +161,6 @@ int menu(struct nk_context *ctx)
         nk_layout_row_push(ctx, 80);
         if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
         {
-            // nk_layout_row_dynamic(ctx, 20, 1);
 
             if (nk_tree_push(ctx, NK_TREE_NODE, "Emulator Theme", NK_MINIMIZED))
             {
@@ -212,9 +254,6 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
-
-
-
             if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
 
             if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
@@ -225,6 +264,28 @@ int menu(struct nk_context *ctx)
             nk_layout_row_dynamic(ctx, 1, 1);
             nk_rule_horizontal(ctx, nk_gray, nk_true);
 
+            // Emulator Scale
+            int initial_scale_value = display_EMULATOR_RES_SCALE;
+            static const float ratio[] = {80, 120};
+            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+            nk_label(ctx, "Pixel Scale:", NK_TEXT_LEFT);
+            nk_property_int(ctx, "", 10, (int *)&display_EMULATOR_RES_SCALE, 30, 5, 1);
+            // Check if the scale was changed and update the window size
+            if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
+                // Resize Emulator Window
+                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) );
+            }
+
+            // Clock
+            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
+            nk_label(ctx, "CPU CLOCK:", NK_TEXT_LEFT);
+            nk_property_int(ctx, "Clock:", 60, (int *)&CPU_CLOCK, 2000, 10, 1);
+            
+            // --- Split Menu --- //
+            nk_layout_row_dynamic(ctx, 1, 1);
+            nk_rule_horizontal(ctx, nk_gray, nk_true);
+
+            // Reset
             nk_layout_row_dynamic(ctx, 20, 1);
             if (nk_menu_item_label(ctx, "Reset", NK_TEXT_LEFT)) {
                 if ( cpu_rom_loaded ) {
@@ -232,11 +293,7 @@ int menu(struct nk_context *ctx)
                 }
             }
 
-            static const float ratio[] = {80, 120};
-            nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);
-            nk_label(ctx, "CPU CLOCK:", NK_TEXT_LEFT);
-            nk_property_int(ctx, "Clock:", 60, (int *)&CPU_CLOCK, 2000, 10, 1);
-            
+
             nk_menu_end(ctx);
         }
 
