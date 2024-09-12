@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
 
 		// Increment Cycle per second counter
 		cycle_counter++;
+				
 		// ---------------------------------- END OF SECONDs COUNTER  ---------------------------------- //
 
 

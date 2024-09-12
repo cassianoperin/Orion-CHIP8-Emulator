@@ -17,7 +17,6 @@
 // --------------------------------- External Variables --------------------------------- //
 // Lib
 extern char *game_signature;
-// // extern char teste;
 // CPU
 extern unsigned char	        Memory[4096];
 extern bool                     cpu_draw_flag;

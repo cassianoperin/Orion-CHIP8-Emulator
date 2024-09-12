@@ -30,7 +30,6 @@ int menu(struct nk_context *ctx)
         
         // Start Menu Row
         nk_layout_row_begin(ctx, NK_STATIC, 25, 5);
-        // nk_layout_row_dynamic(ctx, 25, 5);
         
         nk_layout_row_push(ctx, 45);
         if (nk_menu_begin_label(ctx, "File", NK_TEXT_LEFT, nk_vec2(120, 200)))

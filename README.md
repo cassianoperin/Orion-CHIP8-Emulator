@@ -22,7 +22,10 @@ Port of chip8 emulator to use nuklear GUI.
 1) quirk_display_wait: quebrado, rever todo draw
 
 2) Emu information
+char gui_statusbar_msg[100];
 
 3) Emu Memories (graph, ram)
 
 4) Opcodes
+
+5) display_pixels 0 ou 1

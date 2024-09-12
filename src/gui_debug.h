@@ -18,6 +18,14 @@
 // --------------------------------- External Variables --------------------------------- //
 // GUI
 extern const struct nk_color nk_white;
+// CPU
+extern unsigned int CPU_CLOCK;
+// Display
+extern unsigned int  display_pixels[8192];
+
+// ---------------------------------- Global Variables ---------------------------------- //
+char guiDebug_mem_addr[10];
+char guiDebug_emuinfo_msg[100];
 
 // -------------------------------------- Functions ------------------------------------- //
 int win_debug(struct nk_context *ctx);
