@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "display_emu.h"
 
 struct nk_canvas {
@@ -22,7 +23,6 @@ canvas_begin(struct nk_context *ctx, struct nk_canvas *canvas, nk_flags flags,
     ctx->style.window.fixed_background = nk_style_item_color(background_color);
 
     /* create/update window and set position + size */
-    // if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR|flags))
     if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE | flags))
         return nk_false;
 
@@ -47,36 +47,42 @@ canvas_end(struct nk_context *ctx, struct nk_canvas *canvas)
     ctx->style.window.fixed_background = canvas->window_background;
 }
 
-void canvas(struct nk_context *ctx)
+void win_emulator(struct nk_context *ctx)
 {
         struct nk_canvas canvas;
-        /*if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_SCALABLE|
-            NK_WINDOW_CLOSABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_TITLE, 10, 10, 600, 400, nk_rgb(250,250,250)))*/
-        
-        // if (canvas_begin(ctx, &canvas, NK_WINDOW_MOVABLE, 0, 36, 640, 320, nk_rgb(250,250,250)))
 
+        // background colors
+        unsigned char bg_R = 0;
+        unsigned char bg_G = 0;
+        unsigned char bg_B = 0;
+        // pixel colors
+        unsigned char px_R = 255;
+        unsigned char px_G = 255; 
+        unsigned char px_B = 255; 
 
-        if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER|NK_WINDOW_MOVABLE, 0, 36, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE), display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE), nk_rgb(250,250,250)))
+        if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE,  \
+                                        0, 40, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 3, \
+                                        (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34, \
+                                        nk_rgb(bg_R,bg_G,bg_B)))
         {
             float x = canvas.painter->clip.x, y = canvas.painter->clip.y;
 
             int rect_size = display_EMULATOR_RES_SCALE;
 
-            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1,   y + 0, rect_size, rect_size), 0, nk_rgb(247, 230, 154));
-            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2,  y + 0, rect_size, rect_size), 0, nk_rgb(247, 0, 154));
-            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*3, y + 0, rect_size, rect_size), 0, nk_rgb(0, 0, 255));
-            // nk_stroke_rect(canvas.painter, nk_rect(x + 150, y + 0, rect_size, rect_size), 10, 3, nk_rgb(0,0,255));
+            // // Screen calibration
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0, y + 0, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,0));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2, y + 0, rect_size, rect_size), 0, nk_rgb(0, 0, 255));
+            // // nk_stroke_rect(canvas.painter, nk_rect(x + rect_size*3, y + 0, rect_size, rect_size), 1, 1, nk_rgb(255, 0, 0));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*63, y + 0, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0,  y + rect_size*31, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*63, y + rect_size*31, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
 
-            // printf("%f %f\n", x, y);
-
-
-
-            // FILL CANVAS
+            // Fill canvas with pixel array
             int line, column, index = 0;
 
             while ( index < 2048 )
             {
-
                 // Lines
                 for ( line = 0 ; line < 32 ; line ++ ) {
                     // 00 ..  63
@@ -85,12 +91,7 @@ void canvas(struct nk_context *ctx)
                     // Columns
                     for ( column = 0 ; column < 64 ; column ++ ) {
                         if ( display_pixels[index+column] == display_pixel_ON_color ) {
-
-                            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*column,   y + rect_size*line, rect_size, rect_size), 0, nk_rgb(0, 0, 255));
-
-                        } else {
-                            // printf("   ");
-                            // printf("  ");
+                            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*column,   y + rect_size*line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
                         }
                     }
 
@@ -99,44 +100,6 @@ void canvas(struct nk_context *ctx)
                 }
             }
 
-
-            /*{
-                float points[12];
-                points[0]  = x + 200; points[1]  = y + 250;
-                points[2]  = x + 250; points[3]  = y + 350;
-                points[4]  = x + 225; points[5]  = y + 350;
-                points[6]  = x + 200; points[7]  = y + 300;
-                points[8]  = x + 175; points[9]  = y + 350;
-                points[10] = x + 150; points[11] = y + 350;
-                nk_fill_polygon(canvas.painter, points, 6, nk_rgb(0,0,0));
-            }
-
-            {
-                float points[12];
-                points[0]  = x + 200; points[1]  = y + 370;
-                points[2]  = x + 250; points[3]  = y + 470;
-                points[4]  = x + 225; points[5]  = y + 470;
-                points[6]  = x + 200; points[7]  = y + 420;
-                points[8]  = x + 175; points[9]  = y + 470;
-                points[10] = x + 150; points[11] = y + 470;
-                nk_stroke_polygon(canvas.painter, points, 6, 4, nk_rgb(0,0,0));
-            }
-
-            {
-                float points[8];
-                points[0]  = x + 250; points[1]  = y + 200;
-                points[2]  = x + 275; points[3]  = y + 220;
-                points[4]  = x + 325; points[5]  = y + 170;
-                points[6]  = x + 350; points[7]  = y + 200;
-                nk_stroke_polyline(canvas.painter, points, 4, 2, nk_rgb(255,128,0));
-            }
-
-            nk_stroke_line(canvas.painter, x + 15, y + 10, x + 200, y + 10, 2.0f, nk_rgb(189,45,75));
-            nk_stroke_rect(canvas.painter, nk_rect(x + 370, y + 20, 100, 100), 10, 3, nk_rgb(0,0,255));
-            nk_stroke_curve(canvas.painter, x + 380, y + 200, x + 405, y + 270, x + 455, y + 120, x + 480, y + 200, 2, nk_rgb(0,150,220));
-            nk_stroke_circle(canvas.painter, nk_rect(x + 20, y + 370, 100, 100), 5, nk_rgb(0,255,120));
-            nk_stroke_triangle(canvas.painter, x + 370, y + 250, x + 470, y + 250, x + 420, y + 350, 6, nk_rgb(255,0,143));
-            nk_stroke_arc(canvas.painter, x + 420, y + 420, 50, 0, 3.141592654f * 3.0f / 4.0f, 5, nk_rgb(0,255,255));*/
         }
         canvas_end(ctx, &canvas);
         

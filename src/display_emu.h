@@ -10,4 +10,4 @@ extern unsigned int  display_pixels[8192];
 extern unsigned int  display_pixel_ON_color;
 
 // -------------------------------------- Functions ------------------------------------- //
-void canvas(struct nk_context *ctx);
+void win_emulator(struct nk_context *ctx);

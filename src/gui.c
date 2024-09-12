@@ -11,13 +11,18 @@ int menu(struct nk_context *ctx)
     static int show_app_about = nk_false;
     static int show_app_quirk_help = nk_false;
 
-
     ctx->style.window.header.align = header_align;
+
+    int windows_x_size = 0;
+    int windows_y_size = 0;
+
+    // Get the window size to add the status bar correctly on the botton
+	SDL_GetWindowSize(window,&windows_x_size,&windows_y_size);
 
     actual_window_flags = window_flags;
     if (!(actual_window_flags & NK_WINDOW_TITLE))
         actual_window_flags &= ~(NK_WINDOW_MINIMIZABLE|NK_WINDOW_CLOSABLE);
-    if (nk_begin(ctx, "Chip8", nk_rect(0, 0, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, 35), actual_window_flags))
+    if (nk_begin(ctx, "MainMenu", nk_rect(0, 0, windows_x_size, 35), actual_window_flags))
     {
         nk_menubar_begin(ctx);
 
@@ -25,6 +30,7 @@ int menu(struct nk_context *ctx)
         
         // Start Menu Row
         nk_layout_row_begin(ctx, NK_STATIC, 25, 5);
+        // nk_layout_row_dynamic(ctx, 25, 5);
         
         nk_layout_row_push(ctx, 45);
         if (nk_menu_begin_label(ctx, "File", NK_TEXT_LEFT, nk_vec2(120, 200)))
@@ -273,7 +279,7 @@ int menu(struct nk_context *ctx)
             // Check if the scale was changed and update the window size
             if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
                 // Resize Emulator Window
-                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) );
+                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 3, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
             }
 
             // Clock

@@ -93,14 +93,9 @@ bool display_draw(void)
 	menu(ctx);
 	status_bar(ctx);
 	// Emulator Window
-	canvas(ctx);
+	win_emulator(ctx);
 	// Future Debug Window
 	overview(ctx);
-
-	// Set background color
-	// SDL_SetRenderDrawColor(renderer, 204, 255, 255, 255);
-	// // Clear the entire screen to our selected color.
-	// SDL_RenderClear(renderer);
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));

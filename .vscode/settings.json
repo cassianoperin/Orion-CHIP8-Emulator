@@ -59,7 +59,9 @@
         "nuklear_sdl_renderer.h": "c",
         "charconv": "cpp",
         "typeinfo": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "__verbose_abort": "c",
+        "cstdio": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "C_Cpp.errorSquiggles": "disabled"
