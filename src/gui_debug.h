@@ -21,7 +21,7 @@ extern const struct nk_color nk_white;
 // CPU
 extern unsigned int CPU_CLOCK;
 // Display
-extern unsigned int  display_pixels[8192];
+extern unsigned char display_pixels[8192];
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char guiDebug_mem_addr[10];

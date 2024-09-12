@@ -44,7 +44,7 @@ void cpu_initialize(void) {
 	I = 0x00;
 	
 	// Initialization - Clean pixels array
-	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+	for ( int i = 0 ; i < (char)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
 			display_pixels[i] = display_pixel_OFF_color;
 	}
 

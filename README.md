@@ -27,5 +27,3 @@ char gui_statusbar_msg[100];
 3) Emu Memories (graph, ram)
 
 4) Opcodes
-
-5) display_pixels 0 ou 1

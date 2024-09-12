@@ -43,11 +43,11 @@
 
 // --------------------------------- External Variables --------------------------------- //
 // Display
-extern unsigned int display_pixels[8192];
+extern unsigned char display_pixels[8192];
 extern unsigned char display_EMULATOR_RES_X;
 extern unsigned char display_EMULATOR_RES_Y;
-extern unsigned int display_pixel_ON_color;
-extern unsigned int display_pixel_OFF_color;
+extern unsigned char display_pixel_ON_color;
+extern unsigned char display_pixel_OFF_color;
 extern bool debug_pixels;
 
 // Quirks

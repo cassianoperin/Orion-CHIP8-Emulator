@@ -40,18 +40,18 @@ unsigned int display_WINDOW_WIDTH_X;
 unsigned int display_WINDOW_HEIGHT_Y;
 
 // Display (Screen size)
-unsigned char display_EMULATOR_RES_X;
-unsigned char display_EMULATOR_RES_Y;
+unsigned int  display_EMULATOR_RES_X;
+unsigned int  display_EMULATOR_RES_Y;
 unsigned int  display_EMULATOR_RES_SCALE;
 bool display_fullscreen;
 // Colors
-unsigned int  display_pixel_ON_color;
-unsigned int  display_pixel_OFF_color;
+unsigned char display_pixel_ON_color;
+unsigned char display_pixel_OFF_color;
 unsigned char display_color_theme;          // Theme number
 
 // Display Array
 // unsigned int  display_pixels[2048];
-unsigned int  display_pixels[8192];
+unsigned char  display_pixels[8192];
 // Frames per second
 unsigned char display_FPS;
 // Debug Pixels

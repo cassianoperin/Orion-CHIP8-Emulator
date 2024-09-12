@@ -14,8 +14,8 @@ bool display_init(void)
 	display_EMULATOR_RES_X  	= 64;
 	display_EMULATOR_RES_Y		= 32;
 	display_EMULATOR_RES_SCALE	= 10;
-	display_pixel_ON_color		= 0xFFFFFFFF;
-	display_pixel_OFF_color		= 0xFF000000;
+	display_pixel_ON_color		= 0xFF;
+	display_pixel_OFF_color		= 0x00;
 	display_color_theme			= 0;
 
 	// Debug
