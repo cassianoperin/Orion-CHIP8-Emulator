@@ -15,7 +15,7 @@
 // Clear the display.
 void opc_chip8_00E0(void) {
 	// Initialization - Clean pixels array
-	for ( int i = 0 ; i < (char)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
 			display_pixels[i] = display_pixel_OFF_color;
 	}
 
