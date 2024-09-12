@@ -19,8 +19,10 @@ Port of chip8 emulator to use nuklear GUI.
 
 ## REFORMA
 
-1) gui.c: gui_init:
-    // Load the emulator Logo
-    showLogo();
+1) quirk_display_wait: quebrado, rever todo draw
 
-2) quirk_display_wait: quebrado, rever todo draw 
+2) Emu information
+
+3) Emu Memories (graph, ram)
+
+4) Opcodes

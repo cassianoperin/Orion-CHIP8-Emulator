@@ -13,8 +13,7 @@
 // #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
-#include "display_emu.h"
-// #include "overview.c"
+#include "gui_emu.h"
 
 
 // --------------------------------- External Variables --------------------------------- //
@@ -33,7 +32,7 @@ unsigned int gui_pixels_logo[2048];
 // Display
 extern int menu(struct nk_context *ctx);
 extern int status_bar(struct nk_context *ctx);
-extern int overview(struct nk_context *ctx);
+extern int win_debug(struct nk_context *ctx);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // Window size

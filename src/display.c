@@ -92,10 +92,12 @@ bool display_draw(void)
 	// Load Menus
 	menu(ctx);
 	status_bar(ctx);
+
 	// Emulator Window
 	win_emulator(ctx);
+	
 	// Future Debug Window
-	overview(ctx);
+	win_debug(ctx);
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));

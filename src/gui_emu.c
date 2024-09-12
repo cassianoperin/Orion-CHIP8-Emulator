@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "display_emu.h"
+#include "gui_emu.h"
 
 struct nk_canvas {
     struct nk_command_buffer *painter;
@@ -61,7 +61,7 @@ void win_emulator(struct nk_context *ctx)
         unsigned char px_B = 255; 
 
         if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE,  \
-                                        0, 40, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 3, \
+                                        0, 36, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4, \
                                         (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34, \
                                         nk_rgb(bg_R,bg_G,bg_B)))
         {
