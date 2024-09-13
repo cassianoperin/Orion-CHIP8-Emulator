@@ -66,6 +66,13 @@ bool display_init(void)
 		}
 	}
 
+	// Set or no vsync
+	if ( quirk_display_wait ) {
+		SDL_RenderSetVSync(renderer, 1);
+	} else {
+		SDL_RenderSetVSync(renderer, 0);
+	}
+
 	return success;
 }
 
@@ -81,13 +88,7 @@ bool display_draw(void)
 	// Increment Frame Counter for FPS
 	frame_counter++;
 
-	// Show Menu
-	if ( quirk_display_wait ) {
-		SDL_RenderSetVSync(renderer, 1);
-
-	} else {
-		SDL_RenderSetVSync(renderer, 0);
-	}
+// 
 
 	// Load Menus
 	menu(ctx);
@@ -97,7 +98,9 @@ bool display_draw(void)
 	win_emulator(ctx);
 	
 	// Future Debug Window
-	win_debug(ctx);
+	win_debug_mem(ctx);
+	win_debug_reg(ctx);
+
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));

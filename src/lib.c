@@ -7,7 +7,6 @@
 //Native File Dialog Extended 
 #include <nfd.h>
 
-
 // Ticker - Use with actions that should be executed each second = 1hz
 bool ticker_second(long lastTime, long currentTime)
 {
@@ -213,11 +212,11 @@ int lib_gui_loadrom(void) {
 		sprintf(str, "ROM loaded.");
 		strcpy(gui_statusbar_msg, str);
 
-		// Hack to force the draw on first frame to hide menu when quirk_display_wait is false
-		// Some games take some time to draw
-		if ( !quirk_display_wait ) {
-			cpu_draw_flag = true;
-		}
+		// // Hack to force the draw on first frame to hide menu when quirk_display_wait is false
+		// // Some games take some time to draw
+		// if ( !quirk_display_wait ) {
+		// 	cpu_draw_flag = true;
+		// }
 
         // remember to free the memory (since NFD_OKAY is returned)
         // NFD_FreePath(outPath);

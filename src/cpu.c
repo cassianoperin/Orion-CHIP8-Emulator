@@ -51,7 +51,8 @@ void cpu_initialize(void) {
 	// New quirk pattern
 	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
 	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-	quirk_display_wait				= true;		// Display wait
+	// quirk_display_wait				= true;		// Display wait
+	quirk_display_wait				= false;		// Display wait
 	quirk_Clipping_Dxyn				= true;		// Clipping
 	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
@@ -79,6 +80,9 @@ void cpu_initialize(void) {
 
 	// Initialize random generator
 	srand(time(NULL));
+
+	// Draw flag
+	cpu_draw_flag = 0;
 
 	// GUI
 	gui_menu_quirks_inactive = false; // Enable Quirks menu

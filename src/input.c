@@ -1,9 +1,4 @@
-#include <SDL2/SDL.h>
-#include <string.h>
 #include "input.h"
-
-#include "nuklear.h"
-#include "nuklear_sdl_renderer.h"
 
 // Handle Inputs
 void input_keyboard(void) {

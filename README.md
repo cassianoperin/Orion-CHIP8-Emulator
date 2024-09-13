@@ -19,11 +19,26 @@ Port of chip8 emulator to use nuklear GUI.
 
 ## REFORMA
 
-1) quirk_display_wait: quebrado, rever todo draw
+1) quirk_display_wait: no menu tem que setar o vsync!!! como é feito no inicio
+ vsync nao ta bom ainda (main)
+		// Pause when over main menu to be able to priorize menu rendering and activate vsync
+		if (nk_window_is_active(ctx, "MainMenu")) {
+			cpu_pause = true;
+		} else {
+			cpu_pause = false;
+		}
+
 
 2) Emu information
-char gui_statusbar_msg[100];
+	CLOCK
+	FPS
+	
+3) Opcodes
 
-3) Emu Memories (graph, ram)
+4) Ver local correto dos includes .h ou .c
 
-4) Opcodes
+5) THEME DRACULA
+
+6) Update nuklear
+
+7) Update SDL to 3

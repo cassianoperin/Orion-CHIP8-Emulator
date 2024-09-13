@@ -61,7 +61,9 @@
         "typeinfo": "c",
         "sstream": "c",
         "__verbose_abort": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "gui_emu.h": "c",
+        "gui_debug_mem.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "C_Cpp.errorSquiggles": "disabled"

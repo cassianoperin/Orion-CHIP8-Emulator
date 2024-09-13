@@ -1,5 +1,9 @@
 #pragma once
+#include <SDL2/SDL.h>
+#include <string.h>
 #include "typedef.h"
+#include "nuklear.h"
+#include "nuklear_sdl_renderer.h"
 
 #define Max_Overclock 3000
 

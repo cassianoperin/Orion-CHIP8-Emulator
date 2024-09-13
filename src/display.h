@@ -13,8 +13,6 @@
 // #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
-#include "gui_emu.h"
-
 
 // --------------------------------- External Variables --------------------------------- //
 // Main
@@ -29,10 +27,14 @@ extern bool quirk_display_wait;
 unsigned int gui_pixels_logo[2048];
 
 // --------------------------------- External Functions --------------------------------- //
-// Display
+// GUI
 extern int menu(struct nk_context *ctx);
 extern int status_bar(struct nk_context *ctx);
-extern int win_debug(struct nk_context *ctx);
+extern int win_debug_mem(struct nk_context *ctx);
+// GUI Emu
+extern void win_emulator(struct nk_context *ctx);
+// GUI Reg
+extern int win_debug_reg(struct nk_context *ctx);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // Window size

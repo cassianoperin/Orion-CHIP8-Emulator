@@ -77,3 +77,4 @@ void gui_init(void);
 int menu(struct nk_context *ctx);
 int status_bar(struct nk_context *ctx);
 
+extern bool 	cpu_pause;

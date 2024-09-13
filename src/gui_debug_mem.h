@@ -1,4 +1,5 @@
 #pragma once
+#include "typedef.h"
 
 /* Nuklear Flags */
 #define INT_MAX 50
@@ -6,12 +7,6 @@
 #define NK_INCLUDE_FONT_BAKING
 #define NK_INCLUDE_DEFAULT_FONT
 #define NK_INCLUDE_STANDARD_VARARGS
-// #define NK_INCLUDE_DEFAULT_ALLOCATOR
-// #define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
-// #define NK_INCLUDE_FONT_BAKING
-// #define NK_INCLUDE_DEFAULT_FONT
-// #define NK_IMPLEMENTATION
-// #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
 
@@ -27,8 +22,8 @@ extern unsigned int  display_EMULATOR_RES_X;
 extern unsigned int  display_EMULATOR_RES_Y;
 
 // ---------------------------------- Global Variables ---------------------------------- //
-char guiDebug_mem_addr[6];
-char guiDebug_emuinfo_msg[50];
+char guiDebug_mem_addr_msg[6];
+char guiDebug_mem_emuinfo_msg[50];
 
 // -------------------------------------- Functions ------------------------------------- //
-int win_debug(struct nk_context *ctx);
+int win_debug_mem(struct nk_context *ctx);

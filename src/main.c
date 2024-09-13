@@ -134,19 +134,24 @@ int main(int argc, char *argv[])
 
 		// Draw screen @60hz
 		if ( quirk_display_wait ) {
-
 			// Draw
 			display_draw();
+		} else { // If not, draw every frame before rom loading (no draw flag)
+			if ( !cpu_rom_loaded ) {
+				// Draw
+				display_draw();
+			} else { // With rom loaded but paused (no draw flag)
+				// Draw
+				display_draw();
+			}	
 		}
 
-		// } else { // Ensure draw @60 when menu is being showed
-		// 	if ( gui_show_menu ) {
-		// 		// Draw
-		// 		display_draw();
-		// 	}
-
+		// // Pause when over main menu to be able to priorize menu rendering and activate vsync
+		// if (nk_window_is_active(ctx, "MainMenu")) {
+		// 	cpu_pause = true;
+		// } else {
+		// 	cpu_pause = false;
 		// }
-
 
 		// --------------- CPU --------------- //
 		float opcodesPerFrame = (float)CPU_CLOCK / pal_freq;					// Opcodes per frame (float)
