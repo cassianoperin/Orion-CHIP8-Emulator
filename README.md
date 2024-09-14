@@ -27,11 +27,6 @@ Port of chip8 emulator to use nuklear GUI.
 		} else {
 			cpu_pause = false;
 		}
-
-
-2) Emu information
-	CLOCK
-	FPS
 	
 3) Opcodes
 
@@ -42,3 +37,9 @@ Port of chip8 emulator to use nuklear GUI.
 6) Update nuklear
 
 7) Update SDL to 3
+
+8) Implement themes
+
+9) Struct of opcodes and history
+
+10) GUI Opcode

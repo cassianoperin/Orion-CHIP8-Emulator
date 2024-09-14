@@ -13,6 +13,10 @@
 // --------------------------------- External Variables --------------------------------- //
 //Main
 extern bool rom_format_hex;
+extern uint64_t counter_second_ms_duration;
+extern unsigned int counter_second_cycles;
+extern unsigned int counter_second_frames;
+extern const int video_system_freq;
 // CPU
 extern unsigned short	PC;
 extern unsigned short	Opcode;
@@ -26,6 +30,7 @@ extern unsigned char    Key[16];
 extern bool             cpu_draw_flag;
 extern bool             cpu_debug_mode;
 extern bool             cpu_pause;
+extern unsigned int     CPU_CLOCK;
 // Quirks
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_Memory_legacy_Fx55_Fx65;

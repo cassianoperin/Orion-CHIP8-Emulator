@@ -57,11 +57,6 @@ char *get_game_signature(char *filename);
 // Time measurement
 long getMicrotime(void);
 
-// Print Frames and Cycles per second on screen
-// void showCPS(long long unsigned int number);
-// void showFPS(int number);
-// void showCPU_CPS(int number);
-
 // Check if a string contains in another
 uint8_t strContains(char* string, char* toFind);
 

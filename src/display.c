@@ -88,8 +88,6 @@ bool display_draw(void)
 	// Increment Frame Counter for FPS
 	frame_counter++;
 
-// 
-
 	// Load Menus
 	menu(ctx);
 	status_bar(ctx);

@@ -164,7 +164,7 @@ void input_keyboard(void) {
 
 				// Reduce Clock
 				case SDLK_5:
-					if ( CPU_CLOCK >= pal_freq + 10) {
+					if ( CPU_CLOCK >= video_system_freq + 10) {
 						CPU_CLOCK -= 10;
 
 						printf("Clock %d\n", CPU_CLOCK);

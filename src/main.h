@@ -55,7 +55,7 @@ extern int menu(struct nk_context *ctx);
 
 // ---------------------------------- Global Constants ---------------------------------- //
 // NTSC: 60hz, PAL: 50HZ
-const int   pal_freq   = 60; 					
+const int   video_system_freq   = 60; 					
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // SDL Video (Emulator Window)
@@ -81,5 +81,9 @@ bool rom_format_hex;
 bool quit;
 
 // Cycle Counters
-// // unsigned int cycle               = 0;     // Main loop cycles
-unsigned int cycle_counter       = 0;     // Main loop cyles/second counter
+unsigned int cycle_counter = 0;     // Main loop cyles/second counter
+
+// Second counters
+uint64_t counter_second_ms_duration; 
+unsigned int counter_second_cycles;
+unsigned int counter_second_frames;

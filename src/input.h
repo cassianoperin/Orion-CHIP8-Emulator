@@ -16,7 +16,7 @@ extern bool quit;
 extern SDL_Window   *window;
 extern SDL_Renderer *renderer;
 extern SDL_Texture  *texture;
-extern const int pal_freq;
+extern const int video_system_freq;
 // Display
 extern unsigned int display_pixel_ON_color;
 extern unsigned int display_pixel_OFF_color;

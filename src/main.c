@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 
 	// ------------ Constants ------------ //
-	const float msPerFrame =  1 / (float) pal_freq; // 16 ms per frame (0.016667) on NTSC, 20ms (0,02) on PAL
+	const float msPerFrame =  1 / (float) video_system_freq; // 16 ms per frame (0.016667) on NTSC, 20ms (0,02) on PAL
 
 	// ------------ Variables ------------ //
 
@@ -68,9 +68,14 @@ int main(int argc, char *argv[])
 		// --------------------------------- START OF SECONDs COUNTER  --------------------------------- //
 		if ( timeSecondLast - timeSecondStart >= 1000000000 ){ 
 
+			// Counters
+			counter_second_ms_duration = timeFrameDurationSum;
+			counter_second_cycles = cycle_counter;
+			counter_second_frames = frame_counter;
+
 			// Window Title Message update
 			char title_msg[80];
-			sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, pal_freq, timeFrameDurationSum);
+			sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, video_system_freq, timeFrameDurationSum);
 			SDL_SetWindowTitle(window, title_msg);
 
 
@@ -154,7 +159,7 @@ int main(int argc, char *argv[])
 		// }
 
 		// --------------- CPU --------------- //
-		float opcodesPerFrame = (float)CPU_CLOCK / pal_freq;					// Opcodes per frame (float)
+		float opcodesPerFrame = (float)CPU_CLOCK / video_system_freq;					// Opcodes per frame (float)
 		// printf("Opcodes: %f\n",opcodesPerFrame);
 		float opcodesPerFrameResidual = opcodesPerFrame - (int)opcodesPerFrame;	// Opcodes per frame residual
 		// printf("Residual: %f\n",opcodesPerFrameResidual);

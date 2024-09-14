@@ -1,11 +1,8 @@
 #pragma once
 #include "typedef.h"
 
-// // --------------------------------- External Variables --------------------------------- //
-// // Counters
-// // extern unsigned int  cycle;
-// extern unsigned char display_FPS;
-// extern unsigned int last_cycle_counter;
+// --------------------------------- External Variables --------------------------------- //
+
 // Screen Size
 extern unsigned char display_EMULATOR_RES_X;
 extern unsigned char display_EMULATOR_RES_Y;
