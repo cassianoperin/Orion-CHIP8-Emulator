@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
     gui_init();
 
 	// Window Theme
-	// THEME_BLACK, THEME_WHITE, THEME_RED, THEME_BLUE, THEME_DARK
-	set_style(ctx, THEME_BLACK);
+	// THEME_BLACK, THEME_WHITE, THEME_RED, THEME_BLUE, THEME_DARK, THEME_DRACULA
+	set_style(ctx, THEME_DRACULA);
 
 	// Seconds Counter
 	timeSecondStart = SDL_GetPerformanceCounter();
@@ -73,11 +73,10 @@ int main(int argc, char *argv[])
 			counter_second_cycles = cycle_counter;
 			counter_second_frames = frame_counter;
 
-			// Window Title Message update
-			char title_msg[80];
-			sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, video_system_freq, timeFrameDurationSum);
-			SDL_SetWindowTitle(window, title_msg);
-
+			// // Window Title Message update
+			// char title_msg[80];
+			// sprintf(title_msg, "Cycles per sec.: %d\t\tFPS: %d   Freq: %dhz   ms: %llu", cycle_counter, frame_counter, video_system_freq, timeFrameDurationSum);
+			// SDL_SetWindowTitle(window, title_msg);
 
 			// --------- Reset Counters ---------- //
 			// Main cycle

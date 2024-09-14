@@ -27,19 +27,13 @@ Port of chip8 emulator to use nuklear GUI.
 		} else {
 			cpu_pause = false;
 		}
-	
-3) Opcodes
+
+2) Struct of opcodes and history
+
+3) GUI Opcodes
 
 4) Ver local correto dos includes .h ou .c
 
-5) THEME DRACULA
+5) Update SDL to 3
 
-6) Update nuklear
-
-7) Update SDL to 3
-
-8) Implement themes
-
-9) Struct of opcodes and history
-
-10) GUI Opcode
+6) Implement themes

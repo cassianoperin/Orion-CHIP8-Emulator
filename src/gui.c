@@ -55,24 +55,53 @@ int menu(struct nk_context *ctx)
              
             if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
             {
-                static int option;
+                static int option = 6;
 
+                //THEME_BLACK, THEME_WHITE, THEME_RED, THEME_BLUE, THEME_DARK, THEME_DRACULA
                 nk_layout_row_static(ctx, 20, 160, 1);
-                option = nk_option_label(ctx, "1: Black",  option == 0) ? 0 : option;
-                option = nk_option_label(ctx, "2: White",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "1: Black",   option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: White",   option == 1) ? 1 : option;
+                // option = nk_option_label(ctx, "3: Red",     option == 2) ? 2 : option;
+                // option = nk_option_label(ctx, "4: Blue",    option == 3) ? 3 : option;
+                // option = nk_option_label(ctx, "5: Dark",    option == 4) ? 4 : option;
+                option = nk_option_label(ctx, "3: Dracula", option == 5) ? 5 : option;
 
                 switch( option )
                 {
-                    // White
+                    // Black
                     case 0:
                         set_style(ctx, THEME_BLACK);
                         break;
 
-                    // Black
+                    // White
                     case 1: {
                        	set_style(ctx, THEME_WHITE);
                         break;
                     }
+
+                    // Red
+                    case 2:
+                        set_style(ctx, THEME_RED);
+                        break;
+
+                    // Blue
+                    case 3: {
+                       	set_style(ctx, THEME_BLUE);
+                        break;
+                    }
+                    
+                    // Dark
+                    case 4:
+                        set_style(ctx, THEME_DARK);
+                        break;
+
+                    // Dracula
+                    case 5: {
+                       	set_style(ctx, THEME_DRACULA);
+                        break;
+                    }
+                    
+
                 }
 
                 nk_tree_pop(ctx);
