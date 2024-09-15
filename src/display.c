@@ -98,6 +98,7 @@ bool display_draw(void)
 	// Future Debug Window
 	win_debug_mem(ctx);
 	win_debug_reg(ctx);
+	win_debug_opc(ctx);
 
 
 	// Update the Screen

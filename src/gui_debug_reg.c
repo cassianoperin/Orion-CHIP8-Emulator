@@ -396,5 +396,5 @@ int win_debug_reg(struct nk_context *ctx)
     }
 
     nk_end(ctx);
-    return !nk_window_is_closed(ctx, "Debug");
+    return !nk_window_is_closed(ctx, "Registers and Flags");
 }

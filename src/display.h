@@ -35,6 +35,8 @@ extern int win_debug_mem(struct nk_context *ctx);
 extern void win_emulator(struct nk_context *ctx);
 // GUI Reg
 extern int win_debug_reg(struct nk_context *ctx);
+// GUI Opc
+extern int win_debug_opc(struct nk_context *ctx);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 // Window size

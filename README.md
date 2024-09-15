@@ -37,3 +37,5 @@ Port of chip8 emulator to use nuklear GUI.
 5) Update SDL to 3
 
 6) Implement themes
+
+7) Windows doesn't close

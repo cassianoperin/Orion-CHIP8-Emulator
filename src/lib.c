@@ -185,6 +185,24 @@ char *get_game_signature(char *filename) {
 	return signature;
 }
 
+int fsize(char *filename){
+
+	FILE *fp = fopen(filename, "rb");
+	if (!fp) {
+		fprintf(stderr, "Unable to open file '%s'!\n", filename);
+		exit(1);
+	}
+
+    int prev=ftell(fp);
+    fseek(fp, 0L, SEEK_END);
+    int sz=ftell(fp);
+    fseek(fp,prev,SEEK_SET); //go back to where we were
+
+	fclose(fp);
+
+    return sz;
+}
+
 int lib_gui_loadrom(void) {
     // initialize NFD
     // either call NFD_Init at the start of your program and NFD_Quit at the end of your program,
@@ -208,9 +226,7 @@ int lib_gui_loadrom(void) {
 		cpu_reset();
 
 		// Update StatusBar message
-		char str[100];
-		sprintf(str, "ROM loaded.");
-		strcpy(gui_statusbar_msg, str);
+		strcpy(gui_statusbar_msg, "ROM loaded");
 
 		// // Hack to force the draw on first frame to hide menu when quirk_display_wait is false
 		// // Some games take some time to draw

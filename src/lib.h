@@ -68,3 +68,6 @@ int lib_gui_loadrom(void);
 
 // Show Logo
 void showLogo(void);
+
+// File/ROM size
+int fsize(char *filename);

@@ -113,11 +113,18 @@ int win_debug_mem(struct nk_context *ctx)
                 }
 
             }
+            // nk_uint valy;
+            // nk_group_get_scroll(ctx, "Memory", NULL, &valy);
+
+            // printf("%d\n", valy);
+
+            nk_group_set_scroll(ctx, "Memory", 0, 744);
+
 
             nk_group_end(ctx);
         }
         
     }
     nk_end(ctx);
-    return !nk_window_is_closed(ctx, "Debug");
+    return !nk_window_is_closed(ctx, "Memory Viewer");
 }

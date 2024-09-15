@@ -11,10 +11,13 @@ void cpu_reset(void) {
 
 	// Load ROM into Memory
 	load_rom(filename,  Memory, sizeof(Memory));
+	
+	// Keep the rom size
+	romsize = fsize(filename);
 
 	// Get Game signature for Qwirks
 	game_signature = get_game_signature(filename);
-	printf("Signature:   %s\n", game_signature );
+	printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
 
 	// Check for Quirks
 	handle_quirks(game_signature);
