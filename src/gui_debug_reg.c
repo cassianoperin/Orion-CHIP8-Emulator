@@ -3,7 +3,7 @@
 int win_debug_reg(struct nk_context *ctx)
 {
     /* window flags */
-    static nk_flags window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_CLOSABLE;
+    static nk_flags window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_NO_SCROLLBAR;
     nk_flags actual_window_flags;
 
     /* popups */

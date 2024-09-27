@@ -97,6 +97,9 @@ void cpu_initialize(void) {
 	// Debug
 	cpu_debug_mode	= false;
 	cpu_pause		= false;
+
+	// Reset ROM loaded status
+	cpu_rom_loaded = false;
 }
 
 void cpu_load_fonts(void) {

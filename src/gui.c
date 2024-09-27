@@ -39,6 +39,13 @@ int menu(struct nk_context *ctx)
                 lib_gui_loadrom();
             }
 
+            if (nk_menu_item_label(ctx, "Close ROM", NK_TEXT_LEFT)) {
+                cpu_initialize();
+
+                // Update StatusBar message
+		        strcpy(gui_statusbar_msg, "No ROM loaded");
+            }
+
             if (nk_menu_item_label(ctx, "Exit", NK_TEXT_LEFT)) {
                 printf("Exiting (from GUI)\n");
                 quit = true;
@@ -292,6 +299,8 @@ int menu(struct nk_context *ctx)
 
             if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
 
+            if ( nk_checkbox_label(ctx, "Pause", &cpu_pause) ) {}
+
             if ( nk_checkbox_label(ctx, "Sound", &sound_enabled) ) {}
 
             // --- Split Menu --- //
@@ -499,7 +508,7 @@ void gui_init(void)
     gui_menu_quirks_inactive = true;
 
     // Initialize msg string
-    strcpy(gui_statusbar_msg, "No ROM loaded.");
+    strcpy(gui_statusbar_msg, "No ROM loaded");
 
     ctx = nk_sdl_init(window, renderer);
     /* Load Fonts: if none of these are loaded a default font will be used  */

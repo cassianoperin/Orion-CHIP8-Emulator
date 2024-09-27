@@ -62,6 +62,7 @@ extern int lib_gui_loadrom(void);
 extern void display_updateWindowSize(unsigned int pixel_scale);
 // CPU
 extern void cpu_reset(void);
+extern void cpu_initialize(void);
 // Font
 extern void showLogo(void);
 

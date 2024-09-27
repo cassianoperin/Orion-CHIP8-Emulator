@@ -24,7 +24,10 @@ extern struct nk_context *ctx;
 // Quirk
 extern bool quirk_display_wait;
 // GUI
-unsigned int gui_pixels_logo[2048];
+extern unsigned int gui_pixels_logo[2048];
+// CPU
+extern bool cpu_debug_mode;
+extern bool cpu_rom_loaded;
 
 // --------------------------------- External Functions --------------------------------- //
 // GUI

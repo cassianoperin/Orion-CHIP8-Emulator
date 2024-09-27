@@ -93,13 +93,16 @@ bool display_draw(void)
 	status_bar(ctx);
 
 	// Emulator Window
-	win_emulator(ctx);
-	
-	// Future Debug Window
-	win_debug_mem(ctx);
-	win_debug_reg(ctx);
-	win_debug_opc(ctx);
+	if ( cpu_rom_loaded || cpu_debug_mode) {
+		win_emulator(ctx);
+	}
 
+	if ( cpu_debug_mode ) {
+		// Future Debug Window
+		win_debug_mem(ctx);
+		win_debug_reg(ctx);
+		win_debug_opc(ctx);
+	}
 
 	// Update the Screen
 	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));
