@@ -222,6 +222,7 @@ int lib_gui_loadrom(void) {
 
 		// Set the selected ROM
 		filename = outPath;
+
 		// Reset CPU
 		cpu_reset();
 

@@ -64,7 +64,7 @@ int win_debug_opc(struct nk_context *ctx)
 
                     // float test = 13.58913413 * (i/2);
 
-                    printf("INT LINE: %d\n", (int)line_size);
+                    // printf("INT LINE: %d\n", (int)line_size);
 
                     nk_group_set_scroll(ctx, "OpcodesGrp", 0, line_size * (i/2) );
 
@@ -75,10 +75,10 @@ int win_debug_opc(struct nk_context *ctx)
 
             }
 
-            nk_uint valy;
-            nk_group_get_scroll(ctx, "OpcodesGrp", NULL, &valy);
+            // nk_uint valy;
+            // nk_group_get_scroll(ctx, "OpcodesGrp", NULL, &valy);
 
-            printf("%d\n", valy);
+            // printf("%d\n", valy);
 
             // nk_group_set_scroll(ctx, "Memory", 0, 744);
 

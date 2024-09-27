@@ -21,6 +21,8 @@ extern unsigned char Memory[4096];
 extern unsigned int CPU_CLOCK;
 extern void cpu_reset(void);
 extern bool cpu_rom_loaded;
+extern unsigned short PC;
+extern unsigned short Opcode;
 // extern bool cpu_draw_flag;
 extern bool quirk_display_wait;
 // GUI

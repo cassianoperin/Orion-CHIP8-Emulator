@@ -128,5 +128,6 @@ void cpu_debug_print(void);
 void cpu_interpreter(void);
 void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
+void cpu_decode_opcode(void);
 
 

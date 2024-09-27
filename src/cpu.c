@@ -12,6 +12,11 @@ void cpu_reset(void) {
 	// Load ROM into Memory
 	load_rom(filename, Memory, sizeof(Memory));
 	
+	if ( cpu_rom_loaded ) {
+		// Read the Opcode from PC and PC+1 bytes
+		cpu_decode_opcode();
+	}
+
 	// Keep the rom size
 	romsize = fsize(filename);
 
@@ -40,7 +45,7 @@ void cpu_initialize(void) {
 	// Components
 	memset(Memory, 0x00,  (sizeof(Memory) / sizeof(Memory[0])) );	// Clean Memory
 	PC = 0x200;								// Start at 0x200 (default CHIP-8)
-	Opcode = 0x00;
+	// Opcode = 0x00;
 	memset(Stack, 0x00, sizeof(Stack));		// Clean Stack
 	SP = 0x00;
 	memset(V, 0x00, sizeof(V));				// Clean V Register
@@ -90,8 +95,8 @@ void cpu_initialize(void) {
 	gui_menu_quirks_inactive = false; // Enable Quirks menu
 
 	// Debug
-	// cpu_debug_mode	= false;
-	cpu_pause		= true;
+	cpu_debug_mode	= false;
+	cpu_pause		= false;
 }
 
 void cpu_load_fonts(void) {
@@ -127,9 +132,6 @@ void cpu_interpreter(void) {
 
 	// Increment opcodes per second counter
 	cycle_counter_cpu ++;
-
-	// Read the Opcode from PC and PC+1 bytes
-	Opcode = (unsigned short)Memory[PC]<<8 | (unsigned short)Memory[PC+1];
 
 	// Debug
 	if ( cpu_debug_mode )
@@ -553,6 +555,8 @@ void cpu_interpreter(void) {
 		printf("\t\t%s\n\n" , cpu_debug_message);
 	}
 
+	// Read the Opcode from PC and PC+1 bytes
+	cpu_decode_opcode();
 }
 
 void cpu_invalid_opcode(unsigned short opc) {
@@ -565,3 +569,9 @@ void cpu_invalid_opcode(unsigned short opc) {
 		gui_menu_quirks_inactive = true;
 
 }
+
+// Read the Opcode from PC and PC+1 bytes
+void cpu_decode_opcode(void) {
+	Opcode = (unsigned short)Memory[PC]<<8 | (unsigned short)Memory[PC+1];
+}
+
