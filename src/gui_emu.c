@@ -51,15 +51,6 @@ void win_emulator(struct nk_context *ctx)
 {
         struct nk_canvas canvas;
 
-        // background colors
-        unsigned char bg_R = 0;
-        unsigned char bg_G = 0;
-        unsigned char bg_B = 0;
-        // pixel colors
-        unsigned char px_R = 255;
-        unsigned char px_G = 255; 
-        unsigned char px_B = 255; 
-
         if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE,  \
                                         0, 36, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4, \
                                         (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34, \

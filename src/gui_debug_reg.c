@@ -280,8 +280,13 @@ int win_debug_reg(struct nk_context *ctx)
             sprintf(guiDebug_reg_emuinfo_msg, "%d hz", CPU_CLOCK);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
-            // Cycles per second
-            nk_label_colored(ctx, "Cycles per sec.:", NK_TEXT_LEFT, nk_rgb(0,255,255));
+            // CPU Cycle
+            nk_label_colored(ctx, "CPU Cycle:", NK_TEXT_LEFT, nk_rgb(0,255,255));
+            sprintf(guiDebug_reg_emuinfo_msg, "%d", cycle_cpu);
+            nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
+
+            // Emulator Cycles per second
+            nk_label_colored(ctx, "Emu cycle p/s:", NK_TEXT_LEFT, nk_rgb(0,255,255));
             sprintf(guiDebug_reg_emuinfo_msg, "%d", counter_second_cycles);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 

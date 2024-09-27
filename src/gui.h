@@ -35,6 +35,13 @@ extern SDL_Texture  *texture;
 extern struct nk_context *ctx;
 extern float font_scale; // GUI Font
 extern bool cpu_rom_loaded;
+// GUI EMU (background and pixel colors)
+extern unsigned char bg_R;
+extern unsigned char bg_G;
+extern unsigned char bg_B;
+extern unsigned char px_R;
+extern unsigned char px_G;
+extern unsigned char px_B;
 // CPU
 extern bool cpu_debug_mode;
 extern unsigned int CPU_CLOCK;

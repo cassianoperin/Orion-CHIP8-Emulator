@@ -27,7 +27,7 @@ extern unsigned short Opcode;
 extern bool quirk_display_wait;
 // GUI
 extern bool gui_menu_quirks_inactive;
-extern char gui_statusbar_msg[100];
+// extern char gui_statusbar_msg[100];
 extern unsigned int gui_pixels_logo[2048];
 extern unsigned int gui_pixel_logo_ON_color;
 // Font

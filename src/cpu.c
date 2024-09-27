@@ -20,21 +20,35 @@ void cpu_reset(void) {
 	// Keep the rom size
 	romsize = fsize(filename);
 
-	// Get Game signature for Qwirks
-	game_signature = get_game_signature(filename);
-	printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
+	// If a rom is bigger than chip8 memory (invalid game or program)
+	if ( romsize > (4096-512) ) {
+		cpu_initialize();
 
-	// Check for Quirks
-	handle_quirks(game_signature);
+		// Print a message
+		strcpy(gui_statusbar_msg, "Invalid rom file! Aborting!");
+		printf("Invalid rom file! Aborting!\n");
 
-	// Load Fonts
-	cpu_load_fonts();
+	} else {
+		// Get Game signature for Qwirks
+		game_signature = get_game_signature(filename);
+		printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
 
-	// Keyboard remaps
-	input_keyboard_remaps();
+		// Check for Quirks
+		handle_quirks(game_signature);
+
+		// Load Fonts
+		cpu_load_fonts();
+
+		// Keyboard remaps
+		input_keyboard_remaps();
+
+		// Update StatusBar message
+		strcpy(gui_statusbar_msg, "ROM loaded");
+	}
 
 	// Clean counters
 	cycle_cpu = 0;
+
 }
 
 void cpu_initialize(void) {
@@ -50,6 +64,8 @@ void cpu_initialize(void) {
 	SP = 0x00;
 	memset(V, 0x00, sizeof(V));				// Clean V Register
 	I = 0x00;
+
+	Opcode = 0;
 	
 	// Initialization - Clean pixels array
 	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
@@ -93,6 +109,9 @@ void cpu_initialize(void) {
 
 	// GUI
 	gui_menu_quirks_inactive = false; // Enable Quirks menu
+
+	// Rom size
+	romsize = 0;
 
 	// Debug
 	cpu_debug_mode	= false;

@@ -226,9 +226,6 @@ int lib_gui_loadrom(void) {
 		// Reset CPU
 		cpu_reset();
 
-		// Update StatusBar message
-		strcpy(gui_statusbar_msg, "ROM loaded");
-
 		// // Hack to force the draw on first frame to hide menu when quirk_display_wait is false
 		// // Some games take some time to draw
 		// if ( !quirk_display_wait ) {

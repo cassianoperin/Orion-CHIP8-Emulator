@@ -46,6 +46,12 @@ int menu(struct nk_context *ctx)
 		        strcpy(gui_statusbar_msg, "No ROM loaded");
             }
 
+            // Split
+            nk_layout_row_dynamic(ctx, 1, 1);
+            nk_rule_horizontal(ctx, nk_gray, nk_true);
+
+            // Exit
+            nk_layout_row_dynamic(ctx, 25, 1);
             if (nk_menu_item_label(ctx, "Exit", NK_TEXT_LEFT)) {
                 printf("Exiting (from GUI)\n");
                 quit = true;
@@ -57,7 +63,7 @@ int menu(struct nk_context *ctx)
 
         // ------------------------------------- Menu VIEW -------------------------------------- //
         nk_layout_row_push(ctx, 45);
-        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(190, 220)))
+        if (nk_menu_begin_label(ctx, "View", NK_TEXT_LEFT, nk_vec2(190, 420)))
         {
              
             if (nk_tree_push(ctx, NK_TREE_NODE, "Theme", NK_MINIMIZED))
@@ -200,7 +206,7 @@ int menu(struct nk_context *ctx)
 
         // ----------------------------------- Menu EMULATION ----------------------------------- //
         nk_layout_row_push(ctx, 80);
-        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 200)))
+        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 400)))
         {
 
             if (nk_tree_push(ctx, NK_TREE_NODE, "Emulator Theme", NK_MINIMIZED))
@@ -219,74 +225,48 @@ int menu(struct nk_context *ctx)
                 {
                     // Black and White
                     case 0:
-                        // display_pixel_ON_color_alt	= 0xFFFFFFFF;
-                        // display_pixel_OFF_color_alt	= 0xFF000000;
+                        bg_R = 0x00; bg_G = 0x00; bg_B = 0x00;
+                        px_R = 0xFF; px_G = 0xFF; px_B = 0xFF;
 
-                        // display_update_theme();
                         break;
 
                     // White and Black
                     case 1: {
-                        // // New colors
-                        // display_pixel_ON_color_alt	= 0xFF000000;
-                        // display_pixel_OFF_color_alt	= 0xFFFFFFFF;
-                        // // Update the colors after Pause if theme has changed
-                        // display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
-                        // display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
-                        // // Update Theme
-                        // display_update_theme();
+                        bg_R = 0xFF; bg_G = 0xFF; bg_B = 0xFF;
+                        px_R = 0x00; px_G = 0x00; px_B = 0x00;
+
                         break;
                     }
 
                     // Grey Wolfand and Crystal Blue
                     case 2: {
-                        // // New colors
-                        // display_pixel_ON_color_alt	= 0xFF5CB3FF;
-                        // display_pixel_OFF_color_alt	= 0xFF504A4B;
-                        // // Update the colors after Pause if theme has changed
-                        // display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
-                        // display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
-                        // // Update Theme
-                        // display_update_theme();
+                        bg_R = 0x50; bg_G = 0x4A; bg_B = 0x4B;
+                        px_R = 0x5C; px_G = 0xB3; px_B = 0xFF;
+
                         break;
                     }
 
                     // Cloudy Gray and Emerald Green
                     case 3: {
-                        // // New colors
-                        // display_pixel_ON_color_alt	= 0xFF50C878;
-                        // display_pixel_OFF_color_alt	= 0xFF6D6968;
-                        // // Update the colors after Pause if theme has changed
-                        // display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
-                        // display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
-                        // // Update Theme
-                        // display_update_theme();
+                        bg_R = 0x6D; bg_G = 0x69; bg_B = 0x68;
+                        px_R = 0x50; px_G = 0xC8; px_B = 0x78;
+
                         break;
                     }
 
                     // Night Black and Pastel Yellow
                     case 4: {
-                        // // New colors
-                        // display_pixel_ON_color_alt	= 0xFFFAF884;
-                        // display_pixel_OFF_color_alt	= 0xFF0C090A;
-                        // // Update the colors after Pause if theme has changed
-                        // display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
-                        // display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
-                        // // Update Theme
-                        // display_update_theme();
+                        bg_R = 0x0C; bg_G = 0x09; bg_B = 0x0A;
+                        px_R = 0xFA; px_G = 0xF8; px_B = 0x84;
+
                         break;
                     }
 
                     // Grey and LightCoral Pink
                     case 5: {
-                        // // New colors
-                        // display_pixel_ON_color_alt	= 0xFFF08080;
-                        // display_pixel_OFF_color_alt	= 0xFF1C1C1C;
-                        // // Update the colors after Pause if theme has changed
-                        // display_pixel_ON_color_tmp = display_pixel_ON_color_alt;
-                        // display_pixel_OFF_color_tmp = display_pixel_OFF_color_alt;
-                        // // Update Theme
-                        // display_update_theme();
+                        bg_R = 0x1C; bg_G = 0x1C; bg_B = 0x1C;
+                        px_R = 0xF0; px_G = 0x80; px_B = 0x80;
+
                         break;
                     }
 
@@ -487,8 +467,14 @@ int status_bar(struct nk_context *ctx)
         nk_menubar_begin(ctx);
         
         nk_layout_row_dynamic(ctx, 15, 1);
-        nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_gray);
-        // nk_label(ctx, gui_statusbar_msg, NK_TEXT_CENTERED);
+        // nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_gray);
+
+        // Error messages will be presented in red
+        if ( !strcmp(gui_statusbar_msg, "No ROM loaded") || !strcmp(gui_statusbar_msg, "ROM loaded") ) {
+            nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_gray);
+        } else {
+            nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_red);
+        }
         
         nk_menubar_end(ctx);        
     }

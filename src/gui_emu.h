@@ -1,6 +1,16 @@
 #pragma once
 #include "nuklear.h"
 
+// ---------------------------------- Global Variables ---------------------------------- //
+// background colors
+unsigned char bg_R = 0;
+unsigned char bg_G = 0;
+unsigned char bg_B = 0;
+// pixel colors
+unsigned char px_R = 255;
+unsigned char px_G = 255; 
+unsigned char px_B = 255; 
+
 // --------------------------------- External Variables --------------------------------- //
 /* Display */ 
 extern unsigned int   display_EMULATOR_RES_X;
