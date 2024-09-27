@@ -6,21 +6,18 @@ Port of chip8 emulator to use nuklear GUI.
 
 1) Test games again (quirks and tests)
     * Breakout Camelo Cortez: quirk problem ingame
-2) Create a way to show Emulator Information
-3) Insert the name of game loaded in the status bar OR window
-4) Reduce the number of global variables
-5) Debug Window
-6) Rewrite DXYN function
+2) Insert the name of game loaded in the status bar OR window
+3) Reduce the number of global variables
+4) Rewrite DXYN function
+5) 
 
 ## Problems
+1) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
-* INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
+## New GUI version
 
-
-## REFORMA
-
-1) quirk_display_wait: no menu tem que setar o vsync!!! como é feito no inicio
- vsync nao ta bom ainda (main)
+1) quirk_display_wait and menu problems:
+ vsync not good yet (main)
 		// Pause when over main menu to be able to priorize menu rendering and activate vsync
 		if (nk_window_is_active(ctx, "MainMenu")) {
 			cpu_pause = true;
@@ -32,8 +29,6 @@ Port of chip8 emulator to use nuklear GUI.
 
 3) GUI Opcodes
 
-4) Ver local correto dos includes .h ou .c
+4) Update SDL to 3
 
-5) Update SDL to 3
-
-7) Fullscreen ta ferrando tamanho janela emu
+5) Fullscreen ta ferrando tamanho janela emu
