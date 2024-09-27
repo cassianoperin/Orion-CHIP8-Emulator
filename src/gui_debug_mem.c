@@ -37,8 +37,8 @@ int win_debug_mem(struct nk_context *ctx)
 
         // Memory Group (data)
         nk_layout_row_static(ctx, (float)550, 404, 2);
-        if (nk_group_begin(ctx, "Memory", NK_WINDOW_BORDER)) {
 
+        if (nk_group_begin(ctx, "Memory", NK_WINDOW_BORDER)) {
             static const float ratio[] = {40, 340};
             nk_layout_row(ctx, NK_STATIC, 10, 2, ratio);
 
@@ -113,13 +113,6 @@ int win_debug_mem(struct nk_context *ctx)
                 }
 
             }
-            // nk_uint valy;
-            // nk_group_get_scroll(ctx, "Memory", NULL, &valy);
-
-            // printf("%d\n", valy);
-
-            nk_group_set_scroll(ctx, "Memory", 0, 744);
-
 
             nk_group_end(ctx);
         }

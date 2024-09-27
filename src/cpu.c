@@ -10,7 +10,7 @@ void cpu_reset(void) {
 	cpu_initialize();
 
 	// Load ROM into Memory
-	load_rom(filename,  Memory, sizeof(Memory));
+	load_rom(filename, Memory, sizeof(Memory));
 	
 	// Keep the rom size
 	romsize = fsize(filename);
@@ -91,7 +91,7 @@ void cpu_initialize(void) {
 
 	// Debug
 	// cpu_debug_mode	= false;
-	cpu_pause		= false;
+	cpu_pause		= true;
 }
 
 void cpu_load_fonts(void) {

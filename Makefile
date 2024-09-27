@@ -4,7 +4,8 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 BUILD_DIR = build
 OBJ_NAME = gui
 # LIBRARY_PATHS = -Llib
-COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
+# COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
+COMPILER_FLAGS = -std=c11 -Wall -O0 -g
 LINKER_FLAGS = -lsdl2
 
 ifndef ARCH

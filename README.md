@@ -39,3 +39,7 @@ Port of chip8 emulator to use nuklear GUI.
 6) Implement themes
 
 7) Windows doesn't close
+
+8) Add PAUSE to emulation menu
+
+9) Opcode is wrong in the registers info (remove?)
