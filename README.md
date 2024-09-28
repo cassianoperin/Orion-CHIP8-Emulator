@@ -32,3 +32,7 @@ Port of chip8 emulator to use nuklear GUI.
 4) Update SDL to 3
 
 5) Fullscreen ta ferrando tamanho janela emu
+
+6) SCALE ta em 9 para debug
+
+7) Decode está errado nos endereços anteriores (00EE nao reconhecido)

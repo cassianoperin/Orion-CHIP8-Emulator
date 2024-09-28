@@ -16,16 +16,26 @@
 // // CPU
 extern unsigned short	PC;
 extern unsigned char Memory[4096];
+extern char cpu_debug_message[120];
+extern bool cpu_debug_mode;
 // // Display
 // extern unsigned char display_pixels[8192];
 // extern unsigned int  display_EMULATOR_RES_X;
 // extern unsigned int  display_EMULATOR_RES_Y;
+extern char gui_statusbar_msg[120];
 // Main
 extern int romsize;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char guiDebug_opc_addr_msg[6];
-char guiDebug_opc_emuinfo_msg[50];
+char guiDebug_opc_data_msg[6];
+char guiDebug_opc_description_msg[50];
 
-// // -------------------------------------- Functions ------------------------------------- //
+// -------------------------------------- Functions ------------------------------------- //
 int win_debug_opc(struct nk_context *ctx);
+
+
+// --------------------------------- External Functions --------------------------------- //
+// CPU
+extern int cpu_get_opcode(int PC_addr);
+extern void cpu_decode_opcode(int opc);

@@ -75,7 +75,7 @@ extern void showLogo(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool gui_menu_quirks_inactive; // Enable/Disable Quirks Menu
-char gui_statusbar_msg[100];
+char gui_statusbar_msg[120];
 unsigned int gui_pixels_logo[2048];
 unsigned int gui_pixel_logo_ON_color;
 unsigned int gui_pixel_logo_OFF_color;

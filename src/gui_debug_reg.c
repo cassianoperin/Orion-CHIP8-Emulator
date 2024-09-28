@@ -12,24 +12,24 @@ int win_debug_reg(struct nk_context *ctx)
     ctx->style.window.header.align = header_align;
 
     actual_window_flags = window_flags;
-    if (nk_begin(ctx, "Registers and Flags", nk_rect(0, 392, 644, 302), actual_window_flags))
+    if (nk_begin(ctx, "Registers and Flags", nk_rect(0, 360, 580, 334), actual_window_flags))
     {
         // Layouts
         static const float ratio_1column[] = {100};
-        static const float ratio_2column[] = {80, 50};
+        static const float ratio_2column[] = {70, 45};
         static const float ratio_2column_long[] = {100, 90};
-        static const float ratio_3column[] = {80, 50, 50};
-        static const float ratio_4column[] = {30, 50, 30, 50};
-        static const float ratio_3column_maingroup[] = {207, 207, 207};
-        static const float ratio_4column_Input[] = {43, 43, 43, 43};
+        static const float ratio_3column[] = {70, 45, 45};
+        static const float ratio_4column[] = {20, 50, 22, 50};
+        static const float ratio_3column_maingroup[] = {180, 170, 210};
+        static const float ratio_4column_Input[] = {38, 38, 38, 38};
 
         // Split the window in 3 horizontal groups
-        nk_layout_row(ctx, NK_STATIC, 260, 3, ratio_3column_maingroup);
+        nk_layout_row(ctx, NK_STATIC, 294, 3, ratio_3column_maingroup);
 
         // Opcode Group LEFT
         if (nk_group_begin(ctx, "RegGroupLeft", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
 
-            // Line with 3 columns of 50
+            // Line with 3 columns
             nk_layout_row(ctx, NK_STATIC, 12, 3, ratio_3column);
 
             // Register label
@@ -39,7 +39,7 @@ int win_debug_reg(struct nk_context *ctx)
 
             // PC
             nk_label_colored(ctx, "PC:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", PC);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%04X", PC);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
             sprintf(guiDebug_reg_emuinfo_msg, "%d", PC);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
@@ -49,7 +49,7 @@ int win_debug_reg(struct nk_context *ctx)
 
             // Opcode
             nk_label_colored(ctx, "Opcode:", NK_TEXT_LEFT, nk_rgb(120,120,120));
-            sprintf(guiDebug_reg_emuinfo_msg, "%04X", Opcode);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%04X", Opcode);
             nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(120,120,120));
 
             // Line with 3 columns of 50
@@ -57,28 +57,28 @@ int win_debug_reg(struct nk_context *ctx)
 
             // I
             nk_label_colored(ctx, "I:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", I);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%04X", I);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
             sprintf(guiDebug_reg_emuinfo_msg, "%d", I);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // SP
             nk_label_colored(ctx, "SP:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "0x%04x", SP);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%04x", SP);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);      
             sprintf(guiDebug_reg_emuinfo_msg, "%d", SP);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Delay Timer:
             nk_label_colored(ctx, "DT:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "0x%02X", DelayTimer);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%02X", DelayTimer);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
             sprintf(guiDebug_reg_emuinfo_msg, "%d", DelayTimer);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Sound Timer:
             nk_label_colored(ctx, "ST:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "0x%02X", SoundTimer);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%02X", SoundTimer);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
             sprintf(guiDebug_reg_emuinfo_msg, "%02d", SoundTimer);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
@@ -94,26 +94,26 @@ int win_debug_reg(struct nk_context *ctx)
 
             for ( int i = 0 ; i < ( (sizeof(Stack) / sizeof(Stack[0])) ) / 2; i++ ) {
                 if ( i == SP ){
-                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X]", i);
+                    sprintf(guiDebug_reg_emuinfo_msg, " [%X]", i);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(255,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", Stack[i]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%04X", Stack[i]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
                 } else {
-                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X]", i);
+                    sprintf(guiDebug_reg_emuinfo_msg, " [%X]", i);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(0,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", Stack[i]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%04X", Stack[i]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
                 }
 
                 if ( i+8 == SP ){
-                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, " [%X]", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_LEFT, nk_rgb(255,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", Stack[i+8]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%04X", Stack[i+8]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
                 } else {
-                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, " [%X]", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_LEFT, nk_rgb(0,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%04X", Stack[i+8]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%04X", Stack[i+8]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);    
                 } 
             }
@@ -136,20 +136,20 @@ int win_debug_reg(struct nk_context *ctx)
             for ( int i = 0 ; i < ( (sizeof(V) / sizeof(V[0])) ) / 2; i++ ) {
                 sprintf(guiDebug_reg_emuinfo_msg, "   V[%X]", i);
                 nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(0,255,255));
-                sprintf(guiDebug_reg_emuinfo_msg, "0x%02X", V[i]);
+                sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i]);
                 nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
    
                 if ( i+8 == 15 ) {
-                    sprintf(guiDebug_reg_emuinfo_msg, "   V[%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, "  V[%X] ", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(255,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%02X", V[i+8]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i+8]);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(245,255,255));
 
                     // nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT); 
                 } else {
-                    sprintf(guiDebug_reg_emuinfo_msg, "   V[%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, "  V[%X] ", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(0,255,255));
-                    sprintf(guiDebug_reg_emuinfo_msg, "0x%02X", V[i+8]);
+                    sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i+8]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT); 
                 }
            

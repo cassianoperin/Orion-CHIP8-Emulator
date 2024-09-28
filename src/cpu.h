@@ -32,6 +32,8 @@ extern int romsize;
 // GUI
 extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[100];
+// GUI DEBUG OPC
+extern char guiDebug_opc_description_msg[50];
 
 // --------------------------------- External Functions --------------------------------- //
 // Lib
@@ -119,6 +121,43 @@ unsigned char   key_FX0A = 0;                // Keep track of the first key pres
 bool            key_FX0A_pressed = false;    // keep track of the state of first key pressed to check when is released to update V[x]
 // GUI
 bool            cpu_rom_loaded;                  // Tell the main loop when to start running the cpu_interpreter()
+// -- Operations (for debug usage - avoid have to detect again) -- //
+// Operation 01 = 00E0 - CLS
+// Operation 02 = 00EE - RET
+// Operation 03 = 0nnn - SYS addr (NOT NEEDED BY ANY GAME)
+// Operation 04 = 1nnn - JP addr
+// Operation 05 = 2nnn - CALL addr
+// Operation 06 = 3xkk - SE Vx, byte
+// Operation 07 = 4xkk - SNE Vx, byte
+// Operation 08 = 5xy0 - SE Vx, Vy
+// Operation 09 = 6xkk - LD Vx, byte
+// Operation 10 = 7xkk - ADD Vx, byte
+// Operation 11 = 8xy0 - LD Vx, Vy
+// Operation 12 = 8xy1 - OR Vx, Vy
+// Operation 13 = 8xy2 - AND Vx, Vy
+// Operation 14 = 8xy3 - XOR Vx, Vy
+// Operation 15 = 8xy4 - ADD Vx, Vy
+// Operation 16 = 8xy5 - SUB Vx, Vy
+// Operation 17 = 8xy6 - SHR Vx {, Vy}
+// Operation 18 = 8xy7 - SUBN Vx, Vy
+// Operation 19 = 8xyE - SHL Vx {, Vy}
+// Operation 20 = 9xy0 - SNE Vx, Vy
+// Operation 21 = Annn - LD I, addr
+// Operation 22 = Bnnn - JP V0, addr
+// Operation 23 = Cxkk - RND Vx, byte
+// Operation 24 = Dxyn - DRW Vx, Vy, nibble
+// Operation 25 = Ex9E - SKP Vx
+// Operation 26 = ExA1 - SKNP Vx
+// Operation 27 = Fx07 - LD Vx, DT
+// Operation 28 = Fx0A - LD Vx, K
+// Operation 29 = Fx15 - LD DT, Vx
+// Operation 30 = Fx18 - LD ST, Vx
+// Operation 31 = Fx1E - ADD I, Vx
+// Operation 32 = Fx29 - LD F, Vx
+// Operation 33 = Fx33 - LD B, Vx
+// Operation 34 = Fx55 - LD [I], Vx
+// Operation 35 = Fx65 - LD Vx, [I]
+// unsigned char cpu_operation = 0;
 
 
 // -------------------------------------- Functions ------------------------------------- //
@@ -128,6 +167,5 @@ void cpu_debug_print(void);
 void cpu_interpreter(void);
 void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
-void cpu_decode_opcode(void);
-
-
+int cpu_get_opcode(int PC_addr);
+void cpu_decode_opcode(int opc);

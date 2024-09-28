@@ -27,10 +27,12 @@ void opc_chip8_00E0(void) {
 // 00EE - RET
 // Return from a subroutine
 // The interpreter sets the program counter to the address at the top of the stack, then subtracts 1 from the stack pointer.
-// Need to incremente PC (PC+=2) after receive the value from Stack
+// Need to increment PC (PC+=2) after receive the value from Stack
 void opc_chip8_00EE(void) {
-	PC = Stack[SP] + 2;
+	PC = Stack[SP];
 	SP --;
+	
+	PC += 2;
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 00EE: Return from a subroutine (PC=0x%04X)", PC);
 
@@ -528,7 +530,6 @@ void opc_chip8_DXYN(void) {
 	// Clear the carry before start
 	V[0xF] = 0;
 
-
 	// Print N Bytes from address I in V[x]V[y] position of the screen
 	// Each byte is a line of 8 bits
 
@@ -605,6 +606,8 @@ void opc_chip8_DXYN(void) {
 
 	// Ask to draw screen
 	cpu_draw_flag = true;
+
+	
 }
 
 // ---------------------------- CHIP-8 Exxx instruction set ---------------------------- //
