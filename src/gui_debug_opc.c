@@ -71,13 +71,14 @@ int win_debug_opc(struct nk_context *ctx)
 
 
              // Show next opcodes
-            for ( int i = 0 ; i < opc_lines ; i+=2 ) {
-                sprintf(str, "%04X:", PC + 2 + i);
+            for ( int i = 2 ; i < opc_lines ; i+=2 ) {
+                sprintf(str, "%04X:", PC + i);
                 strcpy(guiDebug_opc_addr_msg, str);
-                sprintf(str, "%02X %02X", Memory[PC + 2 + i], Memory[ (PC + 2 + i) + 1]);
+                sprintf(str, "%02X %02X", Memory[PC + i], Memory[ (PC + i) + 1]);
+                // printf("%02X %02X\n", Memory[PC + i], Memory[ (PC + i) + 1]);
                 strcpy(guiDebug_opc_data_msg, str);
 
-                if ( PC + 2 + i > 0x1000 ) {
+                if ( PC + i > 0x1000 ) {
                     // Print address
                     nk_label_colored(ctx, guiDebug_opc_addr_msg, NK_TEXT_LEFT, nk_rgb(104,104,104));
                     // Print data
@@ -90,7 +91,11 @@ int win_debug_opc(struct nk_context *ctx)
                     // Print data
                     nk_label(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT);
                     // Print description
-                    opc_tmp = cpu_get_opcode(PC + 2 + i);
+
+                    printf("PC: %04X PC+i: %04X\n", PC, PC+i);
+
+                    opc_tmp = cpu_get_opcode(PC + i);
+                    printf("opc_tmp: %04X\n", opc_tmp);
                     cpu_decode_opcode(opc_tmp);
                     nk_label(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT);
                 }

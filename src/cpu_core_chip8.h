@@ -84,6 +84,9 @@ extern bool             cpu_draw_flag;
 extern unsigned char    key_FX0A;
 extern bool             key_FX0A_pressed;
 
+// GUI DEBUG OPC
+extern char guiDebug_opc_description_msg[50];
+
 // Input
 extern void input_keyboard(void);
 

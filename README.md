@@ -35,4 +35,5 @@ Port of chip8 emulator to use nuklear GUI.
 
 6) SCALE ta em 9 para debug
 
-7) Decode está errado nos endereços anteriores (00EE nao reconhecido)
+7) Decode está errado nos endereços anteriores (00EE nao reconhecido) - NA REAL REVER TODA LOGICA, NO BLINK TAVA COM COMPORTAMENTO ESTRANHO, POR CHAVES'', AI MATAR cpu_decode_opcode
+

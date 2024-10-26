@@ -414,7 +414,6 @@ void opc_chip8_BNNN(void) {
 		PC = nnn + (unsigned short)V[x];
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 Bnnn: Jump to location nnn(%d) + V[x(%d)]", nnn, V[x]);
-
 	}
 }
 
