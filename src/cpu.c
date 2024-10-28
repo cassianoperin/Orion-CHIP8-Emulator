@@ -116,8 +116,9 @@ void cpu_initialize(void) {
 	romsize = 0;
 
 	// Debug
-	cpu_debug_mode	= true;
-	// cpu_pause		= false;
+	cpu_debug_mode	        = true;
+	cpu_debug_print_console = false;
+	// cpu_pause		    = false;
 
 	// Reset ROM loaded status
 	cpu_rom_loaded = false;
@@ -142,10 +143,10 @@ void cpu_load_fonts(void) {
 
 // Debug
 void cpu_debug_print(void){ // Missing Delay Timers and Keys
-	// printf("Cycle: %d\tOpcode: %04X(%04X)\tPC: %04d(0x%04X)\tSP: %02X\tStack: [ %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X ]\
-	//   V: [ %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X ]  I: 0x%04X  DT: 0x%02X  ST: 0x%02X\n", cycle_cpu, Opcode, Opcode & 0xF000, PC, PC,  SP, Stack[0],
-	//  Stack[1], Stack[2], Stack[3], Stack[4], Stack[5], Stack[6], Stack[7], Stack[8], Stack[9], Stack[10], Stack[11], Stack[12], Stack[13], Stack[14], Stack[15],
-	//   V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14], V[15], I, DelayTimer, SoundTimer);
+	printf("Cycle: %d\tOpcode: %04X(%04X)\tPC: %04d(0x%04X)\tSP: %02X\tStack: [ %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X ]\
+	  V: [ %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X ]  I: 0x%04X  DT: 0x%02X  ST: 0x%02X\n", cycle_cpu, Opcode, Opcode & 0xF000, PC, PC,  SP, Stack[0],
+	 Stack[1], Stack[2], Stack[3], Stack[4], Stack[5], Stack[6], Stack[7], Stack[8], Stack[9], Stack[10], Stack[11], Stack[12], Stack[13], Stack[14], Stack[15],
+	  V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14], V[15], I, DelayTimer, SoundTimer);
 }
 
 // CPU Interpreter
@@ -158,7 +159,7 @@ void cpu_interpreter(void) {
 	cycle_counter_cpu ++;
 
 	// Debug
-	if ( cpu_debug_mode )
+	if ( cpu_debug_print_console )
 		cpu_debug_print();
 
 	// Map Opcode Family
@@ -577,9 +578,9 @@ void cpu_interpreter(void) {
   	}
 
 	// Print all opcode debug messages
-	if ( cpu_debug_mode ) {
-		printf("\t\t%s\n\n" , cpu_debug_message);
-	}
+	// if ( cpu_debug_mode ) {
+	// 	printf("\t\t%s\n\n" , cpu_debug_message);
+	// }
 
 	// Read the Opcode from PC and PC+1 bytes
 	Opcode = cpu_get_opcode(PC);
@@ -641,7 +642,8 @@ void cpu_decode_opcode(int opc) {
 						}
 						default :
 						{
-							printf("Opcode 0: Nibble 4 not mapped: %04X\n\n", opc);
+							sprintf(guiDebug_opc_description_msg, "-");
+							// printf("Opcode 0: Nibble 4 not mapped: %04X\n\n", opc);
 							// exit(2);
 						}
 					}
@@ -650,7 +652,8 @@ void cpu_decode_opcode(int opc) {
                 }
 
                 default : {
-					printf("Opcode 0: Nibble 3 not mapped: %04X\n\n", opc);
+					sprintf(guiDebug_opc_description_msg, "-");
+					// printf("Opcode 0: Nibble 3 not mapped: %04X\n\n", opc);
 					// exit(2);
 				}
 			}
@@ -914,7 +917,7 @@ void cpu_decode_opcode(int opc) {
         default :
 		{
 			sprintf(guiDebug_opc_description_msg, "-");
-		      printf("Main opcode not mapped: %04X\n", opc);
+		    //   printf("Main opcode not mapped: %04X\n", opc);
 		}
 
     }

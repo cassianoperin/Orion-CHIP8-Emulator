@@ -103,7 +103,7 @@ int win_debug_opc(struct nk_context *ctx)
             for ( int i = 2 ; i < opc_lines+1 ; i+=2 ) {
                 sprintf(str, "%04X:", PC + i);
                 strcpy(guiDebug_opc_addr_msg, str);
-                // printf("%02X %02X\n", Memory[PC + i], Memory[ (PC + i) + 1]);
+                sprintf(str, "%02X %02X", Memory[PC + i], Memory[ (PC + i) + 1]);
                 strcpy(guiDebug_opc_data_msg, str);
 
                 if ( PC + i > 0x1000 ) {

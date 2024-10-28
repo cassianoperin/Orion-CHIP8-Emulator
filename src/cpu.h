@@ -104,6 +104,7 @@ bool            cpu_draw_flag;			    // Send the draw to screen signal
 // Debug
 bool            cpu_debug_mode;  	        // Enable debug messages
 char            cpu_debug_message[120];     // Debug messages
+bool            cpu_debug_print_console;    // Print debut messages to console
 // SCHIP Specific Variables
 bool            cpu_SCHIP_mode;             // SCHIP mode (ENABLED or DISABLED)
 bool            cpu_SCHIP_LORES_mode;       // SCHIP in Low Resolution mode (00FE)
