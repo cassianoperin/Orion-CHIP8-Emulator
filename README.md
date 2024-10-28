@@ -25,15 +25,10 @@ Port of chip8 emulator to use nuklear GUI.
 			cpu_pause = false;
 		}
 
-2) Struct of opcodes and history
+2) Update SDL to 3
 
-3) GUI Opcodes
+3) Fullscreen ta ferrando tamanho janela emu
 
-4) Update SDL to 3
+4) SCALE ta em 9 para debug
 
-5) Fullscreen ta ferrando tamanho janela emu
-
-6) SCALE ta em 9 para debug
-
-7) Decode está errado nos endereços anteriores (00EE nao reconhecido) - NA REAL REVER TODA LOGICA, NO BLINK TAVA COM COMPORTAMENTO ESTRANHO, POR CHAVES'', AI MATAR cpu_decode_opcode
-
+5) Debug cpu_debug_message adicionar info de que é a ultima instrução executada.

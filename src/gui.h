@@ -18,6 +18,7 @@
 const struct nk_color nk_red = {255,0,0,255};
 const struct nk_color nk_green = {0,255,0,255};
 const struct nk_color nk_blue = {0,0,255,255};
+const struct nk_color nk_light_blue = {0,255,255,255};
 const struct nk_color nk_white = {255,255,255,255};
 const struct nk_color nk_black = {0,0,0,255};
 const struct nk_color nk_gray = {120,120,120,255};

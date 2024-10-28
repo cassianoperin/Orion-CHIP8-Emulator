@@ -10,18 +10,13 @@
 #include "nuklear.h"
 #include "nuklear_sdl_renderer.h"
 
-// // --------------------------------- External Variables --------------------------------- //
-// // GUI
-// extern const struct  nk_color nk_white;
-// // CPU
+// --------------------------------- External Variables --------------------------------- //
+// CPU
 extern unsigned short	PC;
 extern unsigned char Memory[4096];
 extern char cpu_debug_message[120];
 extern bool cpu_debug_mode;
-// // Display
-// extern unsigned char display_pixels[8192];
-// extern unsigned int  display_EMULATOR_RES_X;
-// extern unsigned int  display_EMULATOR_RES_Y;
+// Display
 extern char gui_statusbar_msg[120];
 // Main
 extern int romsize;

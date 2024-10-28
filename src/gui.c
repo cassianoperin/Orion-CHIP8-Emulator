@@ -473,7 +473,10 @@ int status_bar(struct nk_context *ctx)
         if ( !strcmp(gui_statusbar_msg, "No ROM loaded") || !strcmp(gui_statusbar_msg, "ROM loaded") ) {
             nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_gray);
         } else {
-            nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_red);
+            if ( !cpu_debug_mode )
+                nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_red);
+            else
+                nk_label_colored(ctx, gui_statusbar_msg, NK_TEXT_CENTERED, nk_light_blue);
         }
         
         nk_menubar_end(ctx);        

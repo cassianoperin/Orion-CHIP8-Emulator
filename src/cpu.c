@@ -608,8 +608,6 @@ int cpu_get_opcode(int PC_addr) {
 // Decode next opcode to debug message
 void cpu_decode_opcode(int opc) {
 
-printf("%04X\n", opc);
-
     switch(opc & 0xF000)
     {
 

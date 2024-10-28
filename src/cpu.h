@@ -31,7 +31,7 @@ extern char *filename;
 extern int romsize;
 // GUI
 extern bool gui_menu_quirks_inactive;
-extern char gui_statusbar_msg[100];
+extern char gui_statusbar_msg[120];
 // GUI DEBUG OPC
 extern char guiDebug_opc_description_msg[50];
 
