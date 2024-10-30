@@ -17,7 +17,7 @@ Port of chip8 emulator to use nuklear GUI.
 ## New GUI version
 
 1) quirk_display_wait and menu problems:
- vsync not good yet (main)
+ 	vsync not good yet (main)
 		// Pause when over main menu to be able to priorize menu rendering and activate vsync
 		if (nk_window_is_active(ctx, "MainMenu")) {
 			cpu_pause = true;
@@ -29,6 +29,5 @@ Port of chip8 emulator to use nuklear GUI.
 
 3) Fullscreen ta ferrando tamanho janela emu
 
-4) SCALE ta em 9 para debug
+4) quando cpu_debug_mode desativar menu resoluçao
 
-5) Debug cpu_debug_message adicionar info de que é a ultima instrução executada.

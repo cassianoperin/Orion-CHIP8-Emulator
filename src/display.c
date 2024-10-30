@@ -98,10 +98,17 @@ bool display_draw(void)
 	}
 
 	if ( cpu_debug_mode ) {
-		// Future Debug Window
+		// Set debug resolution (720p)
+		display_WINDOW_WIDTH_X		= 1280;
+		display_WINDOW_HEIGHT_Y 	=  720;
+		SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+		// Show debug windows
 		win_debug_mem(ctx);
 		win_debug_reg(ctx);
 		win_debug_opc(ctx);
+		win_debug_sprite(ctx);
 	}
 
 	// Update the Screen

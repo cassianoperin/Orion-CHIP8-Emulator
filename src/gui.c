@@ -120,6 +120,11 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
+            // Disable Resolution menu before when in debug mode
+            if ( cpu_debug_mode ) {
+                nk_widget_disable_begin(ctx);
+            }
+
             // Update the main window resolution
             if (nk_tree_push(ctx, NK_TREE_NODE, "Resolution", NK_MINIMIZED))
             {
@@ -176,13 +181,12 @@ int menu(struct nk_context *ctx)
 
                 nk_tree_pop(ctx);
             }
-
+            nk_widget_disable_end(ctx);
 
             // Disable Pixel Scale menu before rom loading
             if ( display_fullscreen ) {
                 nk_widget_disable_begin(ctx);
             }
-
 
             nk_widget_disable_end(ctx);
 

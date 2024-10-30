@@ -4,7 +4,7 @@
 int win_debug_opc(struct nk_context *ctx)
 {
     /* window flags */
-    static nk_flags window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE;
+    static nk_flags window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_NO_SCROLLBAR;
     nk_flags actual_window_flags;
 
     /* popups */
@@ -13,12 +13,12 @@ int win_debug_opc(struct nk_context *ctx)
     ctx->style.window.header.align = header_align;
 
     actual_window_flags = window_flags;
-    if (nk_begin(ctx, "Disassembler", nk_rect(582, 36, 270, 658), actual_window_flags))
+    if (nk_begin(ctx, "Disassembler", nk_rect(582, 36, 270, 322), actual_window_flags))
     {
 
         // Line with 1 columns
-        static const float ratio_1column[] = {248};
-        nk_layout_row(ctx, NK_STATIC, 145, 1, ratio_1column);
+        static const float ratio_1column[] = {258};
+        nk_layout_row(ctx, NK_STATIC, 130, 1, ratio_1column);
 
         // Opcode Group
         if (nk_group_begin(ctx, "OpcodesGrp", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
@@ -27,7 +27,7 @@ int win_debug_opc(struct nk_context *ctx)
             nk_layout_row(ctx, NK_STATIC, 10, 3, ratio);
 
             char str[50];
-            int opc_lines = 20;
+            int opc_lines = 18;
             int opc_tmp = 0; 
 
             // Show previous opcodes
@@ -87,7 +87,7 @@ int win_debug_opc(struct nk_context *ctx)
         }
 
         // Line with 1 columns
-        nk_layout_row(ctx, NK_STATIC, 145, 1, ratio_1column);
+        nk_layout_row(ctx, NK_STATIC, 130, 1, ratio_1column);
 
         // Opcode Group Next
         if (nk_group_begin(ctx, "OpcodesGrpNext", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
@@ -100,7 +100,7 @@ int win_debug_opc(struct nk_context *ctx)
             int opc_tmp = 0; 
 
              // Show next opcodes
-            for ( int i = 2 ; i < opc_lines+1 ; i+=2 ) {
+            for ( int i = 2 ; i < opc_lines ; i+=2 ) {
                 sprintf(str, "%04X:", PC + i);
                 strcpy(guiDebug_opc_addr_msg, str);
                 sprintf(str, "%02X %02X", Memory[PC + i], Memory[ (PC + i) + 1]);

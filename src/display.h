@@ -36,6 +36,8 @@ extern int status_bar(struct nk_context *ctx);
 extern int win_debug_mem(struct nk_context *ctx);
 // GUI Emu
 extern void win_emulator(struct nk_context *ctx);
+// GUI Sprite
+extern void win_debug_sprite(struct nk_context *ctx);
 // GUI Reg
 extern int win_debug_reg(struct nk_context *ctx);
 // GUI Opc
