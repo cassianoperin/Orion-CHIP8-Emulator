@@ -54,6 +54,9 @@ extern unsigned int display_WINDOW_HEIGHT_Y;
 extern unsigned char display_EMULATOR_RES_X;
 extern unsigned char display_EMULATOR_RES_Y;
 extern unsigned int display_EMULATOR_RES_SCALE;
+extern unsigned int display_WINDOW_WIDTH_X_tmp;
+extern unsigned int display_WINDOW_HEIGHT_Y_tmp;
+extern unsigned int display_EMULATOR_RES_SCALE_tmp;
 extern bool display_fullscreen;
 // Quirks
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
@@ -68,6 +71,7 @@ extern bool quirk_Jump_with_offset_Bnnn;
 extern int lib_gui_loadrom(void);
 // Display
 extern void display_updateWindowSize(unsigned int pixel_scale);
+extern unsigned int display_menu_heigth;
 // CPU
 extern void cpu_reset(void);
 extern void cpu_initialize(void);

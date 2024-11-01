@@ -21,8 +21,16 @@ extern const int video_system_freq;
 extern unsigned int display_pixel_ON_color;
 extern unsigned int display_pixel_OFF_color;
 extern bool display_fullscreen;
+extern unsigned int display_EMULATOR_RES_X;
+extern unsigned int display_EMULATOR_RES_Y;
 extern unsigned int display_EMULATOR_RES_SCALE;
 extern unsigned char display_color_theme;
+extern unsigned int display_WINDOW_WIDTH_X;
+extern unsigned int display_WINDOW_HEIGHT_Y;
+extern unsigned int display_WINDOW_WIDTH_X_tmp;
+extern unsigned int display_WINDOW_HEIGHT_Y_tmp;
+extern unsigned int display_EMULATOR_RES_SCALE_tmp; 
+
 // extern unsigned int frame;
 // Lib
 extern char *game_signature;

@@ -115,13 +115,13 @@ void cpu_initialize(void) {
 	// Rom size
 	romsize = 0;
 
-	// Debug
-	cpu_debug_mode	        = true;
-	cpu_debug_print_console = false;
-	// cpu_pause		    = false;
-
 	// Reset ROM loaded status
 	cpu_rom_loaded = false;
+
+	// Debug
+	// cpu_debug_mode	       = false;
+	// cpu_debug_print_console = false;
+	// cpu_pause		       = false;
 }
 
 void cpu_load_fonts(void) {

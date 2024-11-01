@@ -4,11 +4,11 @@
 // --------------------------------- External Variables --------------------------------- //
 
 // Screen Size
-extern unsigned char display_EMULATOR_RES_X;
-extern unsigned char display_EMULATOR_RES_Y;
-extern unsigned char  display_pixels[8192];
-extern unsigned char  display_pixel_ON_color;
-extern unsigned char  display_pixel_OFF_color;
+extern unsigned int display_EMULATOR_RES_X;
+extern unsigned int display_EMULATOR_RES_Y;
+extern unsigned char display_pixels[8192];
+extern unsigned char display_pixel_ON_color;
+extern unsigned char display_pixel_OFF_color;
 // Font
 extern const char Chip8Fontset[80];
 extern const char SCHIPFontset[160];

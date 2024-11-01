@@ -120,7 +120,7 @@ int menu(struct nk_context *ctx)
                 nk_tree_pop(ctx);
             }
 
-            // Disable Resolution menu before when in debug mode
+            // Disable Resolution menu when in debug mode
             if ( cpu_debug_mode ) {
                 nk_widget_disable_begin(ctx);
             }
@@ -131,46 +131,38 @@ int menu(struct nk_context *ctx)
                 static int option;
 
                 nk_layout_row_static(ctx, 20, 180, 1);
-                option = nk_option_label(ctx, "1:  720p (1280 x  720)",  option == 0) ? 0 : option;
-                option = nk_option_label(ctx, "2: 1080p (1920 x 1080)",  option == 1) ? 1 : option;
-                option = nk_option_label(ctx, "3: 1440p (2560 x 1440)",  option == 2) ? 2 : option;
-                option = nk_option_label(ctx, "4: 2160p (3840 x 2160)",  option == 3) ? 3 : option;
+                option = nk_option_label(ctx, "1:  640x320",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: 1280x640",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "3: 1920x960",  option == 2) ? 2 : option;
 
                 switch( option )
                 {
-                    // 720p (1280 x  720)
+                    // 640 x 320
                     case 0:
-                    	display_WINDOW_WIDTH_X		= 1280;
-	                    display_WINDOW_HEIGHT_Y 	=  720;
+                    	display_WINDOW_WIDTH_X	   =  640;
+	                    display_WINDOW_HEIGHT_Y    =  320 + display_menu_heigth;
+                        display_EMULATOR_RES_SCALE =   10;
                         SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
                         SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
                         break;
 
-                    // 1080p (1920 x 1080)
+                    // 1280 x 640
                     case 1: {
-                    	display_WINDOW_WIDTH_X		= 1920;
-	                    display_WINDOW_HEIGHT_Y 	= 1080;
+                    	display_WINDOW_WIDTH_X		= 1280;
+	                    display_WINDOW_HEIGHT_Y 	=  640 + display_menu_heigth;
+                        display_EMULATOR_RES_SCALE  =   20;
                         SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
                         SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
                         break;
                     }
 
-                    // 1440p (2560 x 1440)
+                    // 1920 x 960
                     case 2: {
-                        display_WINDOW_WIDTH_X		= 2560;
-                        display_WINDOW_HEIGHT_Y 	= 1440;
-                        SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
-                        SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
-                        break;
-                    }
-
-                    // 2160p (3840 x 2160)
-                    case 3: {
-                        display_WINDOW_WIDTH_X		= 3840;
-                        display_WINDOW_HEIGHT_Y 	= 2160;
+                        display_WINDOW_WIDTH_X		= 1920;
+                        display_WINDOW_HEIGHT_Y 	=  960 + display_menu_heigth;
+                        display_EMULATOR_RES_SCALE  =   30;
                         SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
                         SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
@@ -183,18 +175,13 @@ int menu(struct nk_context *ctx)
             }
             nk_widget_disable_end(ctx);
 
-            // Disable Pixel Scale menu before rom loading
-            if ( display_fullscreen ) {
-                nk_widget_disable_begin(ctx);
-            }
 
-            nk_widget_disable_end(ctx);
 
             if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
 
                 if ( display_fullscreen ) {
                     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);       
-                    display_EMULATOR_RES_SCALE = 20; // To ensure that will fill entire screen
+                    display_EMULATOR_RES_SCALE = 30; // To ensure that will fill entire screen
                     display_updateWindowSize(display_EMULATOR_RES_SCALE);
                 } else {
                     SDL_SetWindowFullscreen(window, 0);
@@ -281,7 +268,49 @@ int menu(struct nk_context *ctx)
 
             if ( nk_checkbox_label(ctx, "HEX ROM mode", &rom_format_hex) ) {}
 
-            if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {}
+            if ( nk_checkbox_label(ctx, "Debug", &cpu_debug_mode) ) {
+                
+                if ( cpu_debug_mode ) {
+                    // Resize main Window
+                    display_EMULATOR_RES_SCALE_tmp = display_EMULATOR_RES_SCALE;
+                    display_WINDOW_WIDTH_X_tmp = display_WINDOW_WIDTH_X;
+                    display_WINDOW_HEIGHT_Y_tmp = display_WINDOW_HEIGHT_Y;
+                    display_EMULATOR_RES_SCALE = 9;
+                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 4, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
+
+                    // Set debug resolution (720p)
+                    display_WINDOW_WIDTH_X		= 1280;
+                    display_WINDOW_HEIGHT_Y 	=  720;
+                    SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                    // Set Emulation Windows focus
+                    nk_window_set_focus(ctx, "Emulator");
+                
+                } else {
+
+                    // Set the default emulator message status in status bar
+                    if ( cpu_rom_loaded )
+                        strcpy(gui_statusbar_msg, "ROM loaded");
+                    else
+                        strcpy(gui_statusbar_msg, "No ROM loaded");
+
+                    nk_window_set_focus(ctx, "Emulator");
+                    
+                    // Resize main Window
+                    display_WINDOW_WIDTH_X     = display_WINDOW_WIDTH_X_tmp;
+                    display_WINDOW_HEIGHT_Y    = display_WINDOW_HEIGHT_Y_tmp;
+                    display_EMULATOR_RES_SCALE = display_EMULATOR_RES_SCALE_tmp;
+
+                    // Return main window size
+                    SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
+                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                    // Draw Emulator Window
+                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE ));
+                }
+
+
+            }
 
             if ( nk_checkbox_label(ctx, "Pause", &cpu_pause) ) {}
 
@@ -290,6 +319,12 @@ int menu(struct nk_context *ctx)
             // --- Split Menu --- //
             nk_layout_row_dynamic(ctx, 1, 1);
             nk_rule_horizontal(ctx, nk_gray, nk_true);
+
+
+            // Disable Scale menu when in debug mode
+            if ( cpu_debug_mode ) {
+                nk_widget_disable_begin(ctx);
+            }
 
             // Emulator Scale
             int initial_scale_value = display_EMULATOR_RES_SCALE;
@@ -302,6 +337,8 @@ int menu(struct nk_context *ctx)
                 // Resize Emulator Window
                 nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 4, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
             }
+
+            nk_widget_disable_end(ctx);
 
             // Clock
             nk_layout_row(ctx, NK_STATIC, 20, 2, ratio);

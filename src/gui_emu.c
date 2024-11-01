@@ -23,7 +23,7 @@ canvas_begin(struct nk_context *ctx, struct nk_canvas *canvas, nk_flags flags,
     ctx->style.window.fixed_background = nk_style_item_color(background_color);
 
     /* create/update window and set position + size */
-    if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE | flags))
+    if (!nk_begin(ctx, "Emulator", nk_rect(x, y, width, height), flags))
         return nk_false;
 
     /* allocate the complete window space for drawing */
@@ -50,12 +50,20 @@ canvas_end(struct nk_context *ctx, struct nk_canvas *canvas)
 void win_emulator(struct nk_context *ctx)
 {
         struct nk_canvas canvas;
+        static nk_flags window_flags;
+        unsigned int win_height, win_width;
 
-        if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE,  \
-                                        0, 36, display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4, \
-                                        (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34, \
-                                        nk_rgb(bg_R,bg_G,bg_B)))
-        {
+        if ( cpu_debug_mode ) {
+            window_flags = NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE;
+            win_height = (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34;
+            win_width  = display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4;
+        } else {
+            window_flags = NK_WINDOW_NO_SCROLLBAR ;
+            win_height = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE;
+            win_width  = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE;
+        }
+
+        if (canvas_begin(ctx, &canvas, window_flags, 0, 36, win_width , win_height , nk_rgb(bg_R,bg_G,bg_B))) {
             float x = canvas.painter->clip.x, y = canvas.painter->clip.y;
 
             int rect_size = display_EMULATOR_RES_SCALE;
@@ -82,7 +90,7 @@ void win_emulator(struct nk_context *ctx)
                     // Columns
                     for ( column = 0 ; column < 64 ; column ++ ) {
                         if ( display_pixels[index+column] == display_pixel_ON_color ) {
-                            nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*column,   y + rect_size*line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
+                            nk_fill_rect(canvas.painter, nk_rect(x + rect_size*column, y + rect_size*line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
                         }
                     }
 

@@ -25,6 +25,7 @@ extern struct nk_context *ctx;
 extern bool quirk_display_wait;
 // GUI
 extern unsigned int gui_pixels_logo[2048];
+extern unsigned int gui_menu_heigth;
 // CPU
 extern bool cpu_debug_mode;
 extern bool cpu_rom_loaded;
@@ -49,9 +50,11 @@ unsigned int display_WINDOW_WIDTH_X;
 unsigned int display_WINDOW_HEIGHT_Y;
 
 // Display (Screen size)
-unsigned int  display_EMULATOR_RES_X;
-unsigned int  display_EMULATOR_RES_Y;
-unsigned int  display_EMULATOR_RES_SCALE;
+unsigned int display_EMULATOR_RES_X;
+unsigned int display_EMULATOR_RES_Y;
+unsigned int display_EMULATOR_RES_SCALE;
+unsigned int display_menu_heigth;
+
 bool display_fullscreen;
 // Colors
 unsigned char display_pixel_ON_color;
@@ -61,13 +64,22 @@ unsigned char display_color_theme;          // Theme number
 // Display Array
 // unsigned int  display_pixels[2048];
 unsigned char  display_pixels[8192];
+
 // Frames per second
 unsigned char display_FPS;
+
 // Debug Pixels
 bool debug_pixels;                          // Print pixels to console
+
 // Frame Counters
 unsigned int frame = 0;                      // Frame counter
 unsigned int frame_counter = 0;              // Frame per second
+
+// Debug mode
+unsigned int display_WINDOW_WIDTH_X_tmp; // Keep original pixel scale after leaving debug mode
+unsigned int display_WINDOW_HEIGHT_Y_tmp;
+unsigned int display_EMULATOR_RES_SCALE_tmp; 
+
 
 // -------------------------------------- Functions ------------------------------------- //
 bool display_init(void);

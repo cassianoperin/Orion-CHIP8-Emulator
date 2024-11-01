@@ -1,4 +1,5 @@
 #pragma once
+#include "typedef.h"
 #include "nuklear.h"
 
 // ---------------------------------- Global Variables ---------------------------------- //
@@ -18,6 +19,8 @@ extern unsigned int   display_EMULATOR_RES_Y;
 extern unsigned int   display_EMULATOR_RES_SCALE;
 extern unsigned char  display_pixels[8192];
 extern unsigned char  display_pixel_ON_color;
+/* CPU */
+extern bool           cpu_debug_mode;
 
 // -------------------------------------- Functions ------------------------------------- //
 void win_emulator(struct nk_context *ctx);

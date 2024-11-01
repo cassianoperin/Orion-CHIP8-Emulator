@@ -27,7 +27,6 @@ Port of chip8 emulator to use nuklear GUI.
 
 2) Update SDL to 3
 
-3) Fullscreen ta ferrando tamanho janela emu
+3) Fullscreen lots of problems
 
-4) quando cpu_debug_mode desativar menu resoluçao
-
+4) Resize register texts

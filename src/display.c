@@ -7,16 +7,19 @@ bool display_init(void)
 	bool success = true;
 
 	// Variables
+	// Menus height sum
+	display_menu_heigth = 36+25;
 	// Main Window
-	display_WINDOW_WIDTH_X		= 1280;
-	display_WINDOW_HEIGHT_Y 	=  720;
+	display_WINDOW_WIDTH_X		= 640;
+	display_WINDOW_HEIGHT_Y 	= 320 + display_menu_heigth;
 	// Emulator screen
-	display_EMULATOR_RES_X  	= 64;
-	display_EMULATOR_RES_Y		= 32;
-	display_EMULATOR_RES_SCALE	= 9;
-	display_pixel_ON_color		= 0xFF;
-	display_pixel_OFF_color		= 0x00;
-	display_color_theme			= 0;
+	display_EMULATOR_RES_X  	   = 64;
+	display_EMULATOR_RES_Y		   = 32;
+	display_EMULATOR_RES_SCALE	   = 10;
+	display_EMULATOR_RES_SCALE_tmp = 10;
+	display_pixel_ON_color		   = 0xFF;
+	display_pixel_OFF_color		   = 0x00;
+	display_color_theme		       = 0;
 
 	// Debug
 	debug_pixels			= false;
@@ -98,12 +101,6 @@ bool display_draw(void)
 	}
 
 	if ( cpu_debug_mode ) {
-		// Set debug resolution (720p)
-		display_WINDOW_WIDTH_X		= 1280;
-		display_WINDOW_HEIGHT_Y 	=  720;
-		SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
-		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
 		// Show debug windows
 		win_debug_mem(ctx);
 		win_debug_reg(ctx);
