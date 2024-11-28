@@ -58,7 +58,7 @@ void win_emulator(struct nk_context *ctx)
             win_height = (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34;
             win_width  = display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4;
         } else {
-            window_flags = NK_WINDOW_NO_SCROLLBAR ;
+            window_flags = NK_WINDOW_NO_SCROLLBAR;
             win_height = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE;
             win_width  = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE;
         }
@@ -68,10 +68,21 @@ void win_emulator(struct nk_context *ctx)
 
             int rect_size = display_EMULATOR_RES_SCALE;
 
-            // // Screen calibration
-            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0, y + 0, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
-            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,0));
-            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2, y + 0, rect_size, rect_size), 0, nk_rgb(0, 0, 255));
+            // Screen calibration
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*3, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*4, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*5, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*6, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
+            // printf("0: %f %f\n", x + rect_size*0, x + rect_size*0 + rect_size);
+            // printf("1: %f %f\n", x + rect_size*1, x + rect_size*1 + rect_size);
+            // printf("2: %f %f\n", x + rect_size*2, x + rect_size*2 + rect_size);
+            // printf("3: %f %f\n", x + rect_size*3, x + rect_size*3 + rect_size);
+            // printf("4: %f %f\n", x + rect_size*4, x + rect_size*4 + rect_size);
+            // printf("5: %f %f\n", x + rect_size*5, x + rect_size*5 + rect_size);
+
             // // nk_stroke_rect(canvas.painter, nk_rect(x + rect_size*3, y + 0, rect_size, rect_size), 1, 1, nk_rgb(255, 0, 0));
             // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*63, y + 0, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
             // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0,  y + rect_size*31, rect_size, rect_size), 0, nk_rgb(255, 0, 0));
@@ -89,8 +100,8 @@ void win_emulator(struct nk_context *ctx)
 
                     // Columns
                     for ( column = 0 ; column < 64 ; column ++ ) {
-                        if ( display_pixels[index+column] == display_pixel_ON_color ) {
-                            nk_fill_rect(canvas.painter, nk_rect(x + rect_size*column, y + rect_size*line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
+                        if ( display_pixels[index+(int)column] == display_pixel_ON_color ) {
+                            nk_fill_rect(canvas.painter, nk_rect(x + rect_size*(float)column, y + rect_size*(float)line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
                         }
                     }
 

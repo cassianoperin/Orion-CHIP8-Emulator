@@ -30,7 +30,7 @@ int win_debug_reg(struct nk_context *ctx)
         if (nk_group_begin(ctx, "RegGroupLeft", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
 
             // Line with 3 columns
-            nk_layout_row(ctx, NK_STATIC, 12, 3, ratio_3column);
+            nk_layout_row(ctx, NK_STATIC, 14, 3, ratio_3column);
 
             // Register label
             nk_label_colored(ctx, "Registers:", NK_TEXT_LEFT, nk_rgb(255,255,255));
@@ -45,7 +45,7 @@ int win_debug_reg(struct nk_context *ctx)
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Line with 2 columns
-            nk_layout_row(ctx, NK_STATIC, 10, 2, ratio_2column);
+            nk_layout_row(ctx, NK_STATIC, 14, 2, ratio_2column);
 
             // Opcode
             nk_label_colored(ctx, "Opcode:", NK_TEXT_LEFT, nk_rgb(120,120,120));
@@ -53,7 +53,7 @@ int win_debug_reg(struct nk_context *ctx)
             nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(120,120,120));
 
             // Line with 3 columns of 50
-            nk_layout_row(ctx, NK_STATIC, 12, 3, ratio_3column);
+            nk_layout_row(ctx, NK_STATIC, 14, 3, ratio_3column);
 
             // I
             nk_label_colored(ctx, "I:", NK_TEXT_LEFT, nk_rgb(0,255,255));
@@ -84,13 +84,13 @@ int win_debug_reg(struct nk_context *ctx)
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Line with 1 columns
-            nk_layout_row(ctx, NK_STATIC, 16, 1, ratio_1column);
+            nk_layout_row(ctx, NK_STATIC, 18, 1, ratio_1column);
 
             // Stack
-            nk_label_colored(ctx, "Stack:", NK_TEXT_LEFT, nk_rgb(0,255,255));
+            nk_label_colored(ctx, "Stack:", NK_TEXT_LEFT, nk_rgb(255,255,255));
 
             // Line with 4 columns
-            nk_layout_row(ctx, NK_STATIC, 10, 4, ratio_4column);
+            nk_layout_row(ctx, NK_STATIC, 14, 4, ratio_4column);
 
             for ( int i = 0 ; i < ( (sizeof(Stack) / sizeof(Stack[0])) ) / 2; i++ ) {
                 if ( i == SP ){
@@ -130,24 +130,30 @@ int win_debug_reg(struct nk_context *ctx)
             // // Empty line
             // nk_label_colored(ctx, "", NK_TEXT_LEFT, nk_rgb(0,255,255));
 
+            // Line with 1 columns
+            nk_layout_row(ctx, NK_STATIC, 18, 1, ratio_1column);
+
+            // Stack
+            nk_label_colored(ctx, "V:", NK_TEXT_LEFT, nk_rgb(255,255,255));
+
             // Line with 4 columns
-            nk_layout_row(ctx, NK_STATIC, 10, 4, ratio_4column);
+            nk_layout_row(ctx, NK_STATIC, 12, 4, ratio_4column);
 
             for ( int i = 0 ; i < ( (sizeof(V) / sizeof(V[0])) ) / 2; i++ ) {
-                sprintf(guiDebug_reg_emuinfo_msg, "   V[%X]", i);
+                sprintf(guiDebug_reg_emuinfo_msg, "   [%X]", i);
                 nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(0,255,255));
                 sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i]);
                 nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
    
                 if ( i+8 == 15 ) {
-                    sprintf(guiDebug_reg_emuinfo_msg, "  V[%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X] ", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(255,255,255));
                     sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i+8]);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(245,255,255));
 
                     // nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT); 
                 } else {
-                    sprintf(guiDebug_reg_emuinfo_msg, "  V[%X] ", i+8);
+                    sprintf(guiDebug_reg_emuinfo_msg, "  [%X] ", i+8);
                     nk_label_colored(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT, nk_rgb(0,255,255));
                     sprintf(guiDebug_reg_emuinfo_msg, "#%02X", V[i+8]);
                     nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT); 
@@ -267,13 +273,13 @@ int win_debug_reg(struct nk_context *ctx)
         if (nk_group_begin(ctx, "RegGroupRight", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
          
            // Line with 1 columns
-            nk_layout_row(ctx, NK_STATIC, 12, 1, ratio_1column);
+            nk_layout_row(ctx, NK_STATIC, 15, 1, ratio_1column);
 
             //  Inputs:
             nk_label_colored(ctx, "Information:", NK_TEXT_LEFT, nk_rgb(255,255,255));
 
             // Line with 2 columns
-            nk_layout_row(ctx, NK_STATIC, 12, 2, ratio_2column_long);
+            nk_layout_row(ctx, NK_STATIC, 15, 2, ratio_2column_long);
 
             // CPU Clock
             nk_label_colored(ctx, "CPU Clock:", NK_TEXT_LEFT, nk_rgb(0,255,255));
@@ -325,7 +331,7 @@ int win_debug_reg(struct nk_context *ctx)
             // Empty line
 
            // Line with 1 columns
-            nk_layout_row(ctx, NK_STATIC, 12, 1, ratio_1column);
+            nk_layout_row(ctx, NK_STATIC, 15, 1, ratio_1column);
 
             //  Inputs:
             nk_label_colored(ctx, "Flags:", NK_TEXT_LEFT, nk_rgb(255,255,255));
@@ -367,7 +373,7 @@ int win_debug_reg(struct nk_context *ctx)
             // nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Line with 2 columns
-            nk_layout_row(ctx, NK_STATIC, 10, 2, ratio_2column_long);
+            nk_layout_row(ctx, NK_STATIC, 15, 2, ratio_2column_long);
 
             // Draw Flag
             nk_label_colored(ctx, "Draw Flag:", NK_TEXT_LEFT, nk_rgb(0,255,255));

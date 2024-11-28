@@ -180,14 +180,55 @@ int menu(struct nk_context *ctx)
             if ( nk_checkbox_label(ctx, "Fullscreen", &display_fullscreen) ) {
 
                 if ( display_fullscreen ) {
-                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);       
-                    display_EMULATOR_RES_SCALE = 30; // To ensure that will fill entire screen
-                    display_updateWindowSize(display_EMULATOR_RES_SCALE);
+                    
+                    struct nk_vec2 sss;
+                    sss = nk_window_get_content_region_size(ctx);
+                    printf("enable %f\n", sss.x);
+
+                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN );
+
+
+                        // for (int i = 0; i < SDL_GetNumVideoDisplays(); i++) {
+                           
+                        //     printf("%d\n", SDL_GetNumVideoDisplays());
+                            
+                            // int x,y;
+
+                            // SDL_GetWindowSize(window, &x, &y);
+                            //     printf("x: %d  y: %d\n", x, y);
+
+
+
+                            
+                            // if (SDL_GetDisplayBounds(i, &displayBounds) == 0) {
+                            //     SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "%d, %d, %d", i, displayBounds.x, displayBounds.y); 
+
+                            // }
+                            // else {
+                            // SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION,
+                            //             "SDL_GetDisplayBounds(%d) failed: %s",
+                            //             i, SDL_GetError());
+                            // }
+
+
+                        // }
+
+                        
+
+
+                    // display_EMULATOR_RES_SCALE = 30; // To ensure that will fill entire screen
+                    // display_updateWindowSize(display_EMULATOR_RES_SCALE);
                 } else {
+
+                    struct nk_vec2 sss;
+                    sss = nk_window_get_content_region_size(ctx);
+                    printf("disable %f\n", sss.x);
+
                     SDL_SetWindowFullscreen(window, 0);
-                    display_EMULATOR_RES_SCALE = 10;
-                    display_updateWindowSize(display_EMULATOR_RES_SCALE);
-                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+                    // display_EMULATOR_RES_SCALE = 10;
+                    // display_updateWindowSize(display_EMULATOR_RES_SCALE);
+                    // SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
                 }
 
             }

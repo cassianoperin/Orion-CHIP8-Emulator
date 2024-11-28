@@ -9,7 +9,6 @@ Port of chip8 emulator to use nuklear GUI.
 2) Insert the name of game loaded in the status bar OR window
 3) Reduce the number of global variables
 4) Rewrite DXYN function
-5) 
 
 ## Problems
 1) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
@@ -27,6 +26,8 @@ Port of chip8 emulator to use nuklear GUI.
 
 2) Update SDL to 3
 
-3) Fullscreen lots of problems
+3) Fullscreen
+	a) Menu resolution enabled in fullscreen?
+	b) Red text on status bar when leaving fullscreen
+	c) Canvas.painter (gui_emu.c) doesn't draw correctly with float numbers
 
-4) Resize register texts
