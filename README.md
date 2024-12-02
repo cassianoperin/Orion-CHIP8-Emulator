@@ -72,7 +72,7 @@ CHIP-8 emulator written in C with Nuklear gui library.
 
 	`Z` `X` `C` `V`
 
-	`P and ESC`: Pause and Resume emulation
+	`P` and `ESC`: Pause and Resume emulation
 
 	`5`: Decrease CPU Clock Speed
 
@@ -82,7 +82,7 @@ CHIP-8 emulator written in C with Nuklear gui library.
 
 	`0`: Reset
 
-	`I (While paused)`: Reset
+	`I`: Increase CPU Cycle (in paused mode))
 
 
 ## EMULATOR Build Instructions
@@ -165,7 +165,7 @@ CHIP-8 emulator written in C with Nuklear gui library.
 
 Test memory leaks on binary:
 
-	`leaks --atExit --list -- main`
+`leaks --atExit --list -- main`
 
 
 ## TODO
