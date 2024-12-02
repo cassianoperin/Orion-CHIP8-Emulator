@@ -1,6 +1,6 @@
-# CHIP-8 / CHIP-8 HIRES / SCHIP Emulator
+# ORION CHIP-8 Emulator
 
-Chip 8 emulator written in C with SDL2
+CHIP-8 emulator written in C with Nuklear gui library.
 
 **CHIP-8 Space Invaders Game** | **Superchip (SCHIP) Spacefight 2091!**
 :-------------------------:|:-------------------------:
