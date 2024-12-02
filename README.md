@@ -2,13 +2,13 @@
 
 CHIP-8 emulator written in C with Nuklear gui library.
 
-**Main Emulator** | **CHIP-8 PONG 2**
+**Main Emulator** | **CHIP-8 Pong 2 game**
 :-------------------------:|:-------------------------:
 <img width="380" alt="main" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Main.png">  |  <img width="380" alt="pong2" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Pong2.png">
-:-------------------------:|:-------------------------:
-:-----------------------------------------------------:
-<img width="760" alt="debug" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Debug.png">
-:-----------------------------------------------------:
+
+**Debug Screen**|
+:-------------------------:|
+<img width="787" alt="debug" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Debug.png"> |
 
 ## CHIP8 Status
 * ![100%](https://progress-bar.xyz/100) CPU Opcodes
@@ -19,18 +19,18 @@ CHIP-8 emulator written in C with Nuklear gui library.
 * ![100%](https://progress-bar.xyz/100) Sound
 ## CHIP8 HiRes
 * ![0%](https://progress-bar.xyz/0) CPU Opcodes
-* ![0%](https://progress-bar.xyz/100) Memory
-* ![0%](https://progress-bar.xyz/100) Registers
+* ![0%](https://progress-bar.xyz/0) Memory
+* ![0%](https://progress-bar.xyz/0) Registers
 * ![0%](https://progress-bar.xyz/0) Graphics
 * ![0%](https://progress-bar.xyz/0) Qwirks
-* ![0%](https://progress-bar.xyz/100) Sound
+* ![0%](https://progress-bar.xyz/0) Sound
 ## SCHIP Status
 * ![0%](https://progress-bar.xyz/0) CPU Opcodes
-* ![0%](https://progress-bar.xyz/100) Memory
-* ![0%](https://progress-bar.xyz/100) Registers
+* ![0%](https://progress-bar.xyz/0) Memory
+* ![0%](https://progress-bar.xyz/0) Registers
 * ![0%](https://progress-bar.xyz/0) Graphics
 * ![0%](https://progress-bar.xyz/0) Qwirks
-* ![0%](https://progress-bar.xyz/100) Sound
+* ![0%](https://progress-bar.xyz/0) Sound
 ## Emulator
 * ![100%](https://progress-bar.xyz/100) Pause and resume emulation
 * ![100%](https://progress-bar.xyz/100) Reset emulation
@@ -39,10 +39,10 @@ CHIP-8 emulator written in C with Nuklear gui library.
 * ![100%](https://progress-bar.xyz/100) Hexadecimal rom format support
 * ![100%](https://progress-bar.xyz/100) Step Forward CPU Cycles for Debug
 * ![100%](https://progress-bar.xyz/100) Increase and Decrease CPU Clock Speed
-* ![10%](https://progress-bar.xyz/80) Keyboard remaps
+* ![10%](https://progress-bar.xyz/10) Keyboard remaps
 * ![0%](https://progress-bar.xyz/0) Step Back (Rewind) CPU Cycles for Debug
 * ![0%](https://progress-bar.xyz/0) Save States
-* ![50%](https://progress-bar.xyz/0) Fullscreen
+* ![50%](https://progress-bar.xyz/50) Fullscreen
 * ![100%](https://progress-bar.xyz/100) Emulation Status from all games I have to test
 
 ## EMULATOR Usage
