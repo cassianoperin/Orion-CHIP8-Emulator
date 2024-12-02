@@ -2,7 +2,7 @@ CC = gcc
 SRC_DIR = src
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 BUILD_DIR = build
-OBJ_NAME = gui
+OBJ_NAME = orion
 # LIBRARY_PATHS = -Llib
 # COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
 COMPILER_FLAGS = -std=c11 -Wall -O0 -g

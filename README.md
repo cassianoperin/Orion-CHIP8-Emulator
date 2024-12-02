@@ -1,6 +1,6 @@
-# CHIP-8 GUI with Nuklear
+# ORION CHIP-8 Emulator
 
-Port of chip8 emulator to use nuklear GUI.
+CHIP-8 emulator written in C with Nuklear gui library.
 
 ## Improvements
 
@@ -28,6 +28,9 @@ Port of chip8 emulator to use nuklear GUI.
 
 3) Fullscreen
 	a) Menu resolution enabled in fullscreen?
-	b) Red text on status bar when leaving fullscreen
-	c) Canvas.painter (gui_emu.c) doesn't draw correctly with float numbers
+	b) Canvas.painter (gui_emu.c) doesn't draw correctly with float numbers
+
+4) Test draw float squares values on high dpi
+
+5) Replace manual processing in DXYN by a XOR.
 

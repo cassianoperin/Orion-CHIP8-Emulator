@@ -29,7 +29,7 @@ int menu(struct nk_context *ctx)
         // ------------------------------------- Menu FILE -------------------------------------- //
         
         // Start Menu Row
-        nk_layout_row_begin(ctx, NK_STATIC, 25, 5);
+        nk_layout_row_begin(ctx, NK_STATIC, 24, 5);
         
         nk_layout_row_push(ctx, 45);
         if (nk_menu_begin_label(ctx, "File", NK_TEXT_LEFT, nk_vec2(120, 200)))
@@ -482,7 +482,7 @@ int menu(struct nk_context *ctx)
         {
             nk_layout_row_dynamic(ctx, 20, 1);
             nk_label(ctx, "Orion CHIP-8 Emulator", NK_TEXT_CENTERED);
-            nk_label(ctx, "By Cassiano Perin", NK_TEXT_CENTERED);
+            nk_label(ctx, "Developer: Cassiano Perin", NK_TEXT_CENTERED);
             nk_label(ctx, "Orion CHIP8 is licensed under the public domain License.",  NK_TEXT_CENTERED);
             nk_popup_end(ctx);
         } else show_app_about = nk_false;
@@ -503,27 +503,27 @@ int menu(struct nk_context *ctx)
         if (nk_popup_begin(ctx, NK_POPUP_STATIC, "CHIP-8 Quirk Help", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
         {
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "1. vF reset", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "1. vF reset", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "The AND, OR and XOR opcodes (8xy1, 8xy2 and 8xy3) reset the register flag to zero.");
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "2. Memory", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "2. Memory", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "The save and load opcodes (Fx55 and Fx65) increment the index register.");
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "3. Display wait", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "3. Display wait", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "Drawing sprites to the display waits for the vertical blank, limiting to max 60 FPS.");
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "4. Clipping", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "4. Clipping", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen.");
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "5. Shifting", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "5. Shifting", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "The shift opcodes (8xy6 and 8xyE) only operate on vX instead of storing the shifted version of vY in vX.");
             nk_layout_row_dynamic(ctx, 20, 1);
-            nk_label_colored(ctx, "6. Jumping", NK_TEXT_LEFT, nk_blue);
+            nk_label_colored(ctx, "6. Jumping", NK_TEXT_LEFT, nk_light_blue);
             nk_layout_row_static(ctx, 40, popup_size_x - 20, 1);
             nk_label_wrap(ctx, "The \"jump to some address plus v0\" instruction (Bnnn) doesn't use v0, but vX instead where X is the highest nibble of nnn.");
             nk_popup_end(ctx);

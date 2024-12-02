@@ -84,6 +84,7 @@ extern void opc_chip8_ND_02D8(void);
 // SCHIP
 extern void opc_schip_00FF(void);
 extern void opc_schip_DXY0(void);
+// extern void opc_schip_00FE(void);
 
 // ---------------------------------- Global Constants ---------------------------------- //
 const int CHIP8_DEFAULT_CLOCK = 500;

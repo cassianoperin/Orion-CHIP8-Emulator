@@ -14,6 +14,10 @@
 // 		sprintf(cpu_debug_message, "CHIP-8 00EE: Return from a subroutine (PC=0x%04X)", PC);
 // }
 
+// void opc_schip_00FE(void) {
+// 	PC += 2;
+// }
+
 
 // SCHIP - 00FF
 // Enable High-Res Mode (128 x 64 resolution)

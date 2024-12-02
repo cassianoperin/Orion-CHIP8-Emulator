@@ -54,7 +54,7 @@ void win_emulator(struct nk_context *ctx)
         unsigned int win_height, win_width;
 
         if ( cpu_debug_mode ) {
-            window_flags = NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE;
+            window_flags = NK_WINDOW_TITLE|NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_MINIMIZABLE|NK_WINDOW_NO_SCROLLBAR;
             win_height = (display_EMULATOR_RES_Y * (display_EMULATOR_RES_SCALE)) + 34;
             win_width  = display_EMULATOR_RES_X * (display_EMULATOR_RES_SCALE) + 4;
         } else {

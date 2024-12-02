@@ -360,7 +360,7 @@ void input_keyboard(void) {
 						} else {
 							// Update the status bar message
 							char str[100];
-							sprintf(str, "ROM loaded.");
+							sprintf(str, "ROM loaded");
 							strcpy(gui_statusbar_msg, str);
 						}
 					}

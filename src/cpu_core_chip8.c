@@ -436,76 +436,6 @@ void opc_chip8_CXNN(void) {
 
 }
 
-// // ---------------------------- CHIP-8 Dxxx instruction set ---------------------------- // NOVA
-
-// // Dxyn - DRW Vx, Vy, nibble
-// // Draw n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
-// void opc_chip8_DXYN() {
-	
-// 	// // Draw in Chip-8 Low Resolution mode
-//     unsigned short gpx_position;
-//     unsigned char x , y, n, byte, sprite;
-//     unsigned char x, y, n;
-
-// 	x = (Opcode & 0x0F00) >> 8;
-// 	y = (Opcode & 0x00F0) >> 4;
-//     n = (Opcode & 0x000F);
-//     // // Check if they need to be initialized //
-//     // byte = 0;
-//     // gpx_position = 0;
-//     // sprite = 0;
-// 	if ( cpu_debug_mode )
-// 		sprintf(cpu_debug_message, "CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
-
-// 	V[0xF] = 0;
-
-// 	// uint8_t // ESSE char	uint8_t	8	Unsigned	0 .. 255
-
-//   	for (int32_t i = 0; i < n; i++)
-//   	{
-// 		uint8_t sprite = Memory[I + i];
-// 		int32_t row = (V[y] + i) % 32;
-
-// 		for (int32_t f = 0; f < 8; f++)
-// 		{
-// 			int32_t b = (sprite & 0x80) >> 7;	// MSB (Most Significant Bit), 1 will draw, 0 don't
-// 			int32_t col = (V[x] + f) % 64;
-// 			int32_t offset = row * 64 + col;
-
-// 			// if (b == 1)
-// 			// {
-// 			// 	if (display_pixels[offset] != display_pixel_OFF_color)
-// 			// 	{
-// 			// 		display_pixels[offset] = display_pixel_OFF_color;
-// 			// 		V[0xF] = 1;
-// 			// 	}
-// 			// 	else
-// 			// 		display_pixels[offset] = display_pixel_ON_color;
-// 			// }
-
-
-// 			// If bit=1, test current graphics[index], if is already set, mark v[F]=1 (collision)
-// 			if ( b  == 1 ) {
-// 				// Set colision case graphics[index] is already 1
-// 				if ( display_pixels[offset] == display_pixel_ON_color ) {
-// 					V[0xF] = 1;
-// 					display_pixels[offset] = display_pixel_OFF_color; 
-// 				} else {
-//           			display_pixels[offset] = display_pixel_ON_color;
-// 				}
-// 			}
-
-
-// 			// Shift left to get the next bit on the MSB (Most Significant Bit) positon
-// 			sprite <<= 1;
-// 		}
-//  	 }
-
-// 	PC += 2;
-
-// 	// Ask to draw screen
-// 	cpu_draw_flag = true;
-// }
 
 // ---------------------------- CHIP-8 Dxxx instruction set ---------------------------- // NOVA MINHA
 
@@ -524,8 +454,6 @@ void opc_chip8_DXYN(void) {
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
 	
-	// printf("CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d\n", I, x, V[x], y, V[y], n);
-
 	// Clear the carry before start
 	V[0xF] = 0;
 
@@ -606,7 +534,42 @@ void opc_chip8_DXYN(void) {
 	// Ask to draw screen
 	cpu_draw_flag = true;
 
-	
+
+	// ------- Alternative version for testing purposes ------- //
+
+	// uint8_t Vx = (Opcode & 0x0F00) >> 8;
+	// uint8_t Vy = (Opcode & 0x00F0) >> 4;
+	// uint8_t height = Opcode & 0x000F;
+
+	// // Wrap if going beyond screen boundaries
+	// uint8_t xPos = V[Vx] % 64;
+	// uint8_t yPos = V[Vy] % 32;
+
+	// V[0xF] = 0;
+
+	// for (unsigned int row = 0; row < height; ++row)
+	// {
+	// 	uint8_t spriteByte = Memory[(int)I + row];
+
+	// 	for (unsigned int col = 0; col < 8; ++col)
+	// 	{
+	// 		uint8_t spritePixel = spriteByte & (0x80 >> col);
+	// 		int screenPixel = (yPos + row) * 64 + (xPos + col);
+
+	// 		// Sprite pixel is on
+	// 		if (spritePixel)
+	// 		{
+	// 			// Screen pixel also on - collision
+	// 			if (display_pixels[screenPixel] == display_pixel_ON_color)
+	// 			{
+	// 				V[0xF] = 1;
+	// 			}
+
+	// 			// Effectively XOR with the sprite pixel
+	// 			display_pixels[screenPixel] ^= 0xFF;
+	// 		}
+	// 	}
+	// }
 }
 
 // ---------------------------- CHIP-8 Exxx instruction set ---------------------------- //
