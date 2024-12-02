@@ -2,11 +2,13 @@
 
 CHIP-8 emulator written in C with Nuklear gui library.
 
-**CHIP-8 Space Invaders Game** | **Superchip (SCHIP) Spacefight 2091!**
+**Main Emulator** | **CHIP-8 PONG 2**
 :-------------------------:|:-------------------------:
-<img width="380" alt="invaders" src="https://github.com/cassianoperin/CHIP8/blob/master/images/invaders.gif">  |  <img width="380" alt="invaders" src="https://github.com/cassianoperin/CHIP8/blob/master/images/spacefight2091.gif">
+<img width="380" alt="main" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Main.png">  |  <img width="380" alt="pong2" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Pong2.png">
+:-------------------------:|:-------------------------:
 :-----------------------------------------------------:
-<img width="380" alt="invaders" src="https://github.com/cassianoperin/CHIP8/blob/master/images/invaders.gif">
+<img width="760" alt="debug" src="https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/images/Orion-Debug.png">
+:-----------------------------------------------------:
 
 ## CHIP8 Status
 * ![100%](https://progress-bar.xyz/100) CPU Opcodes
@@ -28,7 +30,7 @@ CHIP-8 emulator written in C with Nuklear gui library.
 * ![0%](https://progress-bar.xyz/100) Registers
 * ![0%](https://progress-bar.xyz/0) Graphics
 * ![0%](https://progress-bar.xyz/0) Qwirks
-* ![100%](https://progress-bar.xyz/100) Sound
+* ![0%](https://progress-bar.xyz/100) Sound
 ## Emulator
 * ![100%](https://progress-bar.xyz/100) Pause and resume emulation
 * ![100%](https://progress-bar.xyz/100) Reset emulation
