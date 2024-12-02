@@ -5,7 +5,7 @@
             "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/gui",
+            "program": "${workspaceFolder}/build/orion",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
