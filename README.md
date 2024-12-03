@@ -196,6 +196,29 @@ Test memory leaks on binary:
 	destroy and recreate window after?
 	https://stackoverflow.com/questions/3827892/how-can-i-change-the-size-of-an-array-in-c
 
+5) Raus recommendations:
+
+- cpu_reset: You first load the rom file into memory, and THEN you check if it was too large to fit?
+- Replace signature by SHA1
+- display wait should't be on by default
+- to simplify all "cores" you plan to support, you may prefer to increment the PC after the fetching of the opcode, instead of doing it per-instruction
+- your stack never utilizes index 0 because you increment the counter on a routine before you set the opcode, rather than setting the opcode first and incrementing after (which also requires a return to decrement first)
+- you also don't have safety bars if the stack under/overflows
+- similarly, you might prefer to define x/y/n/nn/nnn after the instruction fetch before you get into the instruction matching part, and feed them as arguments 
+- also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
+- your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
+- your CxNN should just mask rand() directly with nn and be done with it, that modulo is useless, and also limits the range to 0..254
+- I am legit unsure how you passed the display test from my oob test rom your dxyn has the potential to overwrite whatever vx or vy holds when you set vf to 0 because either of them could be the vf register
+so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
+(unless you only set vf to the amount of collisions at the very end by using another var to hold collision status in the meantime)
+--- that commented alternate version's good, if only some work is done to tackle clipping vs wrapping which is basically non-existent right now
+- Ex9E/ExA1/Fx29/Fx30 will mask the value coming from Vx with 0xF to only keep the lower 4 bits (0..15) you don't need to do subtracting and throw errors, it's how they're meant to work
+- get rid of that spacefight quirk in Fx1E, it's a myth and does not exist, the rom is merely buggy, and there exists a version that fixes the bugs
+- SCHIP -
+-- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
+-- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
+
+
 ## GUI
 
 1. Build a "cycle accurate" cpu, with a 12bits address bus and 8 bit data bus for visual representations
@@ -219,3 +242,5 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 	* Most Dangerous Game [Peter Maruhnic]
 
 2) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
+
+3) Stack is incrementing first (start on 1)
