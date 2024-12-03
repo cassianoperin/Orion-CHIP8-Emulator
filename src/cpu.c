@@ -9,14 +9,6 @@ void cpu_reset(void) {
 	// Initialize
 	cpu_initialize();
 
-	// Load ROM into Memory
-	load_rom(filename, Memory, sizeof(Memory));
-	
-	if ( cpu_rom_loaded ) {
-		// Read the Opcode from PC and PC+1 bytes
-		Opcode = cpu_get_opcode(PC);
-	}
-
 	// Keep the rom size
 	romsize = fsize(filename);
 
@@ -42,8 +34,16 @@ void cpu_reset(void) {
 		// Keyboard remaps
 		input_keyboard_remaps();
 
+		// Load ROM into Memory
+		load_rom(filename, Memory, sizeof(Memory));
+
 		// Update StatusBar message
 		strcpy(gui_statusbar_msg, "ROM loaded");
+	}
+
+	if ( cpu_rom_loaded ) {
+		// Read the Opcode from PC and PC+1 bytes
+		Opcode = cpu_get_opcode(PC);
 	}
 
 	// Clean messages
