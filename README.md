@@ -198,7 +198,6 @@ Test memory leaks on binary:
 
 5) Raus recommendations:
 
-- cpu_reset: You first load the rom file into memory, and THEN you check if it was too large to fit?
 - Replace signature by SHA1
 - display wait should't be on by default
 - to simplify all "cores" you plan to support, you may prefer to increment the PC after the fetching of the opcode, instead of doing it per-instruction
