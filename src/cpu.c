@@ -43,7 +43,10 @@ void cpu_reset(void) {
 
 	if ( cpu_rom_loaded ) {
 		// Read the Opcode from PC and PC+1 bytes
-		Opcode = cpu_get_opcode(PC);
+		Opcode = cpu_fetch_opcode(PC);
+
+		// Increment PC
+		PC += 2;
 	}
 
 	// Clean messages
@@ -166,16 +169,17 @@ void cpu_interpreter(void) {
 	switch ( Opcode & 0xF000 )
   	{
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
+		// 0NNN: Execute RCA 1802 machine language routine at address NNN
+		// 00E0: Clear the screen
+		// 00EE: Return from subroutine
+
 		case 0x0000: //0NNN
+		
 			switch ( Opcode & 0x0F00 ) {
 
 				case 0x0000: //00NN
+					
 					switch ( Opcode & 0x00FF ) { //00NN
-
-						// // 0000 (ETI-660)
-						// case 0x0000:
-						// 	opc_chip8_ETI660_0000();
-						// 	break;
 
 						// 00E0 (CHIP-8)
 						case 0x00E0:
@@ -187,109 +191,19 @@ void cpu_interpreter(void) {
 							opc_chip8_00EE();
 							break;
 
-						// // 00F0 (CHIP-8x HiRes)
-						// case 0x00F0:
-						// 	opc_chip8HiRes_00F0();
-						// 	break;
-
-						// // 00F8 (ETI-660)
-						// case 0x00F8:
-						// 	opc_chip8_ETI660_00F8();
-						// 	break;
-
-						// 00FB (SCHIP)
-						case 0x00FB:
-								// opc_schip_00FB();
-								// printf("Opcode 00FB not implemented yet\n");
-								// exit(2);
-								cpu_invalid_opcode(Opcode);
-							break;
-
-						// 00FC (SCHIP)
-						// 00FC (ETI-660) - Turn display off
-						case 0x00FC:
-							// // ETI-660 Opcode
-							// if ( Global.Hybrid_ETI_660_HW ) {
-							// 	opc_chip8_ETI660_00FC();
-							// 	break;
-
-							// // SCHIP Opcode
-							// } else {
-								// opc_schip_00FC();
-								// printf("Opcode 00FC not implemented yet\n");
-								// exit(2);
-								cpu_invalid_opcode(Opcode);
-								break;
-							// }
-
-						// 00FD (SCHIP)
-						case 0x00FD:
-							// opc_schip_00FD();
-							// printf("0x00FD not implemented yet\n");
-							// exit(2);
-							cpu_invalid_opcode(Opcode);
-							break;
-
-						// 00FE (SCHIP)
-						case 0x00FE:
-							// opc_schip_00FE();
-							// printf("0x00FE not implemented yet\n");
-							// exit(2);
-							cpu_invalid_opcode(Opcode);
-							break;
-
-						// 00FF (SCHIP)
-						// 00FF - In ETI-660, 00FF is a NO OP (do nothing)
-						case 0x00FF:
-							opc_schip_00FF();
-							break;
-
-							// // 00FF - ETI-660
-							// if ( Global.Hybrid_ETI_660_HW ) {
-							// 	opc_chip8_ETI660_00FF();
-							// 	break;
-
-							// // 00FF - SCHIP
-							// } else {
-							// 	opc_schip_00FF();
-							// 	break;
-							// }
-
 						default:
 							// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
 							// exit(0);
 							cpu_invalid_opcode(Opcode);
 					}
 
-					switch ( Opcode & 0x00F0 ){ //00N0
-						// 00CN (SCHIP)
-						case 0x00C0:
-							// n := Opcode & 0x000F;
-							// opc_schip_00CN(n);
-							// printf("00CN not implemented yet\n");
-							// exit(2);
-							cpu_invalid_opcode(Opcode);
-
-							break;
-					}
-
 				case 0x0200: //02NN
 					switch ( Opcode & 0x0FFF ) {
-
-				// 		// 0230 (CHIP-8 HIRES)
-				// 		case 0x0230:
-				// 			opc_chip8HiRes_0230();
-				// 			break;
 
 						// 02D8 (CHIP-8 NON DOCUMENTED)
 						case 0x02D8:
 							opc_chip8_ND_02D8();
 							break;
-
-				// 		// 02E4 (CHIP-8 NON DOCUMENTED)
-				// 		case 0x02E4:
-				// 			opc_chip8_ND_02E4();
-				// 			break;
 
 					}
 				break;
@@ -299,6 +213,7 @@ void cpu_interpreter(void) {
 					// exit(0);
 					cpu_invalid_opcode(Opcode);
 			}
+
 			break;
 		
 		// ---------------------------- CHIP-8 1xxx instruction set ---------------------------- //
@@ -308,7 +223,6 @@ void cpu_interpreter(void) {
 
 		// // ---------------------------- CHIP-8 2xxx instruction set ---------------------------- //
 		case 0x2000: // 2nnn (CHIP-8)
-			// printf ("2000\n");
 			opc_chip8_2NNN();
 			break;
 
@@ -421,37 +335,7 @@ void cpu_interpreter(void) {
 
 		// ---------------------------- CHIP-8 Dxxx instruction set ---------------------------- //
 		case 0xD000: // Dxyn (CHIP-8)
-
-			switch ( Opcode & 0x000F ) {
-
-				// DXY0 (SCHIP)
-				case 0x0000:
-
-					// if ( !cpu_SCHIP_mode ) {
-					// 	// Quirk to SCHIP Robot DEMO)
-
-
-					// 	// // Even in SCHIP Mode this game needs to draw 16x16 Pixels
-					// 	// if ( quirk_LoRes_Wide_Sprite_Dxy0 ) {
-					// 	// 	cpu_SCHIP_LORES_mode = false;
-					// 	// } else {
-					// 	// 	// If NOT in SCHIP mode will draw 16x8 sprites
-					// 	// 	cpu_SCHIP_LORES_mode = true;
-
-
-					// 	// }
-					// }
-					// If in SCHIP mode will draw 16x16 sprites
-					opc_schip_DXY0();
-							// printf("dxy0 not implemented yet\n");
-							// exit(2);
-					break;
-
-				// DXYN (CHIP-8, Draw n-byte sprites)
-				default:
-					opc_chip8_DXYN();
-					break;
-			}
+			opc_chip8_DXYN();
 			break;
 
 		// ---------------------------- CHIP-8 Exxx instruction set ---------------------------- //
@@ -518,14 +402,6 @@ void cpu_interpreter(void) {
 					opc_chip8_FX29(x);
 					break;
 
-				// Fx30 (SCHIP)
-				case 0x0030:
-					// opc_schip_FX30(x);
-					// printf("Opcode Fx30 not implemented yet!\n ");
-					// exit(2);
-					cpu_invalid_opcode(Opcode);
-					break;
-
 				// Fx33 (CHIP-8)
 				case 0x0033:
 					opc_chip8_FX33(x);
@@ -541,32 +417,9 @@ void cpu_interpreter(void) {
 					opc_chip8_FX65(x);
 					break;
 
-				// FX75 (SCHIP)
-				case 0x0075:
-					// opc_schip_FX75(x);
-					// printf("Opcode FX75 not implemented yet!\n ");
-					// exit(2);
-					cpu_invalid_opcode(Opcode);
-					break;
-
-				// FX85 (SCHIP)
-				case 0x0085:
-					// opc_schip_FX85(x);
-					// printf("Opcode FX85 not implemented yet!\n ");
-					// exit(2);
-					cpu_invalid_opcode(Opcode);
-					break;
-
-				// // Fx00 (ETI-660)
-				// case 0x0000:
-				// 	opc_chip8_ETI660_FX00(x);
-				// 	break;
-
 				default:
-					// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					//     // strcpy(gui_statusbar_msg, "NOT IMPLEMENTED.");
-					// exit(2);
-					cpu_invalid_opcode(Opcode);	
+					cpu_invalid_opcode(Opcode);
+
 			}
 			break;
 		}
@@ -583,7 +436,10 @@ void cpu_interpreter(void) {
 	// }
 
 	// Read the Opcode from PC and PC+1 bytes
-	Opcode = cpu_get_opcode(PC);
+	Opcode = cpu_fetch_opcode(PC);
+
+	// Increment PC
+	PC += 2;
 }
 
 void cpu_invalid_opcode(unsigned short opc) {
@@ -598,7 +454,7 @@ void cpu_invalid_opcode(unsigned short opc) {
 }
 
 // Read the Opcode from PC and PC+1 bytes
-int cpu_get_opcode(int PC_addr) {
+int cpu_fetch_opcode(int PC_addr) {
 	
 	int opc;
 	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];
@@ -917,7 +773,8 @@ void cpu_decode_opcode(int opc) {
         default :
 		{
 			sprintf(guiDebug_opc_description_msg, "-");
-		    //   printf("Main opcode not mapped: %04X\n", opc);
+			printf("Main opcode not mapped: %04X\n", opc);
+			exit(2);
 		}
 
     }
