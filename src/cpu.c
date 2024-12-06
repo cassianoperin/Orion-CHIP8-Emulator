@@ -21,6 +21,9 @@ void cpu_reset(void) {
 		printf("Invalid rom file! Aborting!\n");
 
 	} else {
+		// Load ROM into Memory
+		load_rom(filename, Memory, sizeof(Memory));
+
 		// Get Game signature for Qwirks
 		game_signature = get_game_signature(filename);
 		printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
@@ -33,9 +36,6 @@ void cpu_reset(void) {
 
 		// Keyboard remaps
 		input_keyboard_remaps();
-
-		// Load ROM into Memory
-		load_rom(filename, Memory, sizeof(Memory));
 
 		// Update StatusBar message
 		strcpy(gui_statusbar_msg, "ROM loaded");
