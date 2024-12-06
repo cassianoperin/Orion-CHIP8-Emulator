@@ -44,9 +44,6 @@ void cpu_reset(void) {
 	if ( cpu_rom_loaded ) {
 		// Read the Opcode from PC and PC+1 bytes
 		Opcode = cpu_fetch_opcode(PC);
-
-		// Increment PC
-		PC += 2;
 	}
 
 	// Clean messages
@@ -438,8 +435,6 @@ void cpu_interpreter(void) {
 	// Read the Opcode from PC and PC+1 bytes
 	Opcode = cpu_fetch_opcode(PC);
 
-	// Increment PC
-	PC += 2;
 }
 
 void cpu_invalid_opcode(unsigned short opc) {
@@ -455,6 +450,18 @@ void cpu_invalid_opcode(unsigned short opc) {
 
 // Read the Opcode from PC and PC+1 bytes
 int cpu_fetch_opcode(int PC_addr) {
+	
+	int opc;
+	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];
+
+	// Increment PC
+	PC += 2;
+
+	return opc;
+}
+
+// Read the Opcode from PC and PC+1 bytes for debug screen
+int cpu_fetch_opcode_debug(int PC_addr) {
 	
 	int opc;
 	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];

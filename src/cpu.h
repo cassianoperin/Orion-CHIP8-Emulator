@@ -132,4 +132,5 @@ void cpu_interpreter(void);
 void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
 int  cpu_fetch_opcode(int PC_addr);
+int  cpu_fetch_opcode_debug(int PC_addr);
 void cpu_decode_opcode(int opc);

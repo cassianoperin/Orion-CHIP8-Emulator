@@ -32,5 +32,5 @@ int win_debug_opc(struct nk_context *ctx);
 
 // --------------------------------- External Functions --------------------------------- //
 // CPU
-extern int cpu_fetch_opcode(int PC_addr);
+extern int cpu_fetch_opcode_debug(int PC_addr);
 extern void cpu_decode_opcode(int opc);

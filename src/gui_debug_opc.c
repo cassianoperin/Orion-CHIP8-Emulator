@@ -49,7 +49,7 @@ int win_debug_opc(struct nk_context *ctx)
                     // Print data
                     nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                     // Print description
-                    opc_tmp = cpu_fetch_opcode(PC - i);
+                    opc_tmp = cpu_fetch_opcode_debug(PC - i);
                     cpu_decode_opcode(opc_tmp);
                     nk_label_colored(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                 }                
@@ -79,7 +79,7 @@ int win_debug_opc(struct nk_context *ctx)
             strcpy(guiDebug_opc_data_msg, str);
             nk_label(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT);
 
-            opc_tmp = cpu_fetch_opcode(PC);
+            opc_tmp = cpu_fetch_opcode_debug(PC);
             cpu_decode_opcode(opc_tmp);
             nk_label(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT); 
 
@@ -119,7 +119,7 @@ int win_debug_opc(struct nk_context *ctx)
                     // Print data
                     nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                     // Print description
-                    opc_tmp = cpu_fetch_opcode(PC + i);
+                    opc_tmp = cpu_fetch_opcode_debug(PC + i);
                     cpu_decode_opcode(opc_tmp);
                     nk_label_colored(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                 }
