@@ -199,10 +199,8 @@ Test memory leaks on binary:
 5) Raus recommendations:
 
 - Replace signature by SHA1
-- display wait should't be on by default
 - your stack never utilizes index 0 because you increment the counter on a routine before you set the opcode, rather than setting the opcode first and incrementing after (which also requires a return to decrement first)
 - you also don't have safety bars if the stack under/overflows
-- similarly, you might prefer to define x/y/n/nn/nnn after the instruction fetch before you get into the instruction matching part, and feed them as arguments 
 - also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
 - your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
 - your CxNN should just mask rand() directly with nn and be done with it, that modulo is useless, and also limits the range to 0..254

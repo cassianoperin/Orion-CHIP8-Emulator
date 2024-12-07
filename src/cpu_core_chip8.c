@@ -32,31 +32,34 @@ void opc_chip8_00EE(void) {
 	
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 00EE: Return from a subroutine (PC=0x%04X)", PC);
-
 }
 
-// // ---------------------------- CHIP-8 1xxx instruction set ---------------------------- //
+
+// ---------------------------- CHIP-8 1xxx instruction set ---------------------------- //
 
 // 1nnn - JP addr
 // Jump to location nnn.
 // The interpreter sets the program counter to nnn.
-void opc_chip8_1NNN(void) {
-	PC = Opcode & 0x0FFF;
+void opc_chip8_1NNN(unsigned short nnn) {
+	PC = nnn;
+
 	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%02X", Opcode & 0x0FFF);
+		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%04X", nnn);
 }
+
 
 // ---------------------------- CHIP-8 2xxx instruction set ---------------------------- //
 
 // 2nnn - CALL addr
 // Call subroutine at nnn.
 // The interpreter increments the stack pointer, then puts the current PC on the top of the stack. The PC is then set to nnn.
-void opc_chip8_2NNN(void){
+void opc_chip8_2NNN(unsigned short nnn){
 	SP++;
 	Stack[SP] = PC;
-	PC = Opcode & 0x0FFF;
+	PC = nnn;
+
 	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 2nnn: Call Subroutine at 0x%d", PC);
+		sprintf(cpu_debug_message, "CHIP-8 2nnn: Call Subroutine at 0x%04X", PC);
 }
 
 
@@ -65,11 +68,7 @@ void opc_chip8_2NNN(void){
 // 3xnn - SE Vx, byte
 // Skip next instruction if Vx = NN.
 // The interpreter compares register Vx to nn, and if they are equal, increments the program counter by 2.
-void opc_chip8_3XNN(void) {
-    unsigned char x, nn;
-
-	x = (Opcode & 0x0F00) >> 8;
-	nn = Opcode & 0x00FF;
+void opc_chip8_3XNN(unsigned char x, unsigned char nn) {
 
 	if ( V[x] == nn ) {
 		PC += 2;
@@ -83,16 +82,14 @@ void opc_chip8_3XNN(void) {
 	}
 }
 
-// // ---------------------------- CHIP-8 4xxx instruction set ---------------------------- //
+
+// ---------------------------- CHIP-8 4xxx instruction set ---------------------------- //
 
 // 4xnn - SNE Vx, byte
 // Skip next instruction if Vx != nn.
 // The interpreter compares register Vx to nn, and if they are not equal, increments the program counter by 2.
-void opc_chip8_4XNN(void) {
-    unsigned char x, nn;
+void opc_chip8_4XNN(unsigned char x, unsigned char nn) {
 
-	x = (Opcode & 0x0F00) >> 8;
-	nn = Opcode & 0x00FF;
 	if ( V[x] != nn ) {
 		PC += 2;
 		if ( cpu_debug_mode )
@@ -104,44 +101,35 @@ void opc_chip8_4XNN(void) {
 	}
 }
 
+
 // ---------------------------- CHIP-8 5xxx instruction set ---------------------------- //
 
 // 5xy0 - SE Vx, Vy
 // Skip next instruction if Vx = Vy.
 // The interpreter compares register Vx to register Vy, and if they are equal, increments the program counter by 2.
-void opc_chip8_5XY0(void) {
-	unsigned char x, y;
-
-	x = (Opcode & 0x0F00) >> 8;
-	y = (Opcode & 0x00F0) >> 4;
+void opc_chip8_5XY0(unsigned char x, unsigned char y) {
 
 	if ( V[x] == V[y] ){
 		PC += 2;
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 5xy0: V[x(%d)]:%d EQUAL V[y(%d)]:%d, SKIP one instruction", x, V[x], y, V[y]);
-
 	} else {
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 5xy0: V[x(%d)]:%d NOT EQUAL V[y(%d)]:%d, DO NOT SKIP one instruction", x, V[x], y, V[y]);
-
 	}
 }
+
 
 // ---------------------------- CHIP-8 6xxx instruction set ---------------------------- //
 
 // 6xnn - LD Vx, byte
 // Set Vx = nn.
 // The interpreter puts the value nn into register Vx.
-void opc_chip8_6XNN(void) {
-    unsigned char x, nn;
-
-	x = (Opcode & 0x0F00) >> 8;
-	nn = (char)Opcode;
-
+void opc_chip8_6XNN(unsigned char x, unsigned char nn) {
 	V[x] = nn;
+
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 6xnn: Set V[x(%d)] = 0x%02X", x, nn);
-
 }
 
 
@@ -150,17 +138,11 @@ void opc_chip8_6XNN(void) {
 // 7xnn - ADD Vx, byte
 // Set Vx = Vx + nn.
 // Adds the value nn to the value of register Vx, then stores the result in Vx.
-void opc_chip8_7XNN(void) {
-	unsigned char x, nn;
-
-	x = (Opcode & 0x0F00) >> 8;
-	nn = Opcode;
-
+void opc_chip8_7XNN(unsigned char x, unsigned char nn) {
 	V[x] += nn;
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 7xnn: Add the value nn(%d) to V[x(%d)]", nn, x);
-
 }
 
 // ---------------------------- CHIP-8 8xxx instruction set ---------------------------- //
@@ -331,29 +313,21 @@ void opc_chip8_8XYE(unsigned char x, unsigned char y) {
 
 // ---------------------------- CHIP-8 9xxx instruction set ---------------------------- //
 
-// // 9xy0 - SNE Vx, Vy
-// // Skip next instruction if Vx != Vy.
-// // The values of Vx and Vy are compared, and if they are not equal, the program counter is increased by 2.
-void opc_chip8_9XY0(void) {
-    unsigned char x,y;
-
-	x = (Opcode & 0x0F00) >> 8;
-	y = (Opcode & 0x00F0) >> 4;
+// 9xy0 - SNE Vx, Vy
+// Skip next instruction if Vx != Vy.
+// The values of Vx and Vy are compared, and if they are not equal, the program counter is increased by 2.
+void opc_chip8_9XY0(unsigned char x, unsigned char y) {
 
 	if ( V[x] != V[y] ) {
-		// PC += 4;
 		PC += 2;
+
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 9xy0: V[x(%d)]:%02X != V[y(%d)]: 0x%02X, SKIP one instruction", x, V[x], y, V[y]);
-
 	} else {
-
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 9xy0: V[x(%d)]:%02X = V[y(%d)]: 0x%02X, DO NOT SKIP one instruction", x, V[x], y, V[y]);
-
 	}
 }
-
 
 
 // ---------------------------- CHIP-8 Axxx instruction set ---------------------------- //
@@ -361,13 +335,12 @@ void opc_chip8_9XY0(void) {
 // Annn - LD I, addr
 // Set I = nnn.
 // The value of register I is set to nnn.
-void opc_chip8_ANNN(void) {
-	I = Opcode & 0x0FFF;
+void opc_chip8_ANNN(unsigned short nnn) {
+	I = nnn;
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Annn: Set I = 0x%04X", I);
 }
-
 
 
 // ---------------------------- CHIP-8 Bxxx instruction set ---------------------------- //
@@ -375,8 +348,7 @@ void opc_chip8_ANNN(void) {
 // Bnnn - JP V0, addr
 // Jump to location nnn + V0.
 // The program counter is set to nnn plus the value of V0.
-void opc_chip8_BNNN(void) {
-	unsigned short nnn = Opcode & 0x0FFF;
+void opc_chip8_BNNN(unsigned short nnn, unsigned char x) {
 
 	// Normal Chip8 Bnnn Behavior
 	if ( !quirk_Jump_with_offset_Bnnn ) {
@@ -386,30 +358,23 @@ void opc_chip8_BNNN(void) {
 
 	// Bnnn_jump_with_offset quirk, sum V[x] instead of V[0]
 	} else {
-		unsigned char x  = (Opcode & 0x0F00) >> 8;
-
 		PC = nnn + (unsigned short)V[x];
 		if ( cpu_debug_mode )
 			sprintf(cpu_debug_message, "CHIP-8 Bnnn: Jump to location nnn(%d) + V[x(%d)]", nnn, V[x]);
 	}
 }
 
-// // ---------------------------- CHIP-8 Cxxx instruction set ---------------------------- //
+
+// ---------------------------- CHIP-8 Cxxx instruction set ---------------------------- //
 
 // Cxnn - RND Vx, byte
 // Set Vx = random byte AND nn.
 // The interpreter generates a random number from 0 to 255, which is then ANDed with the value nn. The results are stored in Vx. See instruction 8xy2 for more information on AND.
-void opc_chip8_CXNN(void) {
-	unsigned short x;
-	unsigned char nn;
-	x = (unsigned short)(Opcode&0x0F00) >> 8;
-	nn = Opcode & 0x00FF;
-
+void opc_chip8_CXNN(unsigned char x, unsigned char nn) {
 	V[x] = (rand() % 255) & nn;
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Cxnn: V[x(%d)] = %d (random byte AND nn(%d)) = %d", x, V[x], nn, V[x]);
-
 }
 
 
@@ -417,15 +382,11 @@ void opc_chip8_CXNN(void) {
 
 // Dxyn - DRW Vx, Vy, nibble
 // Draw n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
-void opc_chip8_DXYN(void) {
+void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 		
 	// Draw in Chip-8 Low Resolution mode
     unsigned short gpx_position, row, column = 0;
-    unsigned char x, y, n, byte, bit, bit_value, sprite = 0;
-
-	x = (Opcode & 0x0F00) >> 8;
-	y = (Opcode & 0x00F0) >> 4;
-    n = (Opcode & 0x000F);
+    unsigned char byte, bit, bit_value, sprite = 0;
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
@@ -811,7 +772,7 @@ void opc_chip8_ND_02D8(void) {
 }
 
 // // 02E4
-// // NON DOCUMENTED OPCODED, USED BY CHIP-8 Tic-Tac-Toe ([AUD_2464_09_B41_ID23_01] sound program
+// // NON DOCUMENTED OPCODED, USED BY CHIP-8 Tic-jkjkljac-Toe ([AUD_2464_09_B41_ID23_01] sound program
 // // LDF I, V[02] // Load into I the address of the 8x5 font with index as value of V[02].
 // func opc_chip8_ND_02E4() {
 // 	I = uint16(Memory[V[2]])

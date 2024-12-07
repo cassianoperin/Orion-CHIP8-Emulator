@@ -77,7 +77,7 @@ void cpu_initialize(void) {
 	// New quirk pattern
 	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
 	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-	quirk_display_wait				= true;		// Display wait
+	quirk_display_wait				= false;	// Display wait
 	quirk_Clipping_Dxyn				= true;		// Clipping
 	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
@@ -162,14 +162,20 @@ void cpu_interpreter(void) {
 	if ( cpu_debug_print_console )
 		cpu_debug_print();
 
-	// Map Opcode Family
+	// Decode all values that can be used by opcodes
+	unsigned char  x   = (Opcode & 0x0F00) >> 8;
+	unsigned char  y   = (Opcode & 0x00F0) >> 4;
+    unsigned char  n   = (Opcode & 0x000F);
+	unsigned char  nn  =  Opcode & 0x00FF;
+	unsigned short nnn =  Opcode & 0x0FFF;
+
+	// Decode and Execute
 	switch ( Opcode & 0xF000 )
   	{
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
 		// 0NNN: Execute RCA 1802 machine language routine at address NNN
 		// 00E0: Clear the screen
 		// 00EE: Return from subroutine
-
 		case 0x0000: //0NNN
 		
 			switch ( Opcode & 0x0F00 ) {
@@ -215,46 +221,42 @@ void cpu_interpreter(void) {
 		
 		// ---------------------------- CHIP-8 1xxx instruction set ---------------------------- //
 		case 0x1000: // 1nnn (CHIP-8)
-			opc_chip8_1NNN();
+			opc_chip8_1NNN(nnn);
 			break;
 
 		// // ---------------------------- CHIP-8 2xxx instruction set ---------------------------- //
 		case 0x2000: // 2nnn (CHIP-8)
-			opc_chip8_2NNN();
+			opc_chip8_2NNN(nnn);
 			break;
 
 		// ---------------------------- CHIP-8 3xxx instruction set ---------------------------- //
 		case 0x3000: // 3xnn (CHIP-8)
-			opc_chip8_3XNN();
+			opc_chip8_3XNN(x, nn);
 			break;
 
 		// ---------------------------- CHIP-8 4xxx instruction set ---------------------------- //
 		case 0x4000: // 4xnn (CHIP-8)
-			opc_chip8_4XNN();
+			opc_chip8_4XNN(x, nn);
 			break;
 
 		// ---------------------------- CHIP-8 5xxx instruction set ---------------------------- //
 		case 0x5000: // 5xy0 (CHIP-8)
-			opc_chip8_5XY0();
+			opc_chip8_5XY0(x, y);
 			break;
 
 		// ---------------------------- CHIP-8 6xxx instruction set ---------------------------- //
 		case 0x6000: // 6xnn (CHIP-8)
-			opc_chip8_6XNN();
+			opc_chip8_6XNN(x, nn);
 			break;
 
 		// ---------------------------- CHIP-8 7xxx instruction set ---------------------------- //
 		case 0x7000: // 7xnn (CHIP-8)
-			opc_chip8_7XNN();
+			opc_chip8_7XNN(x, nn);
 			break;
 
 		// ---------------------------- CHIP-8 8xxx instruction set ---------------------------- //
 		case 0x8000: // 0x8000 instruction set
 		{
-			unsigned char x, y;
-			x = (Opcode & 0x0F00) >> 8;
-			y = (Opcode & 0x00F0) >> 4;
-
 			switch ( Opcode & 0x000F ) {
 
 				// 8xy0 (CHIP-8)
@@ -312,27 +314,27 @@ void cpu_interpreter(void) {
 
 		// ---------------------------- CHIP-8 9xxx instruction set ---------------------------- //
 		case 0x9000: // 9xy0 (CHIP-8)
-			opc_chip8_9XY0();
+			opc_chip8_9XY0(x, y);
 			break;
 
 		// ---------------------------- CHIP-8 Axxx instruction set ---------------------------- //
 		case 0xA000: // Annn (CHIP-8)
-			opc_chip8_ANNN();
+			opc_chip8_ANNN(nnn);
 			break;
 
 		// ---------------------------- CHIP-8 Bxxx instruction set ---------------------------- //
 		case 0xB000: // Bnnn (CHIP-8)
-			opc_chip8_BNNN();
+			opc_chip8_BNNN(nnn, x);
 			break;
 
 		// ---------------------------- CHIP-8 Cxxx instruction set ---------------------------- //
 		case 0xC000: // Cxnn (CHIP-8)
-			opc_chip8_CXNN();
+			opc_chip8_CXNN(x, nn);
 			break;
 
 		// ---------------------------- CHIP-8 Dxxx instruction set ---------------------------- //
 		case 0xD000: // Dxyn (CHIP-8)
-			opc_chip8_DXYN();
+			opc_chip8_DXYN(x, y, n);
 			break;
 
 		// ---------------------------- CHIP-8 Exxx instruction set ---------------------------- //
