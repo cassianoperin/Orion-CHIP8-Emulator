@@ -205,7 +205,6 @@ Test memory leaks on binary:
 - Replace signature by SHA1
 - also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
 - your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
-- your CxNN should just mask rand() directly with nn and be done with it, that modulo is useless, and also limits the range to 0..254
 - I am legit unsure how you passed the display test from my oob test rom your dxyn has the potential to overwrite whatever vx or vy holds when you set vf to 0 because either of them could be the vf register
 so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
 (unless you only set vf to the amount of collisions at the very end by using another var to hold collision status in the meantime)
