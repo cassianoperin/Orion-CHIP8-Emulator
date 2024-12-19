@@ -24,7 +24,7 @@ extern bool             cpu_SCHIP_mode;
 extern bool             cpu_SCHIP_LORES_mode;
 extern unsigned short	PC;
 // extern unsigned short	Stack[];
-// extern unsigned short	SP;
+// extern unsigned char	SP;
 extern bool             cpu_debug_mode;
 extern char             cpu_debug_message[120];
 extern unsigned short	Opcode;

@@ -70,7 +70,7 @@ extern char *filename;
 // CPU
 extern unsigned short	PC;
 extern unsigned short	Stack[];
-extern unsigned short	SP;
+extern unsigned char	SP;
 extern bool             cpu_debug_mode;
 extern char             cpu_debug_message[120];
 extern unsigned short	Opcode;
@@ -83,6 +83,11 @@ extern unsigned char	SoundTimer;
 extern bool             cpu_draw_flag;
 extern unsigned char    key_FX0A;
 extern bool             key_FX0A_pressed;
+extern bool             cpu_rom_loaded; 
+
+// GUI
+extern bool gui_menu_quirks_inactive;
+extern char gui_statusbar_msg[120];
 
 // GUI DEBUG OPC
 extern char guiDebug_opc_description_msg[50];

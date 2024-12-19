@@ -49,7 +49,7 @@ int win_debug_opc(struct nk_context *ctx)
                     // Print data
                     nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                     // Print description
-                    opc_tmp = cpu_fetch_opcode_debug(PC - i);
+                    opc_tmp = cpu_fetch_opcode(PC - i, false);
                     cpu_decode_opcode(opc_tmp);
                     nk_label_colored(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
                 }                
@@ -79,7 +79,7 @@ int win_debug_opc(struct nk_context *ctx)
             strcpy(guiDebug_opc_data_msg, str);
             nk_label(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT);
 
-            opc_tmp = cpu_fetch_opcode_debug(PC);
+            opc_tmp = cpu_fetch_opcode(PC, false);
             cpu_decode_opcode(opc_tmp);
             nk_label(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT); 
 
@@ -92,45 +92,47 @@ int win_debug_opc(struct nk_context *ctx)
         // Opcode Group Next
         if (nk_group_begin(ctx, "OpcodesGrpNext", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
 
-            static const float ratio[] = {40, 40, 140};
-            nk_layout_row(ctx, NK_STATIC, 10, 3, ratio);
+            if ( cpu_rom_loaded ) {
+                static const float ratio[] = {40, 40, 140};
+                nk_layout_row(ctx, NK_STATIC, 10, 3, ratio);
 
-            char str[50];
-            int opc_lines = 20;
-            int opc_tmp = 0; 
+                char str[50];
+                int opc_lines = 20;
+                int opc_tmp = 0; 
 
-             // Show next opcodes
-            for ( int i = 2 ; i < opc_lines ; i+=2 ) {
-                sprintf(str, "%04X:", PC + i);
-                strcpy(guiDebug_opc_addr_msg, str);
-                sprintf(str, "%02X %02X", Memory[PC + i], Memory[ (PC + i) + 1]);
-                strcpy(guiDebug_opc_data_msg, str);
+                // Show next opcodes
+                for ( int i = 2 ; i < opc_lines ; i+=2 ) {
+                    sprintf(str, "%04X:", PC + i);
+                    strcpy(guiDebug_opc_addr_msg, str);
+                    sprintf(str, "%02X %02X", Memory[PC + i], Memory[ (PC + i) + 1]);
+                    strcpy(guiDebug_opc_data_msg, str);
 
-                if ( PC + i > 0x1000 ) {
-                    // Print address
-                    nk_label_colored(ctx, guiDebug_opc_addr_msg, NK_TEXT_LEFT, nk_rgb(104,104,104));
-                    // Print data
-                    nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(104,104,104));
-                    // Print description
-                    nk_label_colored(ctx, "", NK_TEXT_LEFT, nk_rgb(104,104,104));
-                } else {
-                    // Print address
-                    nk_label_colored(ctx, guiDebug_opc_addr_msg, NK_TEXT_LEFT, nk_rgb(0,255,255));
-                    // Print data
-                    nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
-                    // Print description
-                    opc_tmp = cpu_fetch_opcode_debug(PC + i);
-                    cpu_decode_opcode(opc_tmp);
-                    nk_label_colored(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
+                    if ( PC + i > 0x1000 ) {
+                        // Print address
+                        nk_label_colored(ctx, guiDebug_opc_addr_msg, NK_TEXT_LEFT, nk_rgb(104,104,104));
+                        // Print data
+                        nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(104,104,104));
+                        // Print description
+                        nk_label_colored(ctx, "", NK_TEXT_LEFT, nk_rgb(104,104,104));
+                    } else {
+                        // Print address
+                        nk_label_colored(ctx, guiDebug_opc_addr_msg, NK_TEXT_LEFT, nk_rgb(0,255,255));
+                        // Print data
+                        nk_label_colored(ctx, guiDebug_opc_data_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
+                        // Print description
+                        opc_tmp = cpu_fetch_opcode(PC + i, false);
+                        cpu_decode_opcode(opc_tmp);
+                        nk_label_colored(ctx, guiDebug_opc_description_msg, NK_TEXT_LEFT, nk_rgb(176,176,176));
+                    }
                 }
-            }        
+            }      
 
         nk_group_end(ctx);
         }
 
-        if ( cpu_debug_mode ) {
+        if ( cpu_debug_mode && cpu_rom_loaded ) {
             sprintf(gui_statusbar_msg, "Last instruction: ");
-            strcat(gui_statusbar_msg, cpu_debug_message); // concatena valores em cat
+            strcat(gui_statusbar_msg, cpu_debug_message);
         }
        
     }

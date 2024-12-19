@@ -16,6 +16,7 @@ extern unsigned short	PC;
 extern unsigned char Memory[4096];
 extern char cpu_debug_message[120];
 extern bool cpu_debug_mode;
+extern bool cpu_rom_loaded; 
 // Display
 extern char gui_statusbar_msg[120];
 // Main
@@ -32,5 +33,5 @@ int win_debug_opc(struct nk_context *ctx);
 
 // --------------------------------- External Functions --------------------------------- //
 // CPU
-extern int cpu_fetch_opcode_debug(int PC_addr);
+extern int cpu_fetch_opcode(int PC_addr, bool PC_increment);
 extern void cpu_decode_opcode(int opc);

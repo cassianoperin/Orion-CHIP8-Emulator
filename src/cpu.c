@@ -43,7 +43,7 @@ void cpu_reset(void) {
 
 	if ( cpu_rom_loaded ) {
 		// Read the Opcode from PC and PC+1 bytes
-		Opcode = cpu_fetch_opcode(PC);
+		Opcode = cpu_fetch_opcode(PC, false);
 	}
 
 	// Clean messages
@@ -60,13 +60,11 @@ void cpu_initialize(void) {
 
 	// Components
 	memset(Memory, 0x00,  (sizeof(Memory) / sizeof(Memory[0])) );	// Clean Memory
-	PC = 0x200;								// Start at 0x200 (default CHIP-8)
-	// Opcode = 0x00;
-	memset(Stack, 0x00, sizeof(Stack));		// Clean Stack
-	SP = 0x00;
-	memset(V, 0x00, sizeof(V));				// Clean V Register
-	I = 0x00;
-
+	memset(Stack, 0x00, sizeof(Stack));								// Clean Stack
+	memset(V, 0x00, sizeof(V));										// Clean V Register
+	PC     = 0x200;													// Start at 0x200 (default CHIP-8)
+	SP     = 0;
+	I      = 0;
 	Opcode = 0;
 	
 	// Initialization - Clean pixels array
@@ -111,6 +109,9 @@ void cpu_initialize(void) {
 
 	// GUI
 	gui_menu_quirks_inactive = false; // Enable Quirks menu
+
+	// Debug messages
+	strcpy(guiDebug_opc_description_msg, "");
 
 	// Rom size
 	romsize = 0;
@@ -434,39 +435,38 @@ void cpu_interpreter(void) {
 	// 	printf("\t\t%s\n\n" , cpu_debug_message);
 	// }
 
-	// Read the Opcode from PC and PC+1 bytes
-	Opcode = cpu_fetch_opcode(PC);
+	if ( cpu_rom_loaded ) {
+		// Read the Opcode from PC and PC+1 bytes
+		Opcode = cpu_fetch_opcode(PC, true);
+	} else {
+		// If invalid opcode detected
+		Opcode = cpu_fetch_opcode(PC, false);
+	}
+
 
 }
 
 void cpu_invalid_opcode(unsigned short opc) {
+		cpu_initialize();
 		char str[100];
 		sprintf(str, "Invalid ROM (Opcode 0x%04X not existent or not implemented.)", opc);
 		strcpy(gui_statusbar_msg, str);
 		cpu_rom_loaded = false;
 		// Return to original menu state
-		quirk_display_wait = true;
+		// quirk_display_wait = true;
 		gui_menu_quirks_inactive = true;
-
 }
 
-// Read the Opcode from PC and PC+1 bytes
-int cpu_fetch_opcode(int PC_addr) {
+// Fetch (read the Opcode from PC and PC+1 bytes) and increment PC
+int cpu_fetch_opcode(int PC_addr, bool PC_increment) {
 	
 	int opc;
 	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];
 
-	// Increment PC
-	PC += 2;
-
-	return opc;
-}
-
-// Read the Opcode from PC and PC+1 bytes for debug screen
-int cpu_fetch_opcode_debug(int PC_addr) {
-	
-	int opc;
-	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];
+	if ( PC_increment ) {
+		// Increment PC
+		PC += 2;
+	}
 
 	return opc;
 }

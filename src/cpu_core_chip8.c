@@ -27,9 +27,20 @@ void opc_chip8_00E0(void) {
 // Return from a subroutine
 // The interpreter sets the program counter to the address at the top of the stack, then subtracts 1 from the stack pointer.
 void opc_chip8_00EE(void) {
-	PC = Stack[SP];
+	 // Used to detect an stack Underflow
+	char original_SP = SP;
+
 	SP --;
-	
+	PC = Stack[SP];
+
+	// If you decrease SP and its bigger than original value its because an underflow ocurred
+	if ( SP > original_SP ) {
+		sprintf(gui_statusbar_msg, "CHIP-8 00EE: Stack Underflow");
+		cpu_rom_loaded = false;
+		// Return to original menu state
+		gui_menu_quirks_inactive = true;
+	}
+
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 00EE: Return from a subroutine (PC=0x%04X)", PC);
 }
@@ -44,7 +55,7 @@ void opc_chip8_1NNN(unsigned short nnn) {
 	PC = nnn;
 
 	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%04X", nnn);
+		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%04X", nnn +2);
 }
 
 
@@ -54,9 +65,17 @@ void opc_chip8_1NNN(unsigned short nnn) {
 // Call subroutine at nnn.
 // The interpreter increments the stack pointer, then puts the current PC on the top of the stack. The PC is then set to nnn.
 void opc_chip8_2NNN(unsigned short nnn){
-	SP++;
 	Stack[SP] = PC;
 	PC = nnn;
+	SP++;
+
+	// If you increase SP and its bigger than 15, than an overflow occurred
+	if ( SP > 15 ) {
+		sprintf(gui_statusbar_msg, "CHIP-8 2nnn: Stack Overflow");
+		cpu_rom_loaded = false;
+		// Return to original menu state
+		gui_menu_quirks_inactive = true;
+	}
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 2nnn: Call Subroutine at 0x%04X", PC);
@@ -371,7 +390,8 @@ void opc_chip8_BNNN(unsigned short nnn, unsigned char x) {
 // Set Vx = random byte AND nn.
 // The interpreter generates a random number from 0 to 255, which is then ANDed with the value nn. The results are stored in Vx. See instruction 8xy2 for more information on AND.
 void opc_chip8_CXNN(unsigned char x, unsigned char nn) {
-	V[x] = (rand() % 255) & nn;
+	// V[x] = (rand() % 255) & nn;
+	V[x] = rand() & nn;
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Cxnn: V[x(%d)] = %d (random byte AND nn(%d)) = %d", x, V[x], nn, V[x]);

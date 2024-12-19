@@ -94,7 +94,7 @@ unsigned char	Memory[4096];		        // Memory
 unsigned short	PC;          	            // Program Counter
 unsigned short	Opcode;                 	// CPU Operation Code
 unsigned short	Stack[16];              	// Stack
-unsigned short	SP;                     	// Stack Pointer
+unsigned char	SP;                     	// Stack Pointer
 unsigned char	V[16];                    	// V Register
 unsigned short	I;                   	    // I Register
 unsigned char	DelayTimer;			        // Delay Timer
@@ -131,6 +131,5 @@ void cpu_debug_print(void);
 void cpu_interpreter(void);
 void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
-int  cpu_fetch_opcode(int PC_addr);
-int  cpu_fetch_opcode_debug(int PC_addr);
+int cpu_fetch_opcode(int PC_addr, bool PC_increment);   // Fetch the opcode
 void cpu_decode_opcode(int opc);

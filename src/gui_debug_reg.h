@@ -21,7 +21,7 @@ extern const int video_system_freq;
 extern unsigned short	PC;
 extern unsigned short	Opcode;
 extern unsigned short	Stack[16];
-extern unsigned short	SP;
+extern unsigned char	SP;
 extern unsigned char	V[16];
 extern unsigned short	I;
 extern unsigned char	DelayTimer;
