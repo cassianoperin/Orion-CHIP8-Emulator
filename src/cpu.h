@@ -92,6 +92,7 @@ const int CHIP8_DEFAULT_CLOCK = 500;
 // ---------------------------------- Global Variables ---------------------------------- //
 unsigned char	Memory[4096];		        // Memory
 unsigned short	PC;          	            // Program Counter
+unsigned short	PC_last;          	        // Last Program Counter to use in debug window
 unsigned short	Opcode;                 	// CPU Operation Code
 unsigned short	Stack[16];              	// Stack
 unsigned char	SP;                     	// Stack Pointer

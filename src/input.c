@@ -137,7 +137,7 @@ void input_keyboard(void) {
 				case SDLK_i:
 
 					if (cpu_pause ) {
-						cpu_interpreter();
+							cpu_interpreter();
 						printf("CPU: STEP FORWARD\n");
 					}
 

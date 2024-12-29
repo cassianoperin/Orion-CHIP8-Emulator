@@ -18,7 +18,7 @@ extern unsigned int counter_second_cycles;
 extern unsigned int counter_second_frames;
 extern const int video_system_freq;
 // CPU
-extern unsigned short	PC;
+extern unsigned short	PC_last;
 extern unsigned short	Opcode;
 extern unsigned short	Stack[16];
 extern unsigned char	SP;

@@ -39,9 +39,9 @@ int win_debug_reg(struct nk_context *ctx)
 
             // PC
             nk_label_colored(ctx, "PC:", NK_TEXT_LEFT, nk_rgb(0,255,255));
-            sprintf(guiDebug_reg_emuinfo_msg, "#%04X", PC);
+            sprintf(guiDebug_reg_emuinfo_msg, "#%04X", PC_last);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
-            sprintf(guiDebug_reg_emuinfo_msg, "%d", PC);
+            sprintf(guiDebug_reg_emuinfo_msg, "%d", PC_last);
             nk_label(ctx, guiDebug_reg_emuinfo_msg, NK_TEXT_RIGHT);
 
             // Line with 2 columns

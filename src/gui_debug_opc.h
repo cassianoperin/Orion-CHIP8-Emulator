@@ -12,8 +12,8 @@
 
 // --------------------------------- External Variables --------------------------------- //
 // CPU
-extern unsigned short	PC;
-extern unsigned char Memory[4096];
+extern unsigned short PC_last;
+extern unsigned char  Memory[4096];
 extern char cpu_debug_message[120];
 extern bool cpu_debug_mode;
 extern bool cpu_rom_loaded; 

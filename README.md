@@ -198,9 +198,7 @@ Test memory leaks on binary:
 
 5) If a rom enter in invalid opcode, enable debug hang the emulator
 
-6) DEBUG NOT SHOWING ON STATUS BAR FIRST MESSAGES AXNN (Most dangerous game)
-
-7) Raus recommendations:
+6) Raus recommendations:
 
 - Replace signature by SHA1
 - also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
@@ -217,12 +215,11 @@ so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must
 -- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
 -- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
 
-Gulrak:
+7) Gulrak:
 - Assembly: 
 -- https://johnearnest.github.io/Octo/docs/Manual.html
 -- https://chip8.gulrak.net/
 -- https://groups.google.com/g/comp.sys.hp48/c/e7In51mOgHY
-
 -- https://github.com/rkdud007/solchip8 ???
 -- https://github.com/gulrak/chiplet
 -  in legacy SCHIP, lores mode is using display wait, while hires is not
@@ -231,14 +228,14 @@ Gulrak:
 - And it is correct that vx containing a value > 0xF in Ex9E, ExA1, Fx29 and Fx30 is not an error as only the lower four bits are to be used by these opcodes, so masking them with 0xFwhen using them is the correct way to handle it. (CHIP-8 on the VIP masks them (and the original documentation even documents that only the lower nibble is used but that info got lost in translation in most modern opcode decumentations), and SCHIP originally runs on a HP-48SX, and it has a 4bit CPU, and only uses the lower nibble.)
 - I had a quick look at the source, and while that also should not be the reason for Most Dangerous Game to not work, there is no "undocumented opcode" 02D8 (or 02E4 or anything like that for that matter) in CHIP-8, Tick-Tack-Toe is a hybrid rom needing 1802 assembly support as the code for that "opcode" is in the program, so making it an fixed opcode would of course break every other hybrid program having a function there. They all are the 0NNN that is used to call a machine language program at NNN and exists on COSMAC-VIP CHIP-8 (and most CDP1802 based variants) and the DREAM6800 and its CHIPOS. SCHIP doesn't support 0NNN, and neither do other variants I know of, and any hybrid rom would of course be architecture specific. One could imho add special emulation for this for each hybrid rom that is out there, but  I'd argue that they should only be active if such a rom is recognized like by an SHA1 checksum as the CHIP-8 program database uses them. It's of course just my opinion, but I would not count them as opcodes if they are not part of the interpreter.
 
+8) BLITZ keep trash on screen after reset
 
-- // Fx0A - LD Vx, K (check if I control the release)
+9) // Fx0A - LD Vx, K (check if I control the release)
 // Wait for a key press, store the value of the key in Vx.
 // All execution stops until a key is pressed, then the value of that key is stored in Vx.
 // V[x] must be updated just AFTER the RELEASE of the key
 
-// DELAY TIMER TEST
-
+10) DELAY TIMER TEST
 
 ## GUI
 
@@ -263,5 +260,3 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 	* Most Dangerous Game [Peter Maruhnic]
 
 2) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
-
-3) Stack is incrementing first (start on 1)

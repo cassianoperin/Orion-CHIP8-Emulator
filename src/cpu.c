@@ -43,7 +43,7 @@ void cpu_reset(void) {
 
 	if ( cpu_rom_loaded ) {
 		// Read the Opcode from PC and PC+1 bytes
-		Opcode = cpu_fetch_opcode(PC, false);
+		Opcode = cpu_fetch_opcode(PC, true);
 	}
 
 	// Clean messages
@@ -62,10 +62,11 @@ void cpu_initialize(void) {
 	memset(Memory, 0x00,  (sizeof(Memory) / sizeof(Memory[0])) );	// Clean Memory
 	memset(Stack, 0x00, sizeof(Stack));								// Clean Stack
 	memset(V, 0x00, sizeof(V));										// Clean V Register
-	PC     = 0x200;													// Start at 0x200 (default CHIP-8)
-	SP     = 0;
-	I      = 0;
-	Opcode = 0;
+	PC      = 0x200;												// Start at 0x200 (default CHIP-8)
+	PC_last = 0x200;												// For debug screen because I update the PC prior to execution on fetch
+	SP      = 0;
+	I       = 0;
+	Opcode  = 0;
 	
 	// Initialization - Clean pixels array
 	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
@@ -121,7 +122,7 @@ void cpu_initialize(void) {
 
 	// Debug
 	// cpu_debug_mode	       = false;
-	// cpu_debug_print_console = false;
+	cpu_debug_print_console = true;
 	// cpu_pause		       = false;
 }
 
@@ -464,6 +465,8 @@ int cpu_fetch_opcode(int PC_addr, bool PC_increment) {
 	opc = (unsigned short)Memory[PC_addr]<<8 | (unsigned short)Memory[PC_addr+1];
 
 	if ( PC_increment ) {
+		// It will update PC first to execution, so I keep the current PC for debug screen
+		PC_last = PC;
 		// Increment PC
 		PC += 2;
 	}
