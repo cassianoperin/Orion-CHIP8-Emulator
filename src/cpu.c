@@ -122,7 +122,7 @@ void cpu_initialize(void) {
 
 	// Debug
 	// cpu_debug_mode	       = false;
-	cpu_debug_print_console = true;
+	// cpu_debug_print_console = true;
 	// cpu_pause		       = false;
 }
 

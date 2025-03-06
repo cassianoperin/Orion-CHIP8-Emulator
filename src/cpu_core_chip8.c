@@ -269,23 +269,27 @@ void opc_chip8_8XY5(unsigned char x, unsigned char y) {
 // 8xy6 - SHR Vx {, Vy}
 // Set Vx = Vx SHR 1.
 // If the least-significant bit of Vx is 1, then VF is set to 1, otherwise 0. Then Vx is divided by 2 (SHR).
-// Original Chip8 INCREMENT I in this instruction
-// The flag must be updated AFTER the SHR with the original V[x] value
 void opc_chip8_8XY6(unsigned char x, unsigned char y) {
 
-	unsigned char Vx_original = V[x];	// Necessary once the flag will be set AFTER the SHR
+	unsigned int carry; // Set V[F] to the Least Significant Bit
 
 	if ( quirk_Shifting_legacy_8xy6_8xyE ) {
-		V[x] = V[x] >> 1; // modern CHIP-48 and SUPER-CHIP hardware
+		// modern CHIP-48 and SUPER-CHIP hardware
+		carry = V[x] & 0x01;
+		V[x] = V[x] >> 1;
+
 	} else {
-		V[x] = V[y] >> 1; // original COSMAC VIP hardware
+		// original COSMAC VIP hardware
+		V[x] = V[y];
+		carry = V[x] & 0x01;
+		V[x] = V[x] >> 1;
 	}
 
 	// Now update the flag
-	V[0xF] = Vx_original & 0x01;
+	V[0xF] = carry; 
 
 	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 8xy6: Set V[x(%d)] SHIFT RIGHT 1 = 0x%02X", x, V[x]);
+		sprintf(cpu_debug_message, "CHIP-8 8xy6: Set V[x(%d)] SHIFT RIGHT 1 = 0x%02X", x, V[x]);		
 
 }
 
@@ -311,19 +315,22 @@ void opc_chip8_8XY7(unsigned char x, unsigned char y) {
 // 8xyE - SHL Vx {, Vy}
 // Set Vx = Vx SHL 1.
 // If the most-significant bit of Vx is 1, then VF is set to 1, otherwise to 0. Then Vx is multiplied by 2.
-// *** The flag must be updated with the original V[x] value AFTER the SHL
 void opc_chip8_8XYE(unsigned char x, unsigned char y) {
 
-	unsigned char Vx_original = V[x];	// Necessary once the flag will be set AFTER the SHL
+	unsigned int carry = V[x] >> 7; // Set V[F] to the Most Important Bit
 
 	if ( quirk_Shifting_legacy_8xy6_8xyE ) {
-		V[x] = V[x] << 1; // modern CHIP-48 and SUPER-CHIP hardware
+		// modern CHIP-48 and SUPER-CHIP hardware
+		V[x] = V[x] << 1;
+
 	} else {
-		V[x] = V[y] << 1; // original COSMAC VIP hardware
+		// original COSMAC VIP hardware
+		V[x] = V[y];
+		V[x] = V[x] << 1;
 	}
 
-	// Now update the flag
-	V[0xF] = Vx_original >> 7; // Set V[F] to the Most Important Bit
+	// // Now update the flag
+	V[0xF] = carry; 
 	
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 8xyE: Set V[x(%d)] SHIFT LEFT 1 =  0x%02X ", x, V[x]);

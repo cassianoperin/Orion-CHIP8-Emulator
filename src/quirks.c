@@ -17,7 +17,7 @@ void handle_quirks(char *game_signature) {
 	|| !strcmp(game_signature, "00E0121A4368722E2045+174546") 		// Game:		 Blinky [Hans Christian Egeberg] (alt).ch8
 	|| !strcmp(game_signature, "121A434F4E4E45435434+19434") 		// Game:		 Connect 4 [David Winter].ch8
 	|| !strcmp(game_signature, "121D48494444454E2120+87881") 		// Game:		 Hidden [David Winter, 1996].ch8
-	|| !strcmp(game_signature, "12128D8D20A931393930+88372") 		// Game:		 Syzygy [Roy Trevino, 1990].ch8
+	|| !strcmp(game_signature, "12128D8D20A931393930+88372")		// Game:		 Syzygy [Roy Trevino, 1990].ch8
 	|| !strcmp(game_signature, "12185449435441432062+39518") )		// Game:		 Tic-Tac-Toe [David Winter].ch8
 	{
 		quirk_Memory_legacy_Fx55_Fx65 = false;
@@ -32,7 +32,7 @@ void handle_quirks(char *game_signature) {
 	|| !strcmp(game_signature, "1225535041434520494E+124842") 		// Game:		 Space Invaders [David Winter].ch8
 	|| !strcmp(game_signature, "1225535041434520494E+123139") 		// Game:		 Space Invaders [David Winter] (alt).ch8
 	|| !strcmp(game_signature, "A2CD69386A1ED9A2A2D0+31820") 		// Game:		 Submarine [Carmelo Cortez, 1978].ch8
-	|| !strcmp(game_signature, "00E06A0022626380228A+16829") 		// Game:		 Sum Fun [Joyce Weisbecker].ch8
+	|| !strcmp(game_signature, "00E06A0022626380228A+16829")		// Game:		 Sum Fun [Joyce Weisbecker].ch8
 	|| !strcmp(game_signature, "12185449435441432062+39518") )		// Game:		 Tic-Tac-Toe [David Winter].ch8
 	{
 		quirk_Shifting_legacy_8xy6_8xyE	= true;
