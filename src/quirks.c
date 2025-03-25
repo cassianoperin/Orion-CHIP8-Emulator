@@ -7,7 +7,9 @@ void handle_quirks(char *game_signature) {
 
 	// ---------------------- CHIP8 ---------------------- //
 
-	// Quirk: DISABLE Fx55 and Fx65 legacy mode (load_store_quirk)
+	// DISABLE Quirk "Memory"
+	// Fx55 and Fx65 legacy mode (load_store_quirk)
+	// The save and load opcodes (Fx55 and Fx65) increment the index register
 	if ( !strcmp(game_signature, "00E06300640165EE35EE+40424")		// Test Program: BC_test.ch8
 	|| !strcmp(game_signature, "60FFF015600069006E00+43064")		// Test Program: c8_test.c8
 	|| !strcmp(game_signature, "6601221EF40A44027301+5104")			// Program:		 Delay Timer Test [Matthew Mikolay, 2010].ch8
@@ -18,14 +20,17 @@ void handle_quirks(char *game_signature) {
 	|| !strcmp(game_signature, "121A434F4E4E45435434+19434") 		// Game:		 Connect 4 [David Winter].ch8
 	|| !strcmp(game_signature, "121D48494444454E2120+87881") 		// Game:		 Hidden [David Winter, 1996].ch8
 	|| !strcmp(game_signature, "12128D8D20A931393930+88372")		// Game:		 Syzygy [Roy Trevino, 1990].ch8
+	|| !strcmp(game_signature, "12124A6F6E617321FFFF+51428")		// Game:		 Rocket Launch [Jonas Lindstedt].ch8
 	|| !strcmp(game_signature, "12185449435441432062+39518") )		// Game:		 Tic-Tac-Toe [David Winter].ch8
 	{
 		quirk_Memory_legacy_Fx55_Fx65 = false;
 	}
 
-	// Quirk: ENABLE 8XY6 and 8XYE legacy mode (shift_quirk)
+	
+	// ENABLE Quirk "Shifting"
+	// 8XY6 and 8XYE legacy mode (shift_quirk)
+	// The shift opcodes (8xy6 and 8xyE) only operate on vX instead of storing the shifted version of vY in vX
 	if ( !strcmp(game_signature, "120200E0A201F065A230+31866")		// Program: BMP Viewer - Hello (C8 example) [Hap, 2005].ch8
-	|| !strcmp(game_signature, "12054338506014A370F0+36295")		// Program: Division Test [Sergey Naydenov, 2010].ch8
 	|| !strcmp(game_signature, "124E0819010108010F01+9100") 		// Program: Keypad Test [Hap, 2006].ch8
 	|| !strcmp(game_signature, "121A322E303020432E20+203129") 		// Game:		 Blinky [Hans Christian Egeberg, 1991].ch8
 	|| !strcmp(game_signature, "00E0121A4368722E2045+174546") 		// Game:		 Blinky [Hans Christian Egeberg] (alt).ch8
@@ -33,12 +38,15 @@ void handle_quirks(char *game_signature) {
 	|| !strcmp(game_signature, "1225535041434520494E+123139") 		// Game:		 Space Invaders [David Winter] (alt).ch8
 	|| !strcmp(game_signature, "A2CD69386A1ED9A2A2D0+31820") 		// Game:		 Submarine [Carmelo Cortez, 1978].ch8
 	|| !strcmp(game_signature, "00E06A0022626380228A+16829")		// Game:		 Sum Fun [Joyce Weisbecker].ch8
+	|| !strcmp(game_signature, "00E06300640165EE35EE+40424")		// Game:		 BC_test.ch8
+	|| !strcmp(game_signature, "00E023B66007E09E1204+49550")		// Game:		 Vertical Brix [Paul Robson, 1996].ch8
 	|| !strcmp(game_signature, "12185449435441432062+39518") )		// Game:		 Tic-Tac-Toe [David Winter].ch8
 	{
 		quirk_Shifting_legacy_8xy6_8xyE	= true;
 	}
 
-	// Quirk: DISABLE DXYN Clipping feature
+	// DISABLE Quirk "Clipping"
+	// DXYN Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen
 	if ( !strcmp(game_signature, "2280CC014C011216CA3E+12252") ) {	// Program: Framed MK1 [GV Samways, 1980].ch8
 		quirk_Clipping_Dxyn	= false;
 	}
@@ -48,7 +56,7 @@ void handle_quirks(char *game_signature) {
 		quirk_ClockProgram_fonts = true;
 		printf("Clock Program Quirk Enabled.\n");
 	}
-	
+
 
 	// ---------------------- SCHIP ---------------------- //
 

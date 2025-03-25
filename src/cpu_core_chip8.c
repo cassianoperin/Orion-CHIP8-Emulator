@@ -31,6 +31,7 @@ void opc_chip8_00EE(void) {
 	char original_SP = SP;
 
 	SP --;
+
 	PC = Stack[SP];
 
 	// If you decrease SP and its bigger than original value its because an underflow ocurred
@@ -55,7 +56,7 @@ void opc_chip8_1NNN(unsigned short nnn) {
 	PC = nnn;
 
 	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%04X", nnn +2);
+		sprintf(cpu_debug_message, "CHIP-8 1nnn: Jump to location 0x%04X", nnn);
 }
 
 
@@ -598,11 +599,13 @@ void opc_chip8_FX0A(unsigned char x) {
 
 	unsigned int i;
 
+	PC -= 2;
+
 	// Map the key is pressed
 	if ( !key_FX0A_pressed ) {
 
 		// Decrease the PC added after fetch if key not pressed to keep emulation stopped
-		PC -= 2;
+
 
 		for ( i = 0 ; i < sizeof(Key) ; i++ ) {
 			if (Key[i] == 1) {

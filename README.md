@@ -257,7 +257,13 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 
 1) Games not working:
     * Breakout Camelo Cortez (Apparently this rom has collision detection bugs)
+    * Slide [Joyce Weisbecker] - tempo do botao presionado ta estranho
+    * Programmable Spacefighters [Jef Winsor].ch8 - entender o jogo e ver se ta certo
+	* Submarine [Carmelo Cortez, 1978].ch8 is too fast 
+    * Sum Fun [Joyce Weisbecker] - inputs looks strange
 
 2) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
 3) display_draw strange in main, review and set @60hz when debug or every cycle
+
+4) quirk: quirk_ClockProgram_fonts - map when to load the fonts
