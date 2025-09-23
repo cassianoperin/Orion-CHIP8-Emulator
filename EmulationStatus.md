@@ -35,14 +35,14 @@
 | Mastermind FourRow (Robert Lindley, 1978) | ![100%](https://progress-bar.xyz/100) | 2b450d6a |[Mastermind FourRow](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Mastermind%20FourRow%20(Robert%20Lindley%2C%201978).txt) | |
 | Merlin [David Winter] | ![100%](https://progress-bar.xyz/100) | 1096c3d5 | [Merlin](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Merlin%20%5BDavid%20Winter%5D.txt) | |
 | Missile [David Winter] | ![100%](https://progress-bar.xyz/100) | 6e485c29 | N/A | |
-| Most Dangerous Game [Peter Maruhnic] | ![50%](https://progress-bar.xyz/50) | e941c6d7 | [Most Dangerous Game](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Most%20Dangerous%20Game%20%5BPeter%20Maruhnic%5D.txt) | Glitches |
+| Most Dangerous Game [Peter Maruhnic] | ![100%](https://progress-bar.xyz/100) | e941c6d7 | [Most Dangerous Game](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Most%20Dangerous%20Game%20%5BPeter%20Maruhnic%5D.txt) | |
 | Nim [Carmelo Cortez, 1978] | ![100%](https://progress-bar.xyz/100) | 1b459fa0 | [Nim](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Nim%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | |
 | Paddles | ![90%](https://progress-bar.xyz/90) | 5c786254 | N/A | Glitches against CPU (Press F) in borders |
 | Pong (1 player) | ![100%](https://progress-bar.xyz/100) | 841fde23 | N/A | |
 | Pong (alt) | ![100%](https://progress-bar.xyz/100) | 69970ad2 | N/A | |
 | Pong 2 (Pong hack) [David Winter, 1997] | ![100%](https://progress-bar.xyz/100) | ac46b66d | N/A | |
 | Pong [Paul Vervalin, 1990] | ![100%](https://progress-bar.xyz/100) | 7d75a857 | [Pong (Paul Vervalin)](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Pong%20%5BPaul%20Vervalin%2C%201990%5D.txt) | |
-| Programmable Spacefighters [Jef Winsor] | ![0%](https://progress-bar.xyz/0) | cc8eec70 | [Programmable Spacefighters](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Programmable%20Spacefighters%20%5BJef%20Winsor%5D.txt) | Understand and test game |
+| Programmable Spacefighters [Jef Winsor] | ![100%](https://progress-bar.xyz/100) | cc8eec70 | [Programmable Spacefighters](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Programmable%20Spacefighters%20%5BJef%20Winsor%5D.txt) | |
 | Puzzle | ![100%](https://progress-bar.xyz/100) | 040ca946 | N/A | |
 | Reversi [Philip Baltzer] | ![100%](https://progress-bar.xyz/100) | 02393966 | [Reversi](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Reversi%20%5BPhilip%20Baltzer%5D.txt) | |
 | Rocket Launch [Jonas Lindstedt] | ![100%](https://progress-bar.xyz/100) | bb286fea | N/A | |
@@ -61,7 +61,7 @@
 | Space Invaders [David Winter] | ![100%](https://progress-bar.xyz/100) | 6ff0a017 | [Space Invaders](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Space%20Invaders%20%5BDavid%20Winter%5D.txt) | |
 | Spooky Spot [Joseph Weisbecker, 1978] | ![100%](https://progress-bar.xyz/100) | 3f15d84e | [Spooky Spot](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Spooky%20Spot%20%5BJoseph%20Weisbecker%2C%201978%5D.txt) | |
 | Squash [David Winter] | ![100%](https://progress-bar.xyz/100) | 801843e0 | N/A | |
-| Submarine [Carmelo Cortez, 1978] | ![100%](https://progress-bar.xyz/100) | cb331b6a | [Submarine](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Submarine%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | |
+| Submarine [Carmelo Cortez, 1978] | ![80%](https://progress-bar.xyz/80) | cb331b6a | [Submarine](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Submarine%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | Glitches when fire |
 | Sum Fun [Joyce Weisbecker] | ![100%](https://progress-bar.xyz/100) | 51c9528b | [Sum Fun](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Sum%20Fun%20%5BJoyce%20Weisbecker%5D.txt) | |
 | Syzygy [Roy Trevino, 1990] | ![100%](https://progress-bar.xyz/100) | 67e4bf9c | [Syzygy](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Syzygy%20%5BRoy%20Trevino%2C%201990%5D.txt) | |
 | Tank | ![100%](https://progress-bar.xyz/100) | a929cb73 | [Tank](https://github.com/cassianoperin/CHIP8_C/blob/main/instructions/chip8/Tank.txt) | |

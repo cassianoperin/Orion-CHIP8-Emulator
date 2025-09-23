@@ -658,6 +658,8 @@ void opc_chip8_FX15(unsigned char x) {
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Fx15: Set delay timer = V[x(%d)]: 0x%02X", x, V[x]);
 
+		PC-=2;
+
 }
 
 // Fx18 - LD ST, Vx
