@@ -59,13 +59,6 @@ void handle_quirks(char *game_signature) {
 		quirk_Clipping_Dxyn	= false;
 	}
 
-	// Quirk:		Do not load SCHIP fonts to avoid garbage after FFFFFF clock
-	if ( !strcmp(game_signature, "F10AF20AF30AF40AF50A+27721") ) {	// Program: Clock Program [Bill Fisher, 1981].ch8
-		quirk_ClockProgram_fonts = true;
-		printf("Clock Program Quirk Enabled.\n");
-	}
-
-
 	// ---------------------- SCHIP ---------------------- //
 
 	// // Enable undocumented FX1E feature needed by Spacefight 2091!

@@ -27,7 +27,6 @@ bool quirk_Spacefight2091_Fx1E;			// FX1E undocumented feature needed by Spacefi
 bool quirk_Resize_SCHIP_00FE_00FF;		// Resize_Quirk_00FE_00FF - Clears the screen - Must be set to True always
 bool quirk_Scroll_SCHIP_00CN_00FB_00FC;	// Shift only 2 lines
 bool quirk_LoRes_Wide_Sprite_Dxy0;		// DXY0_loresWideSpriteQuirks - Draws a 16x16 sprite even in low-resolution (64x32) mode, row-major
-bool quirk_ClockProgram_fonts;			// To avoid glitches on FFFFF display, the memory used by SCHIP fonts can't be loaded
 // // ETI
 // bool quirk_ETI660_64x32_screen;			// Enable screen adjustment to 64x32 instead of default 64x48 ETI-660 HW
 // 										// https://tobiasvl.github.io/blog/write-a-chip-8-emulator/#bnnn-jump-with-offset

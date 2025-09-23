@@ -88,7 +88,6 @@ void cpu_initialize(void) {
 	// quirk_Resize_SCHIP_00FE_00FF         = true;
 	// quirk_LoRes_Wide_Sprite_Dxy0         = false;
 	// quirk_Scroll_SCHIP_00CN_00FB_00FC    = false;
-	// quirk_ClockProgram_fonts             = false;
 	// Keyboard_slow_press                  = false;
 
 	// SCHIP Specific Variables
@@ -135,12 +134,11 @@ void cpu_load_fonts(void) {
 		Memory[i] = Chip8Fontset[i];
 	}
 
-	if ( !quirk_ClockProgram_fonts ) {
-		// Load SCHIP 8x10 fontset (Memory address 80-240)
-		for ( i = 0; i < sizeof(SCHIPFontset); i++ ) {
-			Memory[i+80] = SCHIPFontset[i];
-		}
+	// Load SCHIP 8x10 fontset (Memory address 80-240)
+	for ( i = 0; i < sizeof(SCHIPFontset); i++ ) {
+		Memory[i+80] = SCHIPFontset[i];
 	}
+
 }
 
 // Debug
@@ -202,6 +200,7 @@ void cpu_interpreter(void) {
 							cpu_invalid_opcode(Opcode);
 					}
 
+				// 0NNN: Cosmac VIP machine code routine needed by CLOCK program
 				case 0x0200: //02NN
 					switch ( Opcode & 0x0FFF ) {
 

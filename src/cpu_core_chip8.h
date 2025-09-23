@@ -61,7 +61,6 @@ extern bool quirk_ETI660_64x32_screen;
 extern bool quirk_Jump_with_offset_Bnnn;
 extern bool quirk_LoRes_Wide_Sprite_Dxy0;
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
-extern bool quirk_ClockProgram_fonts;
 extern bool quirk_display_wait;
 
 // Main

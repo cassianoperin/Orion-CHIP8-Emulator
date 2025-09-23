@@ -200,7 +200,7 @@ Test memory leaks on binary:
 
 6) Raus recommendations:
 
-- Replace signature by SHA1
+6.1) Replace signature by SHA1
 - also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
 - your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
 - I am legit unsure how you passed the display test from my oob test rom your dxyn has the potential to overwrite whatever vx or vy holds when you set vf to 0 because either of them could be the vf register
@@ -262,5 +262,3 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 2) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
 3) display_draw strange in main, review and set @60hz when debug or every cycle
-
-4) quirk: quirk_ClockProgram_fonts - map when to load the fonts
