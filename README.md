@@ -207,8 +207,9 @@ so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must
 (unless you only set vf to the amount of collisions at the very end by using another var to hold collision status in the meantime)
 --- that commented alternate version's good, if only some work is done to tackle clipping vs wrapping which is basically non-existent right now
 6.4. get rid of that spacefight quirk in Fx1E, it's a myth and does not exist, the rom is merely buggy, and there exists a version that fixes the bugs
-
-- SCHIP -
+6.5 SCHIP -
+-  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"
+- which is basically a step down from the functionality of xochip with a lot less rules to how it works
 -- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
 -- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
 

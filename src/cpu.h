@@ -15,7 +15,6 @@ extern const char SCHIPFontset[160];
 // Legacy Opcodes and Quirks
 extern bool quirk_Memory_legacy_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
-extern bool quirk_Spacefight2091_Fx1E;
 extern bool quirk_Clipping_Dxyn;
 extern bool quirk_Resize_SCHIP_00FE_00FF;
 extern bool quirk_Scroll_SCHIP_00CN_00FB_00FC;
@@ -123,9 +122,12 @@ unsigned char   key_FX0A = 0;                // Keep track of the first key pres
 bool            key_FX0A_pressed = false;    // keep track of the state of first key pressed to check when is released to update V[x]
 // GUI
 bool            cpu_rom_loaded;              // Tell the main loop when to start running the cpu_interpreter()
-// Cosmac VIP 
+// Cosmac VIP Hardware routines
 bool            cosmac_vip_hw_2d8;           // Allow interpreter to understand 0XXX (02d8) invalid instruction
-                                             // (cosmac vip hardware routine call needed by CHIP8 hybrid CLOCK program)   
+                                             // (cosmac vip hardware routine call needed by CHIP8 hybrid CLOCK program)
+// Buggy Spaceflight 2091 rom workaround
+bool            workaround_Fx1E_Spacefight;	// Apply an workaround on FX1E to handle an bugged version of Spacefight 2091 rom
+   
 
 // -------------------------------------- Functions ------------------------------------- //
 void cpu_initialize(void);

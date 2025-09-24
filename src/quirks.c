@@ -58,17 +58,11 @@ void handle_quirks(char *game_signature) {
 
 	// ---------------------- SCHIP ---------------------- //
 
-	// // Enable undocumented FX1E feature needed by Spacefight 2091!
-	// // Game "Spacefight 2091 [Carsten Soerensen, 1992].ch8"
-	// if ( !strcmp(game_signature, "12245370616365466967+250532") ) {
-	// 	quirk_Spacefight2091_Fx1E = true;
-	// 	printf("FX1E undocumented feature enabled.\n");
-	// }
-
+	// CONFIRM, PROBABLY FIXED BY I BUFFER OVERFLOOW IMPLEMENTATION ON Fx1E
 	// // Enable undocumented FX1E feature needed by sctest_12
 	// // SCHIP Test Program "sctest_12 (SC Test.ch8)"
 	// if ( !strcmp(game_signature, "12122054726F6E697820+49853") ) {
-	// 	quirk_Spacefight2091_Fx1E = true;
+	// 	workaround_Fx1E_Spacefight = true;
 	// 	printf("FX1E undocumented feature enabled.\n");
 	// }
 

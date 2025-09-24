@@ -23,7 +23,6 @@ bool quirk_Jump_with_offset_Bnnn;		// The "jump to some address plus v0" instruc
 
 
 // // SCHIP
-bool quirk_Spacefight2091_Fx1E;			// FX1E undocumented feature needed by Spacefight 2091! 
 bool quirk_Resize_SCHIP_00FE_00FF;		// Resize_Quirk_00FE_00FF - Clears the screen - Must be set to True always
 bool quirk_Scroll_SCHIP_00CN_00FB_00FC;	// Shift only 2 lines
 bool quirk_LoRes_Wide_Sprite_Dxy0;		// DXY0_loresWideSpriteQuirks - Draws a 16x16 sprite even in low-resolution (64x32) mode, row-major

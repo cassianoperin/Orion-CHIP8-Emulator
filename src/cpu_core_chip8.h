@@ -53,7 +53,6 @@ extern bool debug_pixels;
 // Quirks
 extern bool quirk_Memory_legacy_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
-extern bool quirk_Spacefight2091_Fx1E;
 extern bool quirk_Clipping_Dxyn;
 extern bool quirk_Resize_SCHIP_00FE_00FF;
 extern bool quirk_Scroll_SCHIP_00CN_00FB_00FC;
@@ -62,6 +61,9 @@ extern bool quirk_Jump_with_offset_Bnnn;
 extern bool quirk_LoRes_Wide_Sprite_Dxy0;
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_display_wait;
+
+// Workarounds
+extern bool workaround_Fx1E_Spacefight;
 
 // Main
 extern char *filename;

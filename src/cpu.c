@@ -34,6 +34,12 @@ void cpu_reset(void) {
 			cosmac_vip_hw_2d8 = true;
 		}
 
+		// Check for a buggy rom version of Game "Spacefight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
+		if ( !strcmp(game_signature, "12245370616365466967+250532") ) {
+			workaround_Fx1E_Spacefight = true;
+			printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled.\n");
+		}
+
 		// Check for Quirks
 		handle_quirks(game_signature);
 
@@ -82,7 +88,7 @@ void cpu_initialize(void) {
 	// New quirk pattern
 	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
 	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-	quirk_display_wait				= false;	// Display wait
+	quirk_display_wait				= true;	// Display wait
 	quirk_Clipping_Dxyn				= true;		// Clipping
 	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
@@ -90,7 +96,6 @@ void cpu_initialize(void) {
 	// // ETI
 	// quirk_ETI660_64x32_screen        	= false;
 	// // SCHIP
-	// quirk_Spacefight2091_Fx1E            = false;
 	// quirk_Resize_SCHIP_00FE_00FF         = true;
 	// quirk_LoRes_Wide_Sprite_Dxy0         = false;
 	// quirk_Scroll_SCHIP_00CN_00FB_00FC    = false;

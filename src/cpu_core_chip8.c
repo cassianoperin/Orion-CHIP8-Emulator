@@ -690,8 +690,8 @@ void opc_chip8_FX1E(unsigned char x) {
 		sprintf(cpu_debug_message, "CHIP-8 Fx1E: Add the value of V[x(%d)]: 0x%02X to I: (0x%04X)",x, V[x], I);
 
 
-	// *** Implement the undocumented feature used by Spacefight 2091
-	if ( quirk_Spacefight2091_Fx1E ) {
+	// Workaround for a buggy rom version of Spacefight 2091
+	if ( workaround_Fx1E_Spacefight ) {
 		if ( I + (unsigned short)V[x] > 0xFFF ) { //4095 - Buffer overflow
 			V[0xF] = 1;
 			I = ( I + (unsigned short)V[x] ) - 4095;
@@ -701,7 +701,12 @@ void opc_chip8_FX1E(unsigned char x) {
 		}
 	// Normal opcode pattern
 	} else {
-		I += (unsigned short)V[x];
+		// Check for I buffer overflow (>4095)
+		if ( I + (unsigned short)V[x] > 0xFFF ) {
+			I = ( I + (unsigned short)V[x] ) - 4095;
+		} else {
+			I += (unsigned short)V[x];
+		}
 	}
 }
 
