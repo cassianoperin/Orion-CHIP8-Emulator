@@ -28,20 +28,11 @@ void cpu_reset(void) {
 		game_signature = get_game_signature(filename);
 		printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
 		
-		// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
-		if ( !strcmp(game_signature, "F10AF20AF30AF40AF50A+27721") )	// Program: Clock Program [Bill Fisher, 1981].ch8
-		{
-			cosmac_vip_hw_2d8 = true;
-		}
-
-		// Check for a buggy rom version of Game "Spacefight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
-		if ( !strcmp(game_signature, "12245370616365466967+250532") ) {
-			workaround_Fx1E_Spacefight = true;
-			printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled.\n");
-		}
-
 		// Check for Quirks
 		handle_quirks(game_signature);
+
+		// Check for workarounds and exceptions
+		handle_workarounds(game_signature);
 
 		// Load Fonts
 		cpu_load_fonts();
@@ -150,6 +141,22 @@ void cpu_load_fonts(void) {
 		Memory[i+80] = SCHIPFontset[i];
 	}
 
+}
+
+// Detected buggy version of Spaceflight and Clock program to apply workarounds and exceptions
+void handle_workarounds(char *game_signature) {
+
+	// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
+	if ( !strcmp(game_signature, "F10AF20AF30AF40AF50A+27721") )	// Program: Clock Program [Bill Fisher, 1981].ch8
+	{
+		cosmac_vip_hw_2d8 = true;
+	}
+
+	// Check for a buggy rom version of Game "Spacefight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
+	if ( !strcmp(game_signature, "12245370616365466967+250532") ) {
+		workaround_Fx1E_Spacefight = true;
+		printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled.\n");
+	}
 }
 
 // Debug

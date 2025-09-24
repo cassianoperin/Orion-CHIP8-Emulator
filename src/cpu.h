@@ -138,3 +138,4 @@ void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
 int cpu_fetch_opcode(int PC_addr, bool PC_increment);   // Fetch the opcode
 void cpu_decode_opcode(int opc);
+void handle_workarounds(char *game_signature);
