@@ -26,15 +26,6 @@ void handle_quirks(char *game_signature) {
 		quirk_Memory_legacy_Fx55_Fx65 = false;
 	}
 
-
-
-	// // ENABLE Quirk "Display Wait"
-	// // Drawing sprites to the display waits for the vertical blank, limiting to max 60 FPS
-	// if ( !strcmp(game_signature, "A2CD69386A1ED9A2A2D0+31820") ) {	// Game: Submarine [Carmelo Cortez, 1978].ch8
-	// 	quirk_display_wait	= true;
-	// }
-
-	
 	// ENABLE Quirk "Shifting"
 	// 8XY6 and 8XYE legacy mode (shift_quirk)
 	// The shift opcodes (8xy6 and 8xyE) only operate on vX instead of storing the shifted version of vY in vX
@@ -58,6 +49,12 @@ void handle_quirks(char *game_signature) {
 	if ( !strcmp(game_signature, "2280CC014C011216CA3E+12252") ) {	// Program: Framed MK1 [GV Samways, 1980].ch8
 		quirk_Clipping_Dxyn	= false;
 	}
+
+	// // ENABLE Quirk "Display Wait"
+	// // Drawing sprites to the display waits for the vertical blank, limiting to max 60 FPS
+	// if ( !strcmp(game_signature, "A2CD69386A1ED9A2A2D0+31820") ) {	// Game: Submarine [Carmelo Cortez, 1978].ch8
+	// 	quirk_display_wait	= true;
+	// }
 
 	// ---------------------- SCHIP ---------------------- //
 

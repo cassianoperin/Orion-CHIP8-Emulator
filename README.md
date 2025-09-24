@@ -200,16 +200,13 @@ Test memory leaks on binary:
 
 6) Raus recommendations:
 
-6.1) Replace signature by SHA1
-- also, your debugs may fail to report correct values for the likes of V[x] and such due to the values having changed beforehand. you'll need to place the debugs first and foremost
-- your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
-- I am legit unsure how you passed the display test from my oob test rom your dxyn has the potential to overwrite whatever vx or vy holds when you set vf to 0 because either of them could be the vf register
+6.1. Replace signature by SHA1
+6.2. your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
+6.3. I am legit unsure how you passed the display test from my oob test rom your dxyn has the potential to overwrite whatever vx or vy holds when you set vf to 0 because either of them could be the vf register
 so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
 (unless you only set vf to the amount of collisions at the very end by using another var to hold collision status in the meantime)
 --- that commented alternate version's good, if only some work is done to tackle clipping vs wrapping which is basically non-existent right now
-- Ex9E/ExA1/Fx29/Fx30 will mask the value coming from Vx with 0xF to only keep the lower 4 bits (0..15) you don't need to do subtracting and throw errors, it's how they're meant to work
-- get rid of that spacefight quirk in Fx1E, it's a myth and does not exist, the rom is merely buggy, and there exists a version that fixes the bugs
-- 2d8 machine language jump (clock cosmac vip hybrid): either way, these "instructions" apply to a particular rom only, they can't be applied globally
+6.4. get rid of that spacefight quirk in Fx1E, it's a myth and does not exist, the rom is merely buggy, and there exists a version that fixes the bugs
 
 - SCHIP -
 -- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.

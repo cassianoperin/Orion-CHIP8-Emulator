@@ -24,9 +24,15 @@ void cpu_reset(void) {
 		// Load ROM into Memory
 		load_rom(filename, Memory, sizeof(Memory));
 
-		// Get Game signature for Qwirks
+		// Get Game signature for Qwirks and Exceptions
 		game_signature = get_game_signature(filename);
 		printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
+		
+		// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
+		if ( !strcmp(game_signature, "F10AF20AF30AF40AF50A+27721") )	// Program: Clock Program [Bill Fisher, 1981].ch8
+		{
+			cosmac_vip_hw_2d8 = true;
+		}
 
 		// Check for Quirks
 		handle_quirks(game_signature);
@@ -173,7 +179,7 @@ void cpu_interpreter(void) {
 	switch ( Opcode & 0xF000 )
   	{
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
-		// 0NNN: Execute RCA 1802 machine language routine at address NNN
+		// 0NNN: Execute RCA 1802 machine language routine at address NNN (needed for CHIP8 CLOCK program)
 		// 00E0: Clear the screen
 		// 00EE: Return from subroutine
 		case 0x0000: //0NNN
@@ -201,15 +207,17 @@ void cpu_interpreter(void) {
 					}
 
 				// 0NNN: Cosmac VIP machine code routine needed by CLOCK program
-				case 0x0200: //02NN
-					switch ( Opcode & 0x0FFF ) {
+				if ( cosmac_vip_hw_2d8 ) {
+					case 0x0200: //02NN
+						switch ( Opcode & 0x0FFF ) {
 
-						// 02D8 (CHIP-8 NON DOCUMENTED)
-						case 0x02D8:
-							opc_chip8_ND_02D8();
-							break;
-
+							// 02D8 (COSMAC VIP Hardware routine call)
+							case 0x02D8:
+								opc_chip8_ND_02D8();
+								break;
+						}
 					}
+				
 				break;
 
 				default:
@@ -723,49 +731,55 @@ void cpu_decode_opcode(int opc) {
 					break;
 				}
 
-                case 0x000A: // F-0A
+                case 0x000A: // Fx0A
                 {
 					sprintf(guiDebug_opc_description_msg, "LOAD V[%X], KEY_PRESS", ( opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-                case 0x0015: // F-15
+                case 0x0015: // Fx15
                 {
 					sprintf(guiDebug_opc_description_msg, "LOAD DT, V[%X]", ( opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-                case 0x0018: // F-18
+                case 0x0018: // Fx18
                 {
 					sprintf(guiDebug_opc_description_msg, "LOAD ST, V[%X]", ( opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-				case 0x001E: // F-1E
+				case 0x001E: // Fx1E
                 {
 					sprintf(guiDebug_opc_description_msg, "ADD I, V[%X]", (opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-				case 0x0029: // F-29
+				case 0x0029: // Fx29
                 {
 					sprintf(guiDebug_opc_description_msg, "SPRITECHAR V[%X]", (opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-                case 0x0033: // F-33
+				// case 0x0030: // Fx30
+                // {
+					// When implemented, remember to Fx30 will mask the value coming from Vx with 0xF to only keep the lower 4 bits (0..15)
+					// Like Fx29
+                // }
+
+                case 0x0033: // Fx33
                 {
 					sprintf(guiDebug_opc_description_msg, "BCD V[%X], I,I+1,I+2", (opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-                case 0x0055: // F-55
+                case 0x0055: // Fx55
                 {
 					sprintf(guiDebug_opc_description_msg, "LOAD M[%04X], V[0-%X]", I, (opc & 0x0F00 ) >> 8 );
                     break;
                 }
 
-                case 0x0065: // F-65
+                case 0x0065: // Fx65
                 {
 					sprintf(guiDebug_opc_description_msg, "LOAD V[0-%X], M[%04X]", (opc & 0x0F00 ) >> 8, I );
                     break;
