@@ -414,7 +414,12 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 		
 	// Draw in Chip-8 Low Resolution mode
     unsigned short gpx_position, row, column = 0;
-    unsigned char byte, bit, bit_value, sprite = 0;
+    unsigned char Vx, Vy, byte, bit, bit_value, sprite = 0;
+
+	// Is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
+	// because either of them could be the vf register
+	Vx = V[x];
+	Vy = V[y];
 
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
@@ -442,14 +447,14 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 		if ( quirk_Clipping_Dxyn ) { 
 			// Do not split the sprite between screen top and down
 			// If the line (y) plus n bytes > 31, then do not print
-			row = ((V[y] % 32) + byte);
+			row = ((Vy % 32) + byte);
 			if ( row > 31 ) {
 				sprite = 0;
 			}
 		} else {
 			// Slit the sprite between screen top and down
 			// if line (y) plus n bytes > 31
-			row = (V[y] + byte) % 32;
+			row = (Vy + byte) % 32;
 		}
 
 		// Always print 8 bits of the byte
@@ -462,12 +467,12 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 			if ( quirk_Clipping_Dxyn ) {
 				// Do not split the sprite between screen right and left
 				// If the row (x) plus number of bits > 63, then do not print
-				column = ((V[x]% 64) + bit);
+				column = ((Vx% 64) + bit);
 				if ( column > 63 ) {
 					bit_value = 0;
 				}
 			} else {
-				column = (V[x] + bit) % 64;
+				column = (Vx + bit) % 64;
 			}
 
 			// Translate the x and Y to the Graphics Vector
