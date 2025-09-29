@@ -15,8 +15,8 @@
 | [corax89: test_opcode](https://github.com/corax89/chip8-test-rom/blob/master/test_opcode.ch8) | ![100%](https://progress-bar.xyz/100) | 0d1a8dd2 | [test_opcode](https://github.com/corax89/chip8-test-rom/tree/master) | |
 | [mattmikolay: Delay Timer Test](https://github.com/mattmikolay/chip-8/blob/master/delaytimer/delay_timer_test.ch8) | ![100%](https://progress-bar.xyz/100) | c97b6066 | N/A | |
 | [mattmikolay: Random Number Test](https://github.com/mattmikolay/chip-8/blob/master/randomnumber/random_number_test.ch8) | ![100%](https://progress-bar.xyz/100) | 3c7ca444 | N/A | |
-| [BC_test.ch8 | ![100%](https://progress-bar.xyz/100) | a5422aa5 | [BC_test](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/test_programs/BC_test.txt) | |
-| [chip8-test-rom.ch8 | ![100%](https://progress-bar.xyz/100) | f811097a | [chip8-test-rom](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/test_programs/chip8-test-rom.txt) | |
+| BC_test.ch8 | ![100%](https://progress-bar.xyz/100) | a5422aa5 | [BC_test](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/test_programs/BC_test.txt) | |
+| chip8-test-rom.ch8 | ![100%](https://progress-bar.xyz/100) | f811097a | [chip8-test-rom](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/test_programs/chip8-test-rom.txt) | |
 
 ## CHIP-8
 | Name | Status | CRC32 | Instructions | Issues
@@ -55,7 +55,7 @@
 | Missile [David Winter] | ![100%](https://progress-bar.xyz/100) | 6e485c29 | N/A | |
 | Most Dangerous Game [Peter Maruhnic] | ![100%](https://progress-bar.xyz/100) | e941c6d7 | [Most Dangerous Game](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Most%20Dangerous%20Game%20%5BPeter%20Maruhnic%5D.txt) | |
 | Nim [Carmelo Cortez, 1978] | ![100%](https://progress-bar.xyz/100) | 1b459fa0 | [Nim](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Nim%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | |
-| Paddles | ![90%](https://progress-bar.xyz/90) | 5c786254 | N/A | Glitches against CPU (Press F) in borders |
+| Paddles | ![100%](https://progress-bar.xyz/100) | 5c786254 | N/A | |
 | Pong (1 player) | ![100%](https://progress-bar.xyz/100) | 841fde23 | N/A | |
 | Pong (alt) | ![100%](https://progress-bar.xyz/100) | 69970ad2 | N/A | |
 | Pong 2 (Pong hack) [David Winter, 1997] | ![100%](https://progress-bar.xyz/100) | ac46b66d | N/A | |
@@ -79,7 +79,7 @@
 | Space Invaders [David Winter] | ![100%](https://progress-bar.xyz/100) | 6ff0a017 | [Space Invaders](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Space%20Invaders%20%5BDavid%20Winter%5D.txt) | |
 | Spooky Spot [Joseph Weisbecker, 1978] | ![100%](https://progress-bar.xyz/100) | 3f15d84e | [Spooky Spot](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Spooky%20Spot%20%5BJoseph%20Weisbecker%2C%201978%5D.txt) | |
 | Squash [David Winter] | ![100%](https://progress-bar.xyz/100) | 801843e0 | N/A | |
-| Submarine [Carmelo Cortez, 1978] | ![80%](https://progress-bar.xyz/80) | cb331b6a | [Submarine](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Submarine%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | Glitches when fire |
+| Submarine [Carmelo Cortez, 1978] | ![100%](https://progress-bar.xyz/100) | cb331b6a | [Submarine](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Submarine%20%5BCarmelo%20Cortez%2C%201978%5D.txt) | Glitches when fire looks bug accordingly the keyboard is handled |
 | Sum Fun [Joyce Weisbecker] | ![100%](https://progress-bar.xyz/100) | 51c9528b | [Sum Fun](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Sum%20Fun%20%5BJoyce%20Weisbecker%5D.txt) | |
 | Syzygy [Roy Trevino, 1990] | ![100%](https://progress-bar.xyz/100) | 67e4bf9c | [Syzygy](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Syzygy%20%5BRoy%20Trevino%2C%201990%5D.txt) | |
 | Tank | ![100%](https://progress-bar.xyz/100) | a929cb73 | [Tank](https://github.com/cassianoperin/Orion-CHIP8-Emulator/blob/main/instructions/chip8/Tank.txt) | |
