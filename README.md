@@ -179,6 +179,8 @@ Test memory leaks on binary:
 
     https://johnearnest.github.io/chip8Archive/
 	https://www.revival-studios.com/other.php
+	https://github.com/mattmikolay/chip-8
+
 
 2. Add result status of known chip-8 test suites and roms
 
@@ -223,13 +225,11 @@ https://github.com/janitor-raus/CubeChip/tree/master/test_roms
 -- https://github.com/gulrak/chiplet
 -  in legacy SCHIP, lores mode is using display wait, while hires is not
 
+8) Disable old C Emulator
 
-8) BLITZ keep trash on screen after reset
+10) Upgrade to SDL3
 
-9) // Fx0A - LD Vx, K (check if I control the release)
-// Wait for a key press, store the value of the key in Vx.
-// All execution stops until a key is pressed, then the value of that key is stored in Vx.
-// V[x] must be updated just AFTER the RELEASE of the key
+11) Update Nuklear
 
 ## GUI
 
@@ -251,10 +251,6 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 
 ### Problems
 
-1) Games not working:
-    * Breakout Camelo Cortez (Apparently this rom has collision detection bugs)
-	* Submarine [Carmelo Cortez, 1978].ch8 is too fast - tem que fixar no 60fps 
+1) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
-2) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
-
-3) display_draw strange in main, review and set @60hz when debug or every cycle
+2) display_draw strange in main, review and set @60hz when debug or every cycle

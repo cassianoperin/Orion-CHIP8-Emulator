@@ -7,20 +7,10 @@
 // 02D8 COSMAC VIP Machine Code Routine used by CLOCK Program
 // No action, just go to next CHIP8 opcode
 void opc_cosmac_vip_hw_2d8(void) {
-	// //LDA 02, I // Load from memory at address I into V[00] to V[02]
-
-	// Will be always 2
-	// unsigned char x;
-	// x = (Opcode & 0x0F00) >> 8;
-
-	// V[0] = (unsigned char)I;
-	// V[1] = (unsigned char)I + 1;
-	// V[2] = (unsigned char)I + 2;
 
 	if ( cpu_debug_mode )
-	// 	sprintf(cpu_debug_message, "CHIP-8 02DB (NON DOCUMENTED): Load from memory at address I(%d) into V[0]= %d, V[1]= %d and V[2]= %d.", I, I , I+1, I+2);
 		sprintf(cpu_debug_message, "CHIP-8 02DB (COSMAC VIP Hardware machine code routine call): No action, go to next instruction");
-
+		
 }
 
 // // 02E4
