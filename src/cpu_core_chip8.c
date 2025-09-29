@@ -547,13 +547,7 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 // Checks the keyboard, and if the key corresponding to the value of Vx is currently in the down position, PC is increased by 2.
 void opc_chip8_EX9E(unsigned char x) {
 
-	// // If Key number is bigger than 16, fix it (Ex.: Breakfree game)
-	// if ( V[x] >= sizeof(Key) ) {
-	// 	V[x] = V[x] - 16;
-	// 	printf("\nPlanned exit to test games that try to use values > 15 for keys in EX9E.\nValue: %d\n\n",x);
-	// 	exit(2);
-	// }
-
+	// Mask Key number to ensure the maximum of 16 keys
 	V[x] = V[x] & 0xF;
 
 	if ( Key[V[x]] == 1 ) {

@@ -84,8 +84,9 @@ void input_keyboard(void) {
 
 				// ---------- Remap Keys ----------- //
 				case SDLK_UP:
-				// if ( input_remap_flag )
-					Key[input_remap_btn_UP] = 1;
+					if ( input_remap_flag )
+						Key[input_remap_btn_UP] = 1;
+
 					break;
 				
 				case SDLK_DOWN:

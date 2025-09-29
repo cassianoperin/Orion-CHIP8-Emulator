@@ -78,7 +78,7 @@ extern void opc_chip8_FX33(unsigned char x);
 extern void opc_chip8_FX55(unsigned char x);
 extern void opc_chip8_FX65(unsigned char x);
 // CHIP-8 Undocumented
-extern void opc_chip8_ND_02D8(void);
+extern void opc_cosmac_vip_hw_2d8(void);
 // SCHIP
 extern void opc_schip_00FF(void);
 extern void opc_schip_DXY0(void);
@@ -139,3 +139,5 @@ void cpu_invalid_opcode(unsigned short opc);
 int cpu_fetch_opcode(int PC_addr, bool PC_increment);   // Fetch the opcode
 void cpu_decode_opcode(int opc);
 void handle_workarounds(char *game_signature);
+
+extern void opc_cosmac_vip_hw_2d8(void);

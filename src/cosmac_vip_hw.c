@@ -6,7 +6,7 @@
 
 // 02D8 COSMAC VIP Machine Code Routine used by CLOCK Program
 // No action, just go to next CHIP8 opcode
-void opc_chip8_ND_02D8(void) {
+void opc_cosmac_vip_hw_2d8(void) {
 	// //LDA 02, I // Load from memory at address I into V[00] to V[02]
 
 	// Will be always 2

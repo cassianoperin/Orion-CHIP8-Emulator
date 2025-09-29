@@ -85,9 +85,6 @@ bool display_draw(void)
 	//Initialization flag
 	bool success = true;
 
-	// Increment total frame counter
-	frame ++;
-
 	// Increment Frame Counter for FPS
 	frame_counter++;
 

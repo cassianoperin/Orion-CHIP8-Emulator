@@ -51,7 +51,6 @@ extern void cpu_reset(void);
 extern void cpu_interpreter(void);
 // Display
 extern void display_updateWindowSize(unsigned int pixel_scale);
-extern bool display_draw(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool            input_remap_flag;

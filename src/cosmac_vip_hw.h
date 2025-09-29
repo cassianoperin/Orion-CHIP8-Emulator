@@ -10,6 +10,6 @@ extern bool            cpu_debug_mode;  	       // Enable debug messages
 extern char            cpu_debug_message[120];     // Debug messages
 
 // -------------------------------------- Functions ------------------------------------- //
-void opc_chip8_ND_02D8(void);
+void opc_cosmac_vip_hw_2d8(void);
 
 

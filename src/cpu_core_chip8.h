@@ -137,5 +137,3 @@ void opc_chip8_FX29(unsigned char x);
 void opc_chip8_FX33(unsigned char x);
 void opc_chip8_FX55(unsigned char x);
 void opc_chip8_FX65(unsigned char x);
-// CHIP-8 Undocumented
-void opc_chip8_ND_02D8(void);

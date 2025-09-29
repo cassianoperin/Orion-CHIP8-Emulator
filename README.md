@@ -212,6 +212,8 @@ so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must
 -- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
 -- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
 
+https://github.com/janitor-raus/CubeChip/tree/master/test_roms
+
 7) Gulrak:
 - Assembly: 
 -- https://johnearnest.github.io/Octo/docs/Manual.html
