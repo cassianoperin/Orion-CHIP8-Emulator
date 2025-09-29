@@ -227,9 +227,8 @@ https://github.com/janitor-raus/CubeChip/tree/master/test_roms
 
 8) Disable old C Emulator
 
-10) Upgrade to SDL3
+9) Upgrade to SDL3
 
-11) Update Nuklear
 
 ## GUI
 
