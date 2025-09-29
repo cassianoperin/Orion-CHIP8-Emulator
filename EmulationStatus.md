@@ -4,13 +4,14 @@
 | Name | Status | CRC32 | Instructions | Issues
 | :------------ |:----------------:| :-----| :-----| :-----|
 | [Timendus 4.2: CHIP-8 splash screen](https://github.com/Timendus/chip8-test-suite/raw/main/bin/1-chip8-logo.ch8) | ![100%](https://progress-bar.xyz/100) | 7718a5eb | [1-chip8-logo](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#chip-8-splash-screen) | |
-| Timendus 4.2: IBM logo | ![100%](https://progress-bar.xyz/100) | 42adaf83 | [2-ibm-logo.ch8](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#ibm-logo) | |
-| Timendus 4.2: Corax+ opcode test | ![100%](https://progress-bar.xyz/100) | 561bf2f2 | [3-corax+](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#corax-opcode-test) | |
-| Timendus 4.2: Flags test | ![100%](https://progress-bar.xyz/100) | 3e251b98 | [4-flags](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#flags-test) | |
-| Timendus 4.2: Quirks test | ![100%](https://progress-bar.xyz/100) | ae214ed4 | [5-quirks](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#quirks-test) | |
-| Timendus 4.2: Keypad test | ![100%](https://progress-bar.xyz/100) | 809db88f | [6-keypad](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#keypad-test) | |
-| Timendus 4.2: Beep test | ![100%](https://progress-bar.xyz/100) | 473bdef6 | [7-beep](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#keypad-test) | |
-| [janitor-raus: oob_test_7](https://github.com/janitor-raus/CubeChip/blob/master/test_roms/oob_test_7.ch8) | ![100%](https://progress-bar.xyz/100) | ec0d7595 | [oob_test_7.ch8](https://github.com/janitor-raus/CubeChip/blob/master/test_roms/oob_test_7.txt) | |
+| [Timendus 4.2: IBM logo](https://github.com/Timendus/chip8-test-suite/raw/main/bin/2-ibm-logo.ch8) | ![100%](https://progress-bar.xyz/100) | 42adaf83 | [2-ibm-logo](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#ibm-logo) | |
+| [Timendus 4.2: Corax+ opcode test](https://github.com/Timendus/chip8-test-suite/raw/main/bin/3-corax+.ch8) | ![100%](https://progress-bar.xyz/100) | 561bf2f2 | [3-corax+](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#corax-opcode-test) | |
+| [Timendus 4.2: Flags test](https://github.com/Timendus/chip8-test-suite/raw/main/bin/4-flags.ch8) | ![100%](https://progress-bar.xyz/100) | 3e251b98 | [4-flags](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#flags-test) | |
+| [Timendus 4.2: Quirks test](https://github.com/Timendus/chip8-test-suite/raw/main/bin/5-quirks.ch8) | ![100%](https://progress-bar.xyz/100) | ae214ed4 | [5-quirks](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#quirks-test) | |
+| [Timendus 4.2: Keypad test](https://github.com/Timendus/chip8-test-suite/raw/main/bin/6-keypad.ch8) | ![100%](https://progress-bar.xyz/100) | 809db88f | [6-keypad](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#keypad-test) | |
+| [Timendus 4.2: Beep test](https://github.com/Timendus/chip8-test-suite/raw/main/bin/7-beep.ch8) | ![100%](https://progress-bar.xyz/100) | 473bdef6 | [7-beep](https://github.com/Timendus/chip8-test-suite?tab=readme-ov-file#keypad-test) | |
+| [janitor-raus: oob_test_7](https://github.com/janitor-raus/CubeChip/blob/master/test_roms/oob_test_7.ch8) | ![100%](https://progress-bar.xyz/100) | ec0d7595 | [oob_test_7](https://github.com/janitor-raus/CubeChip/blob/master/test_roms/oob_test_7.txt) | |
+| [Skosulor: c8_test.c8](https://github.com/Skosulor/c8int/blob/master/test/c8_test.c8) | ![100%](https://progress-bar.xyz/100) | 0d1a8dd2 | [c8_test]https://github.com/Skosulor/c8int/blob/master/test/chip8_test.txt) | |
 
 
 
