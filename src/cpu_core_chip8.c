@@ -478,15 +478,13 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 			// Translate the x and Y to the Graphics Vector
 			gpx_position = (row * display_EMULATOR_RES_X) + column; 
 
-			// If bit=1, test current graphics[index], if is already set, mark v[F]=1 (collision)
-			if ( bit_value  == 1 ) {
+			if (bit_value == 1) {
 				// Set colision case graphics[index] is already 1
-				if ( display_pixels[gpx_position] == display_pixel_ON_color ) {
+				if (display_pixels[gpx_position] == display_pixel_ON_color) {
 					V[0xF] = 1;
-					display_pixels[gpx_position] = display_pixel_OFF_color; 
-				} else {
-          			display_pixels[gpx_position] = display_pixel_ON_color;
 				}
+				// XOR to toggle between the two colors (ON/OFF)
+				display_pixels[gpx_position] ^= display_pixel_ON_color;
 			}
 
 			// Shift left to get the next bit on the MSB (Most Significant Bit) positon

@@ -182,8 +182,6 @@ Test memory leaks on binary:
 	https://github.com/mattmikolay/chip-8
 
 
-2. Add result status of known chip-8 test suites and roms
-
 ### Improvements
 
 ## Emulation
@@ -192,13 +190,11 @@ Test memory leaks on binary:
 
 2) Reduce the number of global variables and code cleaning
 
-3) Improve DXYN function (replace the last part by a XOR)
-
-4) Change graphics array to dynamic
+3) Change graphics array to dynamic
 	destroy and recreate window after?
 	https://stackoverflow.com/questions/3827892/how-can-i-change-the-size-of-an-array-in-c
 
-5) If a rom enter in invalid opcode, enable debug hang the emulator
+4) If a rom enter in invalid opcode, enable debug hang the emulator
 
 6) Raus recommendations:
 
