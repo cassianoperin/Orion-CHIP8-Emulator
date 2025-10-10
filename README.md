@@ -199,10 +199,6 @@ Test memory leaks on binary:
 6) Raus recommendations:
 
 6.1. Replace signature by SHA1
-6.2. your 8xy4 is weirdly complex, just calc sum as short or larger, then store the lower 8 bits in v[x] and shift down the 9th bit into vf
-so it is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
-(unless you only set vf to the amount of collisions at the very end by using another var to hold collision status in the meantime)
---- that commented alternate version's good, if only some work is done to tackle clipping vs wrapping which is basically non-existent right now
 
 6.5 SCHIP -
 -  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"

@@ -229,21 +229,13 @@ void opc_chip8_8XY3(unsigned char x, unsigned char y) {
 // *** Flag needs to be set AFTER the ADD
 void opc_chip8_8XY4(unsigned char x, unsigned char y) {
 
-	// Test the new value and set the flag
-	unsigned char sum = V[x] + V[y];	// Need in case of overflows (keep number between 0-255)
-	unsigned char Vx_original = V[x];	// Necessary once the flag will be set AFTER the ADD
-
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "CHIP-8 8xy4: Set V[x(%d)] = V[x(%d)]: 0x%02X + V[y(%d)]: 0x%02X", x, x, V[x], y, V[y]);
 
-	// Old implementation, sum values, READ THE DOCS IN CASE OF PROBLEMS
-	V[x] += V[y];
+	unsigned short sum = V[x] + V[y];
 
-	if ( sum < Vx_original) {
-		V[0xF] = 1;
-	} else {
-		V[0xF] = 0;
-	}
+	V[x]= sum & 0xFF;			     // Get the last 8 bits only
+	V[0xF] = (sum & 0x100) >> 8;	 // Get the 9th bit
 }
 
 // 8xy5 - SUB Vx, Vy

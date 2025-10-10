@@ -99,7 +99,6 @@ extern void input_keyboard(void);
 // Lib
 extern void print_bin(unsigned char value);
 
-
 // -------------------------------------- Functions ------------------------------------- //
 // CHIP-8
 // void opc_chip8_0NNN();
