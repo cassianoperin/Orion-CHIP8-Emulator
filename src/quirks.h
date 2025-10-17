@@ -33,6 +33,6 @@ bool quirk_LoRes_Wide_Sprite_Dxy0;		// DXY0_loresWideSpriteQuirks - Draws a 16x1
 
 
 // -------------------------------------- Functions ------------------------------------- //
-void handle_quirks(char *game_signature);
+void handle_quirks(char *rom_sha1);
 
 

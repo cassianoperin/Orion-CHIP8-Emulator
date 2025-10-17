@@ -36,7 +36,6 @@ extern const int font_logo[165];
 // --------------------------------- External Functions --------------------------------- //
 
 // ---------------------------------- Global Variables ---------------------------------- //
-char *game_signature;           // Game signature to apply quirks
 extern bool rom_format_hex;
 
 // -------------------------------------- Functions ------------------------------------- //
@@ -52,9 +51,6 @@ bool ticker_cpu(long lastTime, long currentTime);
 
 // Load rom into memory
 void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
-
-// Get Game Signature
-char *get_game_signature(char *filename);
 
 // Time measurement
 long getMicrotime(void);

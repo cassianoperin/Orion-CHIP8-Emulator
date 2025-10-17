@@ -23,8 +23,6 @@ extern bool quirk_Jump_with_offset_Bnnn;
 extern bool quirk_LoRes_Wide_Sprite_Dxy0;
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_display_wait;
-// Main
-extern char *game_signature;
 extern char *filename;
 // GUI
 extern bool gui_menu_quirks_inactive;
@@ -34,12 +32,11 @@ extern char guiDebug_opc_description_msg[50];
 
 // --------------------------------- External Functions --------------------------------- //
 // Lib
-extern void handle_quirks(char *game_signature);
+extern void handle_quirks(char *rom_sha1);
 extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
-extern char *get_game_signature(char *filename);
 extern RomInfo file_size_and_hash(char *filename);
 // Input
-extern void input_keyboard_remaps(void);
+extern void input_keyboard_remaps(char *rom_sha1);
 // CHIP-8
 // void opc_chip8_0NNN(); // Not needed by any game, just for documentation
 extern void opc_chip8_00E0(void);
@@ -137,6 +134,6 @@ void cpu_reset(void);
 void cpu_invalid_opcode(unsigned short opc);
 int cpu_fetch_opcode(int PC_addr, bool PC_increment);   // Fetch the opcode
 void cpu_decode_opcode(int opc);
-void handle_workarounds(char *game_signature);
+void handle_workarounds(char *rom_sha1);
 
 extern void opc_cosmac_vip_hw_2d8(void);

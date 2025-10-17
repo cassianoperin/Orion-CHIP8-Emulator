@@ -25,27 +25,21 @@ void cpu_reset(void) {
 	} else {
 		// Load ROM into Memory
 		load_rom(filename, Memory, sizeof(Memory));
-
-		// Get Game signature for Qwirks and Exceptions
-		game_signature = get_game_signature(filename);
-		printf("Rom size:\t%d bytes\nSignature:\t%s\n", rom.file_len, game_signature );
 		
 		// Print SHA1 Hash
 		printf("SHA1:\t\t%s\n", rom.hash_str);
 
 		// Check for Quirks
-		// handle_quirks(game_signature);
 		handle_quirks(rom.hash_str);
 
 		// Check for workarounds and exceptions
-		// handle_workarounds(game_signature);
 		handle_workarounds(rom.hash_str);
 
 		// Load Fonts
 		cpu_load_fonts();
 
 		// Keyboard remaps
-		input_keyboard_remaps();
+		input_keyboard_remaps(rom.hash_str);
 
 		// Update StatusBar message
 		strcpy(gui_statusbar_msg, "ROM loaded");

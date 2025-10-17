@@ -485,13 +485,13 @@ void input_keyboard(void) {
 
 
 // Emulator key remaps
-void input_keyboard_remaps(void) {
+void input_keyboard_remaps(char *rom_sha1) {
 	input_remap_flag = false;
 
 	// ---------------------- CHIP8 ---------------------- //
 
 	// Game "Blinky [Hans Christian Egeberg, 1991].ch8"
-	if ( !strcmp(game_signature, "121A322E303020432E20+203129") ) {
+	if ( !strcmp(rom_sha1, "d40abc54374e4343639f993e897e00904ddf85d9") ) {
 		input_remap_flag = true;
 		input_remap_btn_UP		= 0x3;
 		input_remap_btn_DOWN	= 0x6;
@@ -501,7 +501,7 @@ void input_keyboard_remaps(void) {
 	}
 
 	// Game "Blinky [Hans Christian Egeberg] (alt).ch8"
-	if ( !strcmp(game_signature, "00E0121A4368722E2045+174546") ) {
+	if ( !strcmp(rom_sha1, "f4169141735d8d60e51409ca7e73f4adedcefef2") ) {
 		input_remap_flag = true;
 		input_remap_btn_UP		= 0x2;
 		input_remap_btn_DOWN	= 0x8;
@@ -511,7 +511,7 @@ void input_keyboard_remaps(void) {
 	}
 
 	// CHIP-8 Game "Syzygy [Roy Trevino, 1990].ch8"
-	if ( !strcmp(game_signature, "12128D8D20A931393930+88372") ) {
+	if ( !strcmp(rom_sha1, "1bdb4ddaa7049266fa3226851f28855a365cfd12") ) {
 		input_remap_flag = true;
 		input_remap_btn_UP		= 0x3;
 		input_remap_btn_DOWN	= 0x6;
@@ -521,7 +521,7 @@ void input_keyboard_remaps(void) {
 	}
 	
 	// CHIP-8 Game "Tank.ch8"
-	if ( !strcmp(game_signature, "123076FB602080654F00+47957") ) {
+	if ( !strcmp(rom_sha1, "18b9d15f4c159e1f0ed58c2d8ec1d89325d3a3b6") ) {
 		input_remap_flag = true;
 		input_remap_btn_UP		= 0x8;
 		input_remap_btn_DOWN	= 0x2;
@@ -532,7 +532,7 @@ void input_keyboard_remaps(void) {
 	}
 
 	// CHIP-8 Game "Pong (1 player).ch8"
-	if ( !strcmp(game_signature, "6A026B0C6C3F6D0CA2EA+25041") ) {
+	if ( !strcmp(rom_sha1, "607c4f7f4e4dce9f99d96b3182bfe7e88bb090ee") ) {
 		input_remap_flag = true;
 		input_remap_btn_UP		= 0x1;
 		input_remap_btn_DOWN	= 0x4;

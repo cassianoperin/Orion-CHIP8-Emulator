@@ -15,8 +15,6 @@
 #include "nuklear_sdl_renderer.h"
 
 // --------------------------------- External Variables --------------------------------- //
-// Lib
-extern char *game_signature;
 // CPU
 extern unsigned char	        Memory[4096];
 extern bool                     cpu_draw_flag;

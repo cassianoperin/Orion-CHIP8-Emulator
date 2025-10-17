@@ -31,9 +31,6 @@ extern unsigned int display_WINDOW_WIDTH_X_tmp;
 extern unsigned int display_WINDOW_HEIGHT_Y_tmp;
 extern unsigned int display_EMULATOR_RES_SCALE_tmp; 
 
-// extern unsigned int frame;
-// Lib
-extern char *game_signature;
 // CPU
 extern unsigned char   Key[];
 extern bool cpu_pause;
@@ -62,4 +59,4 @@ unsigned char   input_remap_btn_SPACE;
 
 // -------------------------------------- Functions ------------------------------------- //
 void input_keyboard(void);
-void input_keyboard_remaps(void);
+void input_keyboard_remaps(char *rom_sha1);

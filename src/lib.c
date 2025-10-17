@@ -166,28 +166,6 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 }
 
 
-// Get Game Signature
-char *get_game_signature(char *filename) {
-
-	// Get the first 12 elements of memory
-	char *signature = (char *)malloc(26);
-	sprintf(signature, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X", Memory[0x200], Memory[0x201], Memory[0x202],\
-		 Memory[0x203], Memory[0x204], Memory[0x205], Memory[0x206], Memory[0x207], Memory[0x208], Memory[0x209]);
-
-	// Sum all memory bytes
-	unsigned int sum = 0;
-	char sum_string[10] = "";
-	for ( int i = 0x200 ; i < sizeof(Memory) ; i++ ) {
-		sum += Memory[i];
-	}
-	sprintf(sum_string, "%d", sum);
-
-	// Unify the 12 first bytes and the sum into the final signature
-	sprintf(signature + strlen(signature), "+%s", sum_string);
-
-	return signature;
-}
-
 // Get the file size and generate the SHA1 hash
 RomInfo file_size_and_hash(char *filename){
 
