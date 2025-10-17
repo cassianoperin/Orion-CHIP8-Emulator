@@ -187,6 +187,7 @@ Test memory leaks on binary:
 ## Emulation
 
 1. Add SCHIP and other extensions
+	https://github.com/janitor-raus/CubeChip/tree/master/test_roms
 
 2) Reduce the number of global variables and code cleaning
 
@@ -194,11 +195,8 @@ Test memory leaks on binary:
 	destroy and recreate window after?
 	https://stackoverflow.com/questions/3827892/how-can-i-change-the-size-of-an-array-in-c
 
-4) If a rom enter in invalid opcode, enable debug hang the emulator
-
 6) Raus recommendations:
-
-6.1. Replace signature by SHA1
+6.1. Replace signature by SHA1: DONE, NEED TO DISABLE OLD SIGNATURE YET
 
 6.5 SCHIP -
 -  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"
@@ -206,7 +204,6 @@ Test memory leaks on binary:
 -- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
 -- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
 
-https://github.com/janitor-raus/CubeChip/tree/master/test_roms
 
 7) Gulrak:
 - Assembly: 

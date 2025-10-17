@@ -7,7 +7,7 @@ OBJ_NAME = orion
 # COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
 COMPILER_FLAGS = -std=c11 -Wall -O0 -g
 # COMPILER_FLAGS = -std=c11 -Wall -O0 -g -Os -s -fno-ident -fno-asynchronous-unwind-tables # Smaller binary
-LINKER_FLAGS = -lsdl2
+LINKER_FLAGS = -lsdl2 -lcrypto
 
 ifndef ARCH
 $(error ARCH is not defined. Run with `make ARCH=mac`, win or linux)

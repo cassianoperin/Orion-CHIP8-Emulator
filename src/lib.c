@@ -6,6 +6,8 @@
 #include "lib.h"
 //Native File Dialog Extended 
 #include <nfd.h>
+// SHA1
+#include <openssl/evp.h>
 
 // Ticker - Use with actions that should be executed each second = 1hz
 bool ticker_second(long lastTime, long currentTime)
@@ -64,6 +66,7 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 			exit(1);
 		}
 		fread(&mem[PC], 1, mem_size - PC, rom);
+		
 		fclose(rom);
 
 		// Tell CPU to start running the interpreter
@@ -185,22 +188,78 @@ char *get_game_signature(char *filename) {
 	return signature;
 }
 
-int fsize(char *filename){
+// Get the file size and generate the SHA1 hash
+RomInfo file_size_and_hash(char *filename){
 
-	FILE *fp = fopen(filename, "rb");
-	if (!fp) {
+	FILE *file = fopen(filename, "rb");
+	if (!file) {
 		fprintf(stderr, "Unable to open file '%s'!\n", filename);
 		exit(1);
 	}
 
-    int prev=ftell(fp);
-    fseek(fp, 0L, SEEK_END);
-    int sz=ftell(fp);
-    fseek(fp,prev,SEEK_SET); //go back to where we were
+	// Get the file size without change the reader pointer
+    int prev=ftell(file);
+    fseek(file, 0L, SEEK_END);
+    int file_size=ftell(file);
+    fseek(file,prev,SEEK_SET); //go back to where we were
 
-	fclose(fp);
+	// Start of SHA1 Hash generation //
+	EVP_MD_CTX *mdctx;
+    unsigned char buffer[1024];
+    unsigned char hash[EVP_MAX_MD_SIZE];
+    unsigned int hash_len;
 
-    return sz;
+    // Create the context to generate the hash
+    mdctx = EVP_MD_CTX_new();
+    if (mdctx == NULL) {
+        perror("Error creating SHA1 hash context!\n");
+        fclose(file);
+		exit(1);
+    }
+
+    // Initialize the context to generate SHA1 hash
+    EVP_DigestInit_ex(mdctx, EVP_sha1(), NULL);
+
+    // Read the file in blocks and update the hash
+    size_t bytesRead;
+    while ((bytesRead = fread(buffer, 1, sizeof(buffer), file)) > 0) {
+        EVP_DigestUpdate(mdctx, buffer, bytesRead);
+    }
+
+    // End the hash calculation
+    EVP_DigestFinal_ex(mdctx, hash, &hash_len);
+
+    // Free the context
+    EVP_MD_CTX_free(mdctx);
+
+	// End of SHA1 Hash generation //
+
+	// Close File
+	fclose(file);
+
+	// Memory allocation to keep hash string
+    // char *hash_str = malloc(hash_len * 2 + 1);
+    char *hash_str = malloc(hash_len * 2 + 1);
+    if (hash_str == NULL) {
+        perror("Failed to allocate memory to keep sha1 hash!");
+        exit(1);
+    }
+
+    // Convert hash bytes to hexadecimal string 
+    for (unsigned int i = 0; i < hash_len; i++)
+        sprintf(&hash_str[i * 2], "%02x", hash[i]);
+
+	// End the string
+    hash_str[hash_len * 2] = '\0';
+
+	// Initialize struct with defaults
+	RomInfo result = {NULL, 0}; 
+
+	// Fill the struct
+    result.hash_str = hash_str;   // Hash
+    result.file_len = file_size;  // File Size
+
+    return result;
 }
 
 int lib_gui_loadrom(void) {
@@ -260,90 +319,6 @@ void showLogo(void) {
 	}
 
 }
-
-
-
-// // Show Emulator Cycles Per Second
-// void showCPS(long long unsigned int number) 
-// {
-// 	// Variables
-//     char nstring[50];
-// 	int str_size, ptr, i , j = 0;
-
-// 	// Convert the integer into a string
-//     sprintf(nstring, "%llu", number);
-// 	// Size of string
-// 	str_size = strlen(nstring);
-
-// 	// Label
-// 	strcpy(string_msg1, "Emulator Cycles per second: ");
-
-// 	// Work with First 3 digits
-// 	ptr = str_size % 3;
-// 	if (ptr) {
-// 		 // Print first digits before point
-// 		for ( i = 0 ; i < ptr ; i++ ) {      
-// 			// printf("%c", nstring[i]); 
-// 			strncat(string_msg1, &nstring[i], 1);
-// 		}
-
-// 		// Just print the point if number is bigguer than 3
-// 		if ( str_size > 3) {
-// 			// printf(".");
-// 			strcat(string_msg1, ".");
-// 		}
-// 	}
-//
-// 	for ( i = ptr ; i < str_size ; i++ ) {      // print the rest inserting points
-// 		// printf("%c", nstring[i]);
-// 		strncat(string_msg1, &nstring[i], 1);
-// 		j++;
-// 		if ( j % 3 == 0 ) {
-// 			if( i < (str_size-1) ) {
-// 				strcat(string_msg1, ".");
-// 				// printf(".");
-// 			} 
-// 		}
-// 	}
-
-// 	// printf("\n");
-// }
-
-// // Show Frames Per Second
-// void showFPS(int number) 
-// {
-// 	int length = snprintf( NULL, 0, "%d", number );
-
-// 	char temp[20];
-// 	char fps_count[10];
-// 	char fps_text[6] = "FPS: ";
-// 	snprintf( fps_count, length + 1, "%d", number );
-
-// 	memcpy(temp,fps_count,sizeof(fps_count));
-// 	memcpy(fps_count,fps_text,strlen(fps_text));
-// 	memcpy(fps_count+strlen(fps_text),temp,strlen(temp)+1);
-
-// 	// strcpy(string_msg3, fps_count);
-// }
-
-// // Show CPU Cycles Per Second (Clock)
-// void showCPU_CPS(int number) 
-// {
-// 	int length = snprintf( NULL, 0, "%d", number );
-
-// 	char temp[30];
-// 	char cps_count[30];
-// 	char cps_text[30] = "CPU Clock: ";
-// 	snprintf( cps_count, length + 1, "%d", number );
-
-// 	memcpy(temp,cps_count,sizeof(cps_count));
-// 	memcpy(cps_count,cps_text,strlen(cps_text));
-// 	memcpy(cps_count+strlen(cps_text),temp,strlen(temp)+1);
-
-// 	strcat(cps_count, " Hz");
-
-// 	// strcpy(string_msg2, cps_count);
-// }
 
 // Time measurement in Microseconds (1 Sec = 1.000.000 Microsecs.)
 long getMicrotime(void){

@@ -9,11 +9,13 @@ void cpu_reset(void) {
 	// Initialize
 	cpu_initialize();
 
+	RomInfo rom;
+
 	// Keep the rom size
-	romsize = fsize(filename);
+	rom = file_size_and_hash(filename);
 
 	// If a rom is bigger than chip8 memory (invalid game or program)
-	if ( romsize > (4096-512) ) {
+	if ( rom.file_len > (4096-512) ) {
 		cpu_initialize();
 
 		// Print a message
@@ -26,10 +28,14 @@ void cpu_reset(void) {
 
 		// Get Game signature for Qwirks and Exceptions
 		game_signature = get_game_signature(filename);
-		printf("Rom size:\t%d bytes\nSignature:\t%s\n", romsize, game_signature );
+		printf("Rom size:\t%d bytes\nSignature:\t%s\n", rom.file_len, game_signature );
 		
+		// Print SHA1 Hash
+		printf("SHA1:\t\t\"%s\"\n", rom.hash_str);
+
 		// Check for Quirks
 		handle_quirks(game_signature);
+		// handle_quirks(rom.hash_str);
 
 		// Check for workarounds and exceptions
 		handle_workarounds(game_signature);
@@ -54,6 +60,9 @@ void cpu_reset(void) {
 
 	// Clean counters
 	cycle_cpu = 0;
+
+	// Release memory used by hash string after use
+	free(rom.hash_str);
 }
 
 void cpu_initialize(void) {
@@ -114,9 +123,6 @@ void cpu_initialize(void) {
 
 	// Debug messages
 	strcpy(guiDebug_opc_description_msg, "");
-
-	// Rom size
-	romsize = 0;
 
 	// Reset ROM loaded status
 	cpu_rom_loaded = false;

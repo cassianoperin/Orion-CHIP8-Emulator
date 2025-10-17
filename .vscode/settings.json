@@ -65,7 +65,8 @@
         "gui_emu.h": "c",
         "gui_debug_mem.h": "c",
         "gui_sprite.h": "c",
-        "cosmac_vip_hw.h": "c"
+        "cosmac_vip_hw.h": "c",
+        "print": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "C_Cpp.errorSquiggles": "disabled"

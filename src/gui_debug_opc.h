@@ -19,8 +19,6 @@ extern bool cpu_debug_mode;
 extern bool cpu_rom_loaded; 
 // Display
 extern char gui_statusbar_msg[120];
-// Main
-extern int romsize;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 char guiDebug_opc_addr_msg[6];

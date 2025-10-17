@@ -26,7 +26,6 @@ extern bool quirk_display_wait;
 // Main
 extern char *game_signature;
 extern char *filename;
-extern int romsize;
 // GUI
 extern bool gui_menu_quirks_inactive;
 extern char gui_statusbar_msg[120];
@@ -38,7 +37,7 @@ extern char guiDebug_opc_description_msg[50];
 extern void handle_quirks(char *game_signature);
 extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
 extern char *get_game_signature(char *filename);
-extern int fsize(char *filename);
+extern RomInfo file_size_and_hash(char *filename);
 // Input
 extern void input_keyboard_remaps(void);
 // CHIP-8

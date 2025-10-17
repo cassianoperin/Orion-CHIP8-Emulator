@@ -1,4 +1,5 @@
 #pragma once
+#include "typedef.h"
 #include <SDL2/SDL.h>
 
 // Boolean Type for Vanilla C
@@ -70,5 +71,5 @@ int lib_gui_loadrom(void);
 // Show Logo
 void showLogo(void);
 
-// File/ROM size
-int fsize(char *filename);
+// File(ROM) size and SHA1 hash generation
+RomInfo file_size_and_hash(char *filename);
