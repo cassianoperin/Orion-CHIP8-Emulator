@@ -196,7 +196,7 @@ Test memory leaks on binary:
 	https://stackoverflow.com/questions/3827892/how-can-i-change-the-size-of-an-array-in-c
 
 6) Raus recommendations:
-6.1. Replace signature by SHA1: DONE, NEED TO DISABLE OLD SIGNATURE YET
+6.1. Replace signature by SHA1: DONE, NEED TO DISABLE OLD SIGNATURE YET (game_signature and function get_game_signature)
 
 6.5 SCHIP -
 -  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"

@@ -5,8 +5,8 @@ BUILD_DIR = build
 OBJ_NAME = orion
 # LIBRARY_PATHS = -Llib
 # COMPILER_FLAGS = -std=c11 -Wall -O0 -g -pedantic
-COMPILER_FLAGS = -std=c11 -Wall -O0 -g
-# COMPILER_FLAGS = -std=c11 -Wall -O0 -g -Os -s -fno-ident -fno-asynchronous-unwind-tables # Smaller binary
+# COMPILER_FLAGS = -std=c11 -Wall -O0 -g
+COMPILER_FLAGS = -std=c11 -Wall -O0 -g -Os -s -fno-ident -fno-asynchronous-unwind-tables # Smaller binary
 LINKER_FLAGS = -lsdl2 -lcrypto
 
 ifndef ARCH
