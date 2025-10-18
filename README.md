@@ -189,27 +189,28 @@ Test memory leaks on binary:
 1. Add SCHIP and other extensions
 	https://github.com/janitor-raus/CubeChip/tree/master/test_roms
 
+	1.1. SCHIP Raus recommendations:
+-  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"
+- which is basically a step down from the functionality of xochip with a lot less rules to how it works
+-- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
+-- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
+   1.2. Gulrak SCHIP recommendations:
+-  in legacy SCHIP, lores mode is using display wait, while hires is not
+
+
 2) Reduce the number of global variables and code cleaning
 
 3) Change graphics array to dynamic
 	destroy and recreate window after?
 	https://stackoverflow.com/questions/3827892/how-can-i-change-the-size-of-an-array-in-c
 
-6.5 SCHIP -
--  with the exception of 2 or 3 known games that need that original behavior to look right (but not necessary to work right), everything else works fine following the behavior of "modern superchip"
-- which is basically a step down from the functionality of xochip with a lot less rules to how it works
--- legacy superchip: always 128x64 resolution, lores coords/draws are doubled (thus why scrolls are half as effective too), dxy0 draws 8x16 sprites, vf will either be 0 or 1. In hires, collisions count per-row (so vf can be > 1), and dxy0 draws 16x16 sprites.
--- modern superchip: resolution is either 64x32 or 128x64 depending on lores/hires respectively. vf collision is only ever 0 or 1. both modes in dxy0 draw 16x16.
-
-
-7) Gulrak:
+4) Gulrak:
 - Assembly: 
 -- https://johnearnest.github.io/Octo/docs/Manual.html
 -- https://chip8.gulrak.net/
 -- https://groups.google.com/g/comp.sys.hp48/c/e7In51mOgHY
 -- https://github.com/rkdud007/solchip8 ???
 -- https://github.com/gulrak/chiplet
--  in legacy SCHIP, lores mode is using display wait, while hires is not
 
 8) Disable old C Emulator
 

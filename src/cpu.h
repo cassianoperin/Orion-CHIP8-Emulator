@@ -137,3 +137,6 @@ void cpu_decode_opcode(int opc);
 void handle_workarounds(char *rom_sha1);
 
 extern void opc_cosmac_vip_hw_2d8(void);
+
+// Lib Json
+extern int json_search_id(const char *hash);

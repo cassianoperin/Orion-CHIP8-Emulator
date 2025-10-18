@@ -35,6 +35,21 @@ void cpu_reset(void) {
 		// Check for workarounds and exceptions
 		handle_workarounds(rom.hash_str);
 
+
+
+		// -------- JSON DATABASE LOOKUP START -------- //
+
+		// Get the ID
+		int json_rom_id = json_search_id(rom.hash_str);
+
+		if (json_rom_id >= 0) {
+			printf("JSON Database:\tID %d\n", json_rom_id);
+		} else {
+			printf("JSON Database:\tHash not found in database: %s\n", rom.hash_str);
+		}
+
+		// --------- JSON DATABASE LOOKUP END --------- //
+
 		// Load Fonts
 		cpu_load_fonts();
 

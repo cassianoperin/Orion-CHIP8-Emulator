@@ -161,7 +161,7 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 		free(hexBufferValid);
 	}
 
-	printf("Loaded game: %s\n", filename);
+	printf("Loaded game:\t%s\n", filename);
 
 }
 

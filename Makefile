@@ -17,6 +17,7 @@ ifeq ($(ARCH),mac)
 	INCLUDE_PATHS = -Ilib/nuklear -Ilib/nfd-extended
 	LINKER_FLAGS += -framework AppKit -framework UniformTypeIdentifiers
 	SRC_FILES += lib/nfd-extended/libnfd.a
+	SRC_FILES += lib/nxjson/nxjson.c
 endif
 
 ifeq ($(ARCH),win)
