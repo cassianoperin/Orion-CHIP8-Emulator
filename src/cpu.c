@@ -39,14 +39,31 @@ void cpu_reset(void) {
 
 		// -------- JSON DATABASE LOOKUP START -------- //
 
-		// Get the ID
-		int json_rom_id = json_search_id(rom.hash_str);
+		// // Get the ID
+		// int json_rom_id = json_search_id(rom.hash_str);
 
-		if (json_rom_id >= 0) {
-			printf("JSON Database:\tID %d\n", json_rom_id);
-		} else {
-			printf("JSON Database:\tHash not found in database: %s\n", rom.hash_str);
+		// if (json_rom_id >= 0) {
+		// 	printf("JSON Database:\tID %d\n", json_rom_id);
+		// } else {
+		// 	printf("JSON Database:\tHash not found in database: %s\n", rom.hash_str);
+		// }
+
+		// printf("DEBUG hash_str = '%s'\n", rom.hash_str);
+
+		// Senf the hash and receive program information
+		RomResult rom_info;
+		int ret = find_rom_by_hash(rom.hash_str, &rom_info);
+		if(ret != FIND_ROM_OK){
+			fprintf(stderr, "Error: %s\n",
+					find_rom_strerror(ret));
+			return;
 		}
+
+		print_rom_result(&rom_info);
+
+		printf("\n\n\n\nCHOOOOSEN PLAT: %s\n\n\n\n", rom_info.chosen_platform);
+
+
 
 		// --------- JSON DATABASE LOOKUP END --------- //
 
