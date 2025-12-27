@@ -57,7 +57,7 @@ void cpu_reset(void) {
 			return;
 		}
 		print_rom_result(&rom_info);
-		printf("\n\n\n\Chosen Platform: %s\n\n\n\n", rom_info.chosen_platform);
+		printf("\n\n\n\nChosen Platform: %s\n\n\n\n", rom_info.chosen_platform);
 
 		// Send the platform and receive the platform info
 		PlatformInfo platform;

@@ -106,20 +106,20 @@ typedef struct {
  * ========================================================= */
 typedef struct {
     PlatformQuirk shift;
-    PlatformQuirk loadStore;
     PlatformQuirk memoryIncrementByX;
     PlatformQuirk memoryLeaveIUnchanged;
     PlatformQuirk wrap;
     PlatformQuirk jump;
     PlatformQuirk vblank;
     PlatformQuirk logic;
-    PlatformQuirk clip;
-    PlatformQuirk scroll;
-    PlatformQuirk hiresCollision;
-    PlatformQuirk spriteWidth8;
-    PlatformQuirk waitVBlank;
-    PlatformQuirk planeMask;
-    PlatformQuirk audioPattern;
+    // PlatformQuirk clip;
+    // PlatformQuirk scroll;
+    // PlatformQuirk hiresCollision;
+    // PlatformQuirk spriteWidth8;
+    // PlatformQuirk waitVBlank;
+    // PlatformQuirk planeMask;
+    // PlatformQuirk audioPattern;
+    // PlatformQuirk loadStore;
 } PlatformQuirks;
 
 /* =========================================================

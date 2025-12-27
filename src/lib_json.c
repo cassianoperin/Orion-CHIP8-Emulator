@@ -521,20 +521,20 @@ int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
                   else { out->quirks.name.present = false; out->quirks.name.value = false; } }
 
             LOAD_QUIRK(shift)
-            LOAD_QUIRK(loadStore)
             LOAD_QUIRK(memoryIncrementByX)
             LOAD_QUIRK(memoryLeaveIUnchanged)
             LOAD_QUIRK(wrap)
             LOAD_QUIRK(jump)
             LOAD_QUIRK(vblank)
             LOAD_QUIRK(logic)
-            LOAD_QUIRK(clip)
-            LOAD_QUIRK(scroll)
-            LOAD_QUIRK(hiresCollision)
-            LOAD_QUIRK(spriteWidth8)
-            LOAD_QUIRK(waitVBlank)
-            LOAD_QUIRK(planeMask)
-            LOAD_QUIRK(audioPattern)
+            // LOAD_QUIRK(clip)
+            // LOAD_QUIRK(scroll)
+            // LOAD_QUIRK(hiresCollision)
+            // LOAD_QUIRK(spriteWidth8)
+            // LOAD_QUIRK(waitVBlank)
+            // LOAD_QUIRK(planeMask)
+            // LOAD_QUIRK(audioPattern)
+            // LOAD_QUIRK(loadStore)
         }
 
         nx_json_free(root);
@@ -570,20 +570,20 @@ void print_platform_info(const PlatformInfo *p) {
         //     printf("  %s:\n", #name);
 
     PRINT_QUIRK(shift)
-    PRINT_QUIRK(loadStore)
     PRINT_QUIRK(memoryIncrementByX)
     PRINT_QUIRK(memoryLeaveIUnchanged)
     PRINT_QUIRK(wrap)
     PRINT_QUIRK(jump)
     PRINT_QUIRK(vblank)
     PRINT_QUIRK(logic)
-    PRINT_QUIRK(clip)
-    PRINT_QUIRK(scroll)
-    PRINT_QUIRK(hiresCollision)
-    PRINT_QUIRK(spriteWidth8)
-    PRINT_QUIRK(waitVBlank)
-    PRINT_QUIRK(planeMask)
-    PRINT_QUIRK(audioPattern)
+    // PRINT_QUIRK(clip)
+    // PRINT_QUIRK(scroll)
+    // PRINT_QUIRK(hiresCollision)
+    // PRINT_QUIRK(spriteWidth8)
+    // PRINT_QUIRK(waitVBlank)
+    // PRINT_QUIRK(planeMask)
+    // PRINT_QUIRK(audioPattern)
+    // PRINT_QUIRK(loadStore)
 }
 
 // --------------------------------- 3 -  END of Send Platform and receive Platform info --------------------------------- //
