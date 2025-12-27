@@ -41,16 +41,14 @@ void cpu_reset(void) {
 
 		// // Get the ID
 		// int json_rom_id = json_search_id(rom.hash_str);
-
 		// if (json_rom_id >= 0) {
 		// 	printf("JSON Database:\tID %d\n", json_rom_id);
 		// } else {
 		// 	printf("JSON Database:\tHash not found in database: %s\n", rom.hash_str);
 		// }
-
 		// printf("DEBUG hash_str = '%s'\n", rom.hash_str);
 
-		// Senf the hash and receive program information
+		// Send the hash and receive program information
 		RomResult rom_info;
 		int ret = find_rom_by_hash(rom.hash_str, &rom_info);
 		if(ret != FIND_ROM_OK){
@@ -58,10 +56,25 @@ void cpu_reset(void) {
 					find_rom_strerror(ret));
 			return;
 		}
-
 		print_rom_result(&rom_info);
+		printf("\n\n\n\Chosen Platform: %s\n\n\n\n", rom_info.chosen_platform);
 
-		printf("\n\n\n\nCHOOOOSEN PLAT: %s\n\n\n\n", rom_info.chosen_platform);
+		// Send the platform and receive the platform info
+		PlatformInfo platform;
+		if (load_platform_by_id(rom_info.chosen_platform, &platform) == 0) {
+			// Plataforma encontrada, imprime informações
+			print_platform_info(&platform);
+		} else {
+			printf("Platform '%s' not found!\n", rom_info.chosen_platform);
+		}
+
+		// // Test 
+		// if (platform.quirks.logic.present) {
+		// printf("'logic' quirk exist with value: %s\n",
+		// 	platform.quirks.logic.value ? "true" : "false");
+		// } else {
+		// 	printf("'logic' quirk is not defined on this platform.\n");
+		// }
 
 
 

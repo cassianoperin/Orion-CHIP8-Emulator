@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+// #include <stdbool.h>
+#include "typedef.h"
 #include "../lib/nxjson/nxjson.h"
 
 
@@ -19,9 +21,11 @@
 #define MAX_PIXEL_COLORS    16
 #define MAX_KEYS            16
 #define MAX_QUIRKS          16
+#define MAX_RESOLUTIONS      8
 
-#define JSON_SHA1_HASHES "database/sha1-hashes.json"
+// #define JSON_SHA1_HASHES "database/sha1-hashes.json"
 #define JSON_PROGRAMS    "database/programs.json"
+#define JSON_PLATFORMS   "database/platforms.json"
 
 /* ================= RESULT STRUCT ================= */
 typedef struct {
@@ -88,19 +92,63 @@ enum {
     FIND_ROM_ROM_NOT_FOUND
 };
 
-// --------------------------------- External Variables --------------------------------- //
 
-// --------------------------------- External Functions --------------------------------- //
+/* =========================================================
+ * Quirk value with presence flag
+ * ========================================================= */
+typedef struct {
+    bool present;   /* indicates if the quirk exists in JSON */
+    bool value;     /* true / false */
+} PlatformQuirk;
 
-// ---------------------------------- Global Variables ---------------------------------- //
+/* =========================================================
+ * All known quirks
+ * ========================================================= */
+typedef struct {
+    PlatformQuirk shift;
+    PlatformQuirk loadStore;
+    PlatformQuirk memoryIncrementByX;
+    PlatformQuirk memoryLeaveIUnchanged;
+    PlatformQuirk wrap;
+    PlatformQuirk jump;
+    PlatformQuirk vblank;
+    PlatformQuirk logic;
+    PlatformQuirk clip;
+    PlatformQuirk scroll;
+    PlatformQuirk hiresCollision;
+    PlatformQuirk spriteWidth8;
+    PlatformQuirk waitVBlank;
+    PlatformQuirk planeMask;
+    PlatformQuirk audioPattern;
+} PlatformQuirks;
 
-// -------------------------------------- Functions ------------------------------------- //
+/* =========================================================
+ * PlatformInfo (single authoritative struct)
+ * ========================================================= */
+typedef struct {
+    char id[MAX_STR];
+    char name[MAX_STR];
+    char description[MAX_STR];
+    char release[MAX_STR];
+
+    char display_resolutions[MAX_RESOLUTIONS][MAX_STR];
+    int  display_resolution_count;
+
+    int default_tickrate;
+
+    PlatformQuirks quirks;
+} PlatformInfo;
+
 /* ================= Public APIs ================= */
+// 1 
 // int  json_search_id(const char *hash);
+// 2
 int  find_rom_by_hash(const char *hash, RomResult *out);
 void print_rom_result(const RomResult *r);
 const char *find_rom_strerror(int code);
-
+// 3
+int load_platform_by_id(const char *platform_id, PlatformInfo *out);
+void print_platform_info(const PlatformInfo *p);
 
 
 #endif

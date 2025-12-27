@@ -64,14 +64,10 @@
 // ------------------------------- 1 -  END of Receive an SHA1 hash and return database ID ------------------------------- //
 
 
+
+
+
 // -------------------------------- 2 -  START of Send the hash and receive program info --------------------------------- //
-
-
-
-
-
-
-// --------------------------------- 2 -  END of Send the hash and receive program info ---------------------------------- //
 
 /* =========================================================
  * Utilities
@@ -439,3 +435,160 @@ void print_rom_result(const RomResult *r){
 
     printf("=================================================\n");
 }
+// --------------------------------- 2 -  END of Send the hash and receive program info ---------------------------------- //
+
+
+
+
+// -------------------------------- 3 -  START of Send Platform and receive Platform info -------------------------------- //
+
+/* =========================================================
+ * Load platform information by ID from the JSON file
+ * ========================================================= */
+int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
+    if (!platform_id || !out) return -1;
+
+    FILE *f = fopen(JSON_PLATFORMS, "rb");
+    if (!f) {
+        fprintf(stderr, "Error opening JSON file: %s\n", JSON_PLATFORMS);
+        return -1;
+    }
+
+    fseek(f, 0, SEEK_END);
+    long fsize = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    char *json_data = malloc(fsize + 1);
+    if (!json_data) {
+        fclose(f);
+        return -1;
+    }
+
+    fread(json_data, 1, fsize, f);
+    fclose(f);
+    json_data[fsize] = '\0';
+
+    const nx_json *root = nx_json_parse_utf8(json_data);
+    free(json_data);
+    if (!root || root->type != NX_JSON_ARRAY) {
+        fprintf(stderr, "Invalid JSON format!\n");
+        return -1;
+    }
+
+    for (int i = 0; i < root->children.length; i++) {
+        const nx_json *platform = nx_json_item(root, i);
+        const nx_json *id = nx_json_get(platform, "id");
+        if (!id || id->type != NX_JSON_STRING) continue;
+        if (strcmp(platform_id, id->text_value) != 0) continue;
+
+        /* Fill the output struct */
+        memset(out, 0, sizeof(PlatformInfo));
+        strncpy(out->id, id->text_value, MAX_STR - 1);
+
+        const nx_json *name = nx_json_get(platform, "name");
+        if (name && name->type == NX_JSON_STRING)
+            strncpy(out->name, name->text_value, MAX_STR - 1);
+
+        const nx_json *desc = nx_json_get(platform, "description");
+        if (desc && desc->type == NX_JSON_STRING)
+            strncpy(out->description, desc->text_value, MAX_STR - 1);
+
+        const nx_json *release = nx_json_get(platform, "release");
+        if (release && release->type == NX_JSON_STRING)
+            strncpy(out->release, release->text_value, MAX_STR - 1);
+
+        const nx_json *tick = nx_json_get(platform, "defaultTickrate");
+        if (tick && (tick->type == NX_JSON_INTEGER || tick->type == NX_JSON_DOUBLE))
+            out->default_tickrate = (int)tick->num.u_value;
+
+        /* Load resolutions */
+        const nx_json *resolutions = nx_json_get(platform, "displayResolutions");
+        if (resolutions && resolutions->type == NX_JSON_ARRAY) {
+            out->display_resolution_count = resolutions->children.length;
+            for (int j = 0; j < resolutions->children.length && j < MAX_RESOLUTIONS; j++) {
+                const nx_json *r = nx_json_item(resolutions, j);
+                if (r && r->type == NX_JSON_STRING)
+                    strncpy(out->display_resolutions[j], r->text_value, MAX_STR - 1);
+            }
+        }
+
+        /* Load quirks */
+        const nx_json *quirks = nx_json_get(platform, "quirks");
+        if (quirks && quirks->type == NX_JSON_OBJECT) {
+            #define LOAD_QUIRK(name) \
+                { const nx_json *q = nx_json_get(quirks, #name); \
+                  if (q && q->type == NX_JSON_BOOL) { out->quirks.name.present = true; out->quirks.name.value = q->num.u_value ? true : false; } \
+                  else { out->quirks.name.present = false; out->quirks.name.value = false; } }
+
+            LOAD_QUIRK(shift)
+            LOAD_QUIRK(loadStore)
+            LOAD_QUIRK(memoryIncrementByX)
+            LOAD_QUIRK(memoryLeaveIUnchanged)
+            LOAD_QUIRK(wrap)
+            LOAD_QUIRK(jump)
+            LOAD_QUIRK(vblank)
+            LOAD_QUIRK(logic)
+            LOAD_QUIRK(clip)
+            LOAD_QUIRK(scroll)
+            LOAD_QUIRK(hiresCollision)
+            LOAD_QUIRK(spriteWidth8)
+            LOAD_QUIRK(waitVBlank)
+            LOAD_QUIRK(planeMask)
+            LOAD_QUIRK(audioPattern)
+        }
+
+        nx_json_free(root);
+        return 0; /* Found and loaded */
+    }
+
+    nx_json_free(root);
+    fprintf(stderr, "Platform '%s' not found!\n", platform_id);
+    return -1;
+}
+
+/* =========================================================
+ * Print platform information
+ * ========================================================= */
+void print_platform_info(const PlatformInfo *p) {
+    if (!p) return;
+
+    printf("ID: %s\n", p->id);
+    printf("Name: %s\n", p->name);
+    printf("Description: %s\n", p->description);
+    printf("Release: %s\n", p->release);
+    printf("Tickrate: %d\n", p->default_tickrate);
+
+    printf("Resolutions (%d):\n", p->display_resolution_count);
+    for (int i = 0; i < p->display_resolution_count; i++)
+        printf("  %s\n", p->display_resolutions[i]);
+
+    printf("Quirks:\n");
+    #define PRINT_QUIRK(name) \
+        if (p->quirks.name.present) \
+            printf("  %s: %s\n", #name, p->quirks.name.value ? "true" : "false"); // \
+        // else \
+        //     printf("  %s:\n", #name);
+
+    PRINT_QUIRK(shift)
+    PRINT_QUIRK(loadStore)
+    PRINT_QUIRK(memoryIncrementByX)
+    PRINT_QUIRK(memoryLeaveIUnchanged)
+    PRINT_QUIRK(wrap)
+    PRINT_QUIRK(jump)
+    PRINT_QUIRK(vblank)
+    PRINT_QUIRK(logic)
+    PRINT_QUIRK(clip)
+    PRINT_QUIRK(scroll)
+    PRINT_QUIRK(hiresCollision)
+    PRINT_QUIRK(spriteWidth8)
+    PRINT_QUIRK(waitVBlank)
+    PRINT_QUIRK(planeMask)
+    PRINT_QUIRK(audioPattern)
+}
+
+// --------------------------------- 3 -  END of Send Platform and receive Platform info --------------------------------- //
+
+
+
+
+
