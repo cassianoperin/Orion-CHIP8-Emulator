@@ -428,7 +428,7 @@ int menu(struct nk_context *ctx)
                     }
 
                 };
-                nk_checkbox_label(ctx, "Clipping", &quirk_Clipping_Dxyn);
+                nk_checkbox_label(ctx, "Wrap", &quirk_Wrap_Dxyn);
                 nk_checkbox_label(ctx, "Shifting", &quirk_Shifting_legacy_8xy6_8xyE);
                 nk_checkbox_label(ctx, "Jump with offset", &quirk_Jump_with_offset_Bnnn);
                 nk_tree_pop(ctx);

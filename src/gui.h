@@ -62,7 +62,7 @@ extern bool display_fullscreen;
 extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_Memory_legacy_Fx55_Fx65;
 extern bool quirk_display_wait;
-extern bool quirk_Clipping_Dxyn;
+extern bool quirk_Wrap_Dxyn;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
 extern bool quirk_Jump_with_offset_Bnnn;
 

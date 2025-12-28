@@ -46,10 +46,12 @@ void handle_quirks(char *rom_sha1) {
 	}
 
 	// DISABLE Quirk "Clipping"
-	// DXYN Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen
-	if ( !strcmp(rom_sha1, "ac7c8db7865beb22c9ec9001c9c0319e02f5d5c2") ) {	// Program: Framed MK1 [GV Samways, 1980].ch8
-		quirk_Clipping_Dxyn	= false;
-	}
+	// // DXYN Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen
+	// if ( !strcmp(rom_sha1, "ac7c8db7865beb22c9ec9001c9c0319e02f5d5c2") ) {	// Program: Framed MK1 [GV Samways, 1980].ch8
+	// 	quirk_Wrap_Dxyn	= false;
+
+	// 	// TESTAR BOWLING
+	// }
 
 	// // ENABLE Quirk "Display Wait"
 	// // Drawing sprites to the display waits for the vertical blank, limiting to max 60 FPS
@@ -95,11 +97,11 @@ void handle_quirks(char *rom_sha1) {
 
 
 	// Print Quirk status on screen
-	printf("\nCHIP 8 Quirks:\nVF Reset:\t%s\nMemory:\t\t%s\nDisplay Wait:\t%s\nClipping:\t%s\nShifting:\t%s\nJumping:\t%s\n\n", 
+	printf("\nCHIP 8 Quirks:\nVF Reset:\t%s\nMemory:\t\t%s\nDisplay Wait:\t%s\nWrap:\t%s\nShifting:\t%s\nJumping:\t%s\n\n", 
 		quirk_VF_Reset_8xy1_8xy2_8xy3?"Enabled":"Disabled",
 		quirk_Memory_legacy_Fx55_Fx65?"Enabled":"Disabled",
 		quirk_display_wait?"Enabled":"Disabled",
-		quirk_Clipping_Dxyn?"Enabled":"Disabled",
+		quirk_Wrap_Dxyn?"Enabled":"Disabled",
 		quirk_Shifting_legacy_8xy6_8xyE?"Enabled":"Disabled",
 		quirk_Jump_with_offset_Bnnn?"Enabled":"Disabled");
 

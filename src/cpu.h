@@ -16,7 +16,7 @@ extern const char SCHIPFontset[160];
 // Legacy Opcodes and Quirks
 extern bool quirk_Memory_legacy_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
-extern bool quirk_Clipping_Dxyn;
+extern bool quirk_Wrap_Dxyn;
 extern bool quirk_Resize_SCHIP_00FE_00FF;
 extern bool quirk_Scroll_SCHIP_00CN_00FB_00FC;
 extern bool quirk_ETI660_64x32_screen;

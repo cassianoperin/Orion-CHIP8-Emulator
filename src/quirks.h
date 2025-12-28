@@ -12,7 +12,7 @@ bool quirk_VF_Reset_8xy1_8xy2_8xy3;		// The AND, OR and XOR opcodes (8XY1, 8XY2 
 bool quirk_Memory_legacy_Fx55_Fx65; 	// Enable original Chip-8 Fx55 and Fx65 opcodes (increases I)
 										// https://tobiasvl.github.io/blog/write-a-chip-8-emulator/#fx55-and-fx65-store-and-load-memory
 bool quirk_display_wait;				// Drawing sprites to the display waits for the vertical blank interrupt, limiting their speed to max 60 draws per second
-bool quirk_Clipping_Dxyn;				// DXYN sprite wrap in Bowling game
+bool quirk_Wrap_Dxyn;					// DXYN sprite wrap in Bowling game
 										// Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen.
 										// When clipping is off, the test checks if sprites get rendered at the right coordinates on the other side of the screen.
 										// This also tests that sprites drawn at coordinates of x > 63 and/or y > 31 are rendered at x % 64 and y % 32. If any of these checks fail, the test will show ERR

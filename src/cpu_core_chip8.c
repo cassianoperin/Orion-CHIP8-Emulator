@@ -436,17 +436,17 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 			print_bin(sprite);
 
 		// --------- Row --------- //
-		if ( quirk_Clipping_Dxyn ) { 
+		if ( quirk_Wrap_Dxyn ) { 
+			// Slit the sprite between screen top and down
+			// if line (y) plus n bytes > 31
+			row = (Vy + byte) % 32;
+		} else {
 			// Do not split the sprite between screen top and down
 			// If the line (y) plus n bytes > 31, then do not print
 			row = ((Vy % 32) + byte);
 			if ( row > 31 ) {
 				sprite = 0;
 			}
-		} else {
-			// Slit the sprite between screen top and down
-			// if line (y) plus n bytes > 31
-			row = (Vy + byte) % 32;
 		}
 
 		// Always print 8 bits of the byte
@@ -456,15 +456,15 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 			bit_value = (sprite & 0x80) >> 7;	// MSB (Most Significant Bit), 1 will draw, 0 don't
 			
 			// ------- Column -------- //
-			if ( quirk_Clipping_Dxyn ) {
+			if ( quirk_Wrap_Dxyn ) {
+				column = (Vx + bit) % 64;
+			} else {
 				// Do not split the sprite between screen right and left
 				// If the row (x) plus number of bits > 63, then do not print
 				column = ((Vx% 64) + bit);
 				if ( column > 63 ) {
 					bit_value = 0;
 				}
-			} else {
-				column = (Vx + bit) % 64;
 			}
 
 			// Translate the x and Y to the Graphics Vector
@@ -740,7 +740,9 @@ void opc_chip8_FX33(unsigned char x) {
 // Stores V0 to VX (including VX) in memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.[d]
 // In the original CHIP-8 implementation, and also in CHIP-48, I is left incremented after this instruction had been executed. In SCHIP, I is left unmodified.
 void opc_chip8_FX55(unsigned char x) {
+
     unsigned char i;
+	
 	for ( i = 0; i <= x; i++ ) {
 		Memory[I+i] = V[i];
 	}

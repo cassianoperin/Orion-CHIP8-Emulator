@@ -36,7 +36,6 @@ void cpu_reset(void) {
 		handle_workarounds(rom.hash_str);
 
 
-
 		// -------- JSON DATABASE LOOKUP START -------- //
 
 		// // Get the ID
@@ -75,8 +74,6 @@ void cpu_reset(void) {
 		// } else {
 		// 	printf("'logic' quirk is not defined on this platform.\n");
 		// }
-
-
 
 		// --------- JSON DATABASE LOOKUP END --------- //
 
@@ -126,12 +123,25 @@ void cpu_initialize(void) {
 	}
 
 	// New quirk pattern
-	quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
-	quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-	quirk_display_wait				= false;	// Display wait
-	quirk_Clipping_Dxyn				= true;		// Clipping
-	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+	quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset) - OK
+		quirk_Memory_legacy_Fx55_Fx65	= false;		// Memory - NAO OK E FALTA 1
+	quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
+	quirk_display_wait				= false;	// Display wait
+	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+
+    // PlatformQuirk memoryIncrementByX;
+    // PlatformQuirk memoryLeaveIUnchanged;
+
+    // PlatformQuirk logic;
+
+	// // New quirk pattern
+	// quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
+	// quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
+	// quirk_display_wait				= false;	// Display wait
+	// quirk_Clipping_Dxyn				= true;		// Clipping
+	// quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+	// quirk_Jump_with_offset_Bnnn		= false;	// Jumping
 
 	// // ETI
 	// quirk_ETI660_64x32_screen        	= false;
