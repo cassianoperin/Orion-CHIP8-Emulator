@@ -742,14 +742,18 @@ void opc_chip8_FX33(unsigned char x) {
 void opc_chip8_FX55(unsigned char x) {
 
     unsigned char i;
-	
+
 	for ( i = 0; i <= x; i++ ) {
 		Memory[I+i] = V[i];
 	}
 
 	// If needed, run the original Chip-8 opcode (not used in recent games)
-	if ( quirk_Memory_legacy_Fx55_Fx65 ) {
-		I = I + x + 1;
+	if ( !quirk_Memory_LeaveI_Fx55_Fx65 ) {
+		if ( quirk_Memory_IncByX_Fx55_Fx65 ) {
+			I = I + x;
+		} else {
+			I = I + x + 1;
+		}
 	}
 
 	if ( cpu_debug_mode )
@@ -776,8 +780,12 @@ void opc_chip8_FX65(unsigned char x) {
 	}
 
 	// If needed, run the original Chip-8 opcode (not used in recent games)
-	if ( quirk_Memory_legacy_Fx55_Fx65 ) {
-		I = I + x + 1;
+	if ( !quirk_Memory_LeaveI_Fx55_Fx65 ) {
+		if ( quirk_Memory_IncByX_Fx55_Fx65 ) {
+			I = I + x;
+		} else {
+			I = I + x + 1;
+		}
 	}
 
 	if ( cpu_debug_mode ) 

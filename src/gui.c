@@ -417,7 +417,7 @@ int menu(struct nk_context *ctx)
 
                 nk_layout_row_dynamic(ctx, 20, 2);
                 nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3);
-                nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_legacy_Fx55_Fx65);
+                nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_IncByX_Fx55_Fx65);
                 if (nk_checkbox_label(ctx, "Display Wait", &quirk_display_wait)){
 
 

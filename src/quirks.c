@@ -23,7 +23,7 @@ void handle_quirks(char *rom_sha1) {
 	||   !strcmp(rom_sha1, "5e70f91ca08e9b9e9de61670492e3db2d7f7d57a")		// Game:		 Rocket Launch [Jonas Lindstedt].ch8
 	||   !strcmp(rom_sha1, "429d455a4bc53167942bf6fd934d72b0f648dce3") )	// Game:		 Tic-Tac-Toe [David Winter].ch8
 	{
-		quirk_Memory_legacy_Fx55_Fx65 = false;
+		quirk_Memory_IncByX_Fx55_Fx65 = true;
 	}
 
 
@@ -99,7 +99,7 @@ void handle_quirks(char *rom_sha1) {
 	// Print Quirk status on screen
 	printf("\nCHIP 8 Quirks:\nVF Reset:\t%s\nMemory:\t\t%s\nDisplay Wait:\t%s\nWrap:\t%s\nShifting:\t%s\nJumping:\t%s\n\n", 
 		quirk_VF_Reset_8xy1_8xy2_8xy3?"Enabled":"Disabled",
-		quirk_Memory_legacy_Fx55_Fx65?"Enabled":"Disabled",
+		quirk_Memory_IncByX_Fx55_Fx65?"Enabled":"Disabled",
 		quirk_display_wait?"Enabled":"Disabled",
 		quirk_Wrap_Dxyn?"Enabled":"Disabled",
 		quirk_Shifting_legacy_8xy6_8xyE?"Enabled":"Disabled",

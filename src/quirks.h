@@ -9,8 +9,9 @@
 // Legacy Opcodes and Quirks
 // Chip8
 bool quirk_VF_Reset_8xy1_8xy2_8xy3;		// The AND, OR and XOR opcodes (8XY1, 8XY2 and 8XY3) reset the flags register to zero
-bool quirk_Memory_legacy_Fx55_Fx65; 	// Enable original Chip-8 Fx55 and Fx65 opcodes (increases I)
+bool quirk_Memory_IncByX_Fx55_Fx65; 	// Enable original Chip-8 Fx55 and Fx65 opcodes (increases I with X or X+1)
 										// https://tobiasvl.github.io/blog/write-a-chip-8-emulator/#fx55-and-fx65-store-and-load-memory
+bool quirk_Memory_LeaveI_Fx55_Fx65; 	// Fx55 and Fx65 leave I unchanged
 bool quirk_display_wait;				// Drawing sprites to the display waits for the vertical blank interrupt, limiting their speed to max 60 draws per second
 bool quirk_Wrap_Dxyn;					// DXYN sprite wrap in Bowling game
 										// Sprites drawn at the bottom edge of the screen get clipped instead of wrapping around to the top of the screen.

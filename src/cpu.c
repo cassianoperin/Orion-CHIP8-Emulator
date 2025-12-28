@@ -124,7 +124,8 @@ void cpu_initialize(void) {
 
 	// New quirk pattern
 	quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset) - OK
-		quirk_Memory_legacy_Fx55_Fx65	= false;		// Memory - NAO OK E FALTA 1
+	quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
+	quirk_Memory_LeaveI_Fx55_Fx65	= false;		// Leave I untouched
 	quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
 	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
 	quirk_display_wait				= false;	// Display wait
@@ -139,7 +140,7 @@ void cpu_initialize(void) {
 	// quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
 	// quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
 	// quirk_display_wait				= false;	// Display wait
-	// quirk_Clipping_Dxyn				= true;		// Clipping
+	// quirk_Wrap_Dxyn					= false;	// Clipping
 	// quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 	// quirk_Jump_with_offset_Bnnn		= false;	// Jumping
 

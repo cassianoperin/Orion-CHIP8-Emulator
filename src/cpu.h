@@ -14,7 +14,8 @@ extern unsigned char display_pixel_OFF_color;
 extern const char Chip8Fontset[80];
 extern const char SCHIPFontset[160];
 // Legacy Opcodes and Quirks
-extern bool quirk_Memory_legacy_Fx55_Fx65;
+extern bool quirk_Memory_IncByX_Fx55_Fx65;
+extern bool quirk_Memory_LeaveI_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
 extern bool quirk_Wrap_Dxyn;
 extern bool quirk_Resize_SCHIP_00FE_00FF;
