@@ -45,6 +45,9 @@ CHIP-8 emulator written in C with Nuklear gui library.
 * ![50%](https://progress-bar.xyz/50) Fullscreen
 * ![100%](https://progress-bar.xyz/100) Emulation Status from all games I have to test
 
+Automatic core and quirks detection using CHIP-8 database!
+https://github.com/chip-8/chip-8-database
+
 ## EMULATOR Usage
 
 1. Run:
@@ -240,6 +243,4 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 1) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
 2) display_draw strange in main, review and set @60hz when debug or every cycle
-
-3) display_EMULATOR_RES_X e display_EMULATOR_RES_Y com tipos diferentes (procurar por unsigned)
 
