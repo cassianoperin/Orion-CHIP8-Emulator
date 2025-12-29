@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "cosmac_vip_hw.h"
+#include "cpu_core_hybridVIP.h"
 
 // ---------------------------- COSMAC VIP MACHINE CODE ---------------------------- //
 

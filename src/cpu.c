@@ -49,14 +49,31 @@ void cpu_reset(void) {
 						core = 2;
 						core_current = 2;
 						printf("Core set to %s\n", platform_info.name);
-					}			
+					}
+				} else if (strcmp(rom_info.chosen_platform, "hybridVIP") == 0) {
+					if ( core == 3 ) {
+						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
+					} else {
+						core = 3;
+						core_current = 3;
+						printf("Core set to %s\n", platform_info.name);
+					}				
 				} else {
-					printf("ERROR: Chosen platform %s not identified yet!\n", rom_info.chosen_platform);
+					printf("ERROR: Chosen platform %s not identified yet! Disabling Core auto detection\n", rom_info.chosen_platform);
+					core_autodetection_enabled = false;
+					gui_menu_core_inactive = false;
 				}
 			}
 		} else {
-			printf("Platform '%s' not found on platforms.json database!\n", rom_info.chosen_platform);
+			printf("Platform '%s' not found on platforms.json database! Disabling Core auto detection\n", rom_info.chosen_platform);
+			core_autodetection_enabled = false;
+			gui_menu_core_inactive = false;
 		}
+	} else {
+		// Disable core autodetection and enable menu
+		printf("Cannot load chosen platform from PROGRAMS.JSON database! Disabling Core auto detection");
+		core_autodetection_enabled = false;
+		gui_menu_core_inactive = false;
 	}
 
 	
@@ -176,8 +193,9 @@ void cpu_load_fonts(void) {
 void handle_workarounds(char *rom_sha1) {
 
 	// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
-	if ( !strcmp(rom_sha1, "016345d75eef34448840845a9590d41e6bfdf46a") )	// Program: Clock Program [Bill Fisher, 1981].ch8
+	if ( !strcmp(rom_sha1, "016345d75eef34448840845a9590d41e6bfdf46a") || !strcmp(rom_info.chosen_platform, "hybridVIP") )	// Program: Clock Program [Bill Fisher, 1981].ch8
 	{
+		printf("hybridVIP workaround applied for Clock program.")
 		cosmac_vip_hw_2d8 = true;
 	}
 
@@ -218,56 +236,46 @@ void cpu_interpreter(void) {
 
 	// Decode and Execute
 	switch ( Opcode & 0xF000 )
-  	{
+	{
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
 		// 0NNN: Execute RCA 1802 machine language routine at address NNN (needed for CHIP8 CLOCK program)
 		// 00E0: Clear the screen
 		// 00EE: Return from subroutine
-		case 0x0000: //0NNN
-		
-			switch ( Opcode & 0x0F00 ) {
+		case 0x0000: {  // 0NNN / 00E0 / 00EE
 
-				case 0x0000: //00NN
-					
-					switch ( Opcode & 0x00FF ) { //00NN
+			switch (Opcode & 0x00FF) {
 
-						// 00E0 (CHIP-8)
-						case 0x00E0:
-							opc_chip8_00E0();
-							break;
+				case 0x00E0:
+					opc_chip8_00E0();
+					break;
 
-						// 00EE (CHIP-8)
-						case 0x00EE:
-							opc_chip8_00EE();
-							break;
+				case 0x00EE:
+					opc_chip8_00EE();
+					break;
 
-						default:
-							// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-							// exit(0);
-							cpu_invalid_opcode(Opcode);
-					}
+				default:
+					/* 0NNN - RCA 1802 routine (Cosmac VIP) */
+					if (cosmac_vip_hw_2d8) {
 
-				// 0NNN: Cosmac VIP machine code routine needed by CLOCK program
-				if ( cosmac_vip_hw_2d8 ) {
-					case 0x0200: //02NN
-						switch ( Opcode & 0x0FFF ) {
+						switch (Opcode & 0x0FFF) {
 
-							// 02D8 (COSMAC VIP Hardware routine call)
 							case 0x02D8:
 								opc_cosmac_vip_hw_2d8();
 								break;
-						}
-					}
-				
-				break;
 
-				default:
-					// printf("\t\tOpcode 0x%04X NOT IMPLEMENTED!!!!\n", Opcode);
-					// exit(0);
-					cpu_invalid_opcode(Opcode);
+							default:
+								cpu_invalid_opcode(Opcode);
+								break;
+						}
+
+					} else {
+						cpu_invalid_opcode(Opcode);
+					}
+					break;
 			}
 
 			break;
+		}
 		
 		// ---------------------------- CHIP-8 1xxx instruction set ---------------------------- //
 		case 0x1000: // 1nnn (CHIP-8)

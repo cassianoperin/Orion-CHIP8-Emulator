@@ -92,22 +92,31 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 
 
 	} else {
-		printf("Problem loading databases or game not found, using default platform quirks\n");
+		if ( !core_autodetection_enabled ) {
+			printf("Core auto detection disabled\n");
+		} else {
+			if ( r.chosen_platform[0] == '\0' ) {
+				printf("Cannot find hash on database.\n");
+			}
+		}
+
+		printf("Using default platform quirks\n");
 
 		// Hardcoded Quirks per Platform in case of a game that does not exist on database
 		switch( core )
 		{
 			// Original CHIP8
-			case 0:
+			case 0: {
 				quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// Logic (VF Reset) - OK
 				quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
 				quirk_Memory_LeaveI_Fx55_Fx65	= false;	// Leave I untouched
 				quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
 				quirk_Jump_with_offset_Bnnn		= false;	// Jumping
-				quirk_display_wait				= false;	// Display wait
+				quirk_display_wait				= true;		// Display wait
 				quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 
 				break;
+			}
 
 			// Modern CHIP-8
 			case 1: {
@@ -135,13 +144,26 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 				break;
 			}
 
+			// hybridVIP
+			case 3: {
+				quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// Logic (VF Reset) - OK
+				quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
+				quirk_Memory_LeaveI_Fx55_Fx65	= false;	// Leave I untouched
+				quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
+				quirk_Jump_with_offset_Bnnn		= false;	// Jumping
+				quirk_display_wait				= true;		// Display wait
+				quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+
+				break;
+			}
+
 		}
 
 	}
 
 	// Print Core on screen
-	static const char *core_names[] = { "Original CHIP-8 (Cosmac VIP)", "Modern CHIP-8", "SuperCHIP 1.1" };
-	printf("\nCHIP-8 CORE: %s\n", (core >= 0 && core < 3) ? core_names[core] : "UNKNOWN_CORE");
+	static const char *core_names[] = { "Original CHIP-8 (Cosmac VIP)", "Modern CHIP-8", "SuperCHIP 1.1", "hybridVIP" };
+	printf("\nCHIP-8 CORE: %s\n", (core >= 0 && core < 4) ? core_names[core] : "UNKNOWN_CORE");
 
 	// Print Default Quirk status on screen
 	printf("Quirks:\n   Logic:\t\t%s\n   Memory Inc by X:\t%s\n   Memory Leave I:\t%s\n   Display Wait:\t%s\n   Wrap:\t\t%s\n   Shifting:\t\t%s\n   Jumping:\t\t%s\n\n", 
@@ -153,36 +175,6 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 		quirk_Shifting_legacy_8xy6_8xyE?"Enabled":"Disabled",
 		quirk_Jump_with_offset_Bnnn?"Enabled":"Disabled");
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	// ---------------------- CHIP8 ---------------------- //

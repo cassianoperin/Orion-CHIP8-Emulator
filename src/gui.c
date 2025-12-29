@@ -238,7 +238,7 @@ int menu(struct nk_context *ctx)
 
         // ----------------------------------- Menu EMULATION ----------------------------------- //
         nk_layout_row_push(ctx, 80);
-        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 420)))
+        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(340, 420)))
         {
             nk_layout_row_dynamic(ctx, 25, 1);
             if ( nk_checkbox_label(ctx, "Auto detect CORE", &core_autodetection_enabled) ) {
@@ -249,9 +249,9 @@ int menu(struct nk_context *ctx)
                 }
             }
 
+
             if (nk_tree_push(ctx, NK_TREE_NODE, "CHIP-8 CORE / Variant", NK_MAXIMIZED))
             {
-
                 // Disable Core menu
                 if ( gui_menu_core_inactive ) {
                     nk_widget_disable_begin(ctx);
@@ -259,11 +259,11 @@ int menu(struct nk_context *ctx)
 
                 static int option;
                 option = core;
-
-                nk_layout_row_static(ctx, 20, 172, 1);
+                nk_layout_row_static(ctx, 20, 176, 2);
                 option = nk_option_label(ctx, "1: CHIP-8 (Cosmac VIP)",  option == 0) ? 0 : option;
                 option = nk_option_label(ctx, "2: CHIP-8 (Modern)",  option == 1) ? 1 : option;
                 option = nk_option_label(ctx, "3: SuperCHIP 1.1 (beta)",  option == 2) ? 2 : option;
+                option = nk_option_label(ctx, "4: hybridVIP",  option == 3) ? 3 : option;
 
                 switch( option )
                 {
@@ -298,6 +298,20 @@ int menu(struct nk_context *ctx)
                     // SuperCHIP 1.1
                     case 2: {
                         core = 2;
+                        // Detect core changes
+                        if ( core != core_current ) {
+                            // printf("Core changed to %d\n", core);
+                            // Update the current core
+                            core_current = core;
+                            handle_quirks(rom_info, platform_info, rom_header.hash_str);
+                        }
+
+                        break;
+                    }
+
+                    // hybridVIP
+                    case 3: {
+                        core = 3;
                         // Detect core changes
                         if ( core != core_current ) {
                             // printf("Core changed to %d\n", core);

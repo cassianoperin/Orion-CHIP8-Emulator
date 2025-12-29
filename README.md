@@ -242,3 +242,4 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 2) display_draw strange in main, review and set @60hz when debug or every cycle
 
 3) display_EMULATOR_RES_X e display_EMULATOR_RES_Y com tipos diferentes (procurar por unsigned)
+

@@ -27,7 +27,7 @@ extern bool quirk_display_wait;
 extern char *filename;
 // GUI
 // extern bool gui_menu_quirks_inactive;
-// extern bool gui_menu_core_inactive; 
+extern bool gui_menu_core_inactive; 
 extern char gui_statusbar_msg[120];
 // GUI DEBUG OPC
 extern char guiDebug_opc_description_msg[50];
@@ -134,6 +134,7 @@ bool            cosmac_vip_hw_2d8;           // Allow interpreter to understand 
 bool            workaround_Fx1E_Spacefight;	// Apply an workaround on FX1E to handle an bugged version of Spacefight 2091 rom
 // CHIP-8 Core / Variant
 int             core = 0;                    // 0 = Cosmac VIP (Original), 1 = Modern CHIP-8, 2 = SuperCHIP 1.1
+                                             // 3 = hybridVIP
 int             core_current = 0;            // Detect core changes to reset the quirks
 bool            core_autodetection_enabled;  // Automatically try to load the core from programs.json
 
