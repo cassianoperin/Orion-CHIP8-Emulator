@@ -195,14 +195,14 @@ void handle_workarounds(char *rom_sha1) {
 	// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
 	if ( !strcmp(rom_sha1, "016345d75eef34448840845a9590d41e6bfdf46a") || !strcmp(rom_info.chosen_platform, "hybridVIP") )	// Program: Clock Program [Bill Fisher, 1981].ch8
 	{
-		printf("hybridVIP workaround applied for Clock program.")
+		printf("hybridVIP workaround applied for Clock program");
 		cosmac_vip_hw_2d8 = true;
 	}
 
 	// Check for a buggy rom version of Game "Space flight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
 	if ( !strcmp(rom_sha1, "aa4f1a282bd64a2364102abf5737a4205365a2b4") ) {
 		workaround_Fx1E_Spacefight = true;
-		printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled.\n");
+		printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled\n");
 	}
 }
 
