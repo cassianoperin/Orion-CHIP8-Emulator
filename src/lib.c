@@ -167,7 +167,7 @@ void load_rom(char *filename, unsigned char *mem, unsigned int mem_size)
 
 
 // Get the file size and generate the SHA1 hash
-RomInfo file_size_and_hash(char *filename){
+ROM_header file_size_and_hash(char *filename){
 
 	FILE *file = fopen(filename, "rb");
 	if (!file) {
@@ -231,7 +231,7 @@ RomInfo file_size_and_hash(char *filename){
     hash_str[hash_len * 2] = '\0';
 
 	// Initialize struct with defaults
-	RomInfo result = {NULL, 0}; 
+	ROM_header result = {NULL, 0}; 
 
 	// Fill the struct
     result.hash_str = hash_str;   // Hash

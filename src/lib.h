@@ -68,4 +68,4 @@ int lib_gui_loadrom(void);
 void showLogo(void);
 
 // File(ROM) size and SHA1 hash generation
-RomInfo file_size_and_hash(char *filename);
+ROM_header file_size_and_hash(char *filename);

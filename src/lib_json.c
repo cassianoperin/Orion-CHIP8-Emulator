@@ -5,69 +5,7 @@
 #include <errno.h>
 #include "lib_json.h"
 
-// // ------------------------------ 1 -  START of Receive an SHA1 hash and return database ID ------------------------------ //
-
-// // =========================================================
-// // Public API
-// // =========================================================
-// int json_search_id(const char *hash) {
-//     FILE *file = fopen(JSON_SHA1_HASHES, "rb");
-//     if (!file) {
-// 		fprintf(stderr, "Error opening JSON database file: %s. Exiting.\n", JSON_SHA1_HASHES);
-//         perror("Error details: ");
-//         exit(2);
-//     }
-
-//     fseek(file, 0, SEEK_END);
-//     long size = ftell(file);
-//     fseek(file, 0, SEEK_SET);
-
-//     char *json_data = malloc(size + 1);
-//     if (!json_data) {
-//         perror("JSON_LIB: Error allocating memory. Exiting.\n");
-//         fclose(file);
-// 		exit(2);
-//     }
-
-//     fread(json_data, 1, size, file);
-//     fclose(file);
-//     json_data[size] = '\0';
-
-//     const nx_json *root = nx_json_parse(json_data, NULL);
-//     free(json_data);
-
-//     if (!root) {
-//         fprintf(stderr, "JSON_LIB: Error parsing JSON: %s. Exiting\n", JSON_SHA1_HASHES);
-//         exit(2);
-//     }
-
-//     if (root->type != NX_JSON_OBJECT) {
-//         fprintf(stderr, "JSON_LIB: JSON is not an object\n");
-//         nx_json_free(root);
-//         exit(2);
-//     }
-
-//     const nx_json *entry = root->children.first;
-//     int result = -1;
-
-//     for (; entry != NULL; entry = entry->next) {
-//         if (entry->key && strcmp(entry->key, hash) == 0) {
-//             result = (int)entry->num.s_value;
-//             break;
-//         }
-//     }
-
-//     nx_json_free(root);
-//     return result;
-// }
-// 
-// ------------------------------- 1 -  END of Receive an SHA1 hash and return database ID ------------------------------- //
-
-
-
-
-
-// -------------------------------- 2 -  START of Send the hash and receive program info --------------------------------- //
+// -------------------------------- 1 -  START of Send the hash and receive program info --------------------------------- //
 
 /* =========================================================
  * Utilities
@@ -111,7 +49,7 @@ static void node_to_cstring(const nx_json *n, char *buf, size_t bufsz){
 static char *read_file(const char *path){
     FILE *f = fopen(path, "rb");
     if(!f){
-        fprintf(stderr, "[find_rom] Failed to open '%s': %s\n",
+        fprintf(stderr, "[JSON_DB_query_program] ERROR: Failed to open '%s': %s\n",
                 path, strerror(errno));
         return NULL;
     }
@@ -150,7 +88,7 @@ static void strip_utf8_bom(char *s){
  * Fill result on Struct
  * ========================================================= */
 static void
-fill_result(RomResult *r,
+fill_result(DB_PROGRAM_rom_info *r,
             const nx_json *program,
             const nx_json *rom,
             const char *chosen,
@@ -311,7 +249,7 @@ fill_result(RomResult *r,
 /* =========================================================
  * Platform selection
  * ========================================================= */
-static void finalize_chosen_platform(RomResult *r){
+static void finalize_chosen_platform(DB_PROGRAM_rom_info *r){
     if(r->chosen_platform[0])
         return;
 
@@ -332,7 +270,7 @@ static void finalize_chosen_platform(RomResult *r){
 /* =========================================================
  * Public API
  * ========================================================= */
-int find_rom_by_hash(const char *hash, RomResult *out){
+int find_rom_by_hash(const char *hash, DB_PROGRAM_rom_info *out){
     if(!hash || !out)
         return FIND_ROM_INVALID_ARGUMENT;
 
@@ -384,26 +322,23 @@ const char *find_rom_strerror(int code){
 /* =========================================================
  * Print ALL fields (always)
  * ========================================================= */
-void print_rom_result(const RomResult *r){
+void JSON_DB_print_program(const DB_PROGRAM_rom_info *r){
     if(!r) return;
 
     printf("=================================================\n");
-    printf("PROGRAM\n");
+    printf("DATABASE PROGRAM DATA\n");
     printf("=================================================\n");
     printf("Index       : %s\n", r->program_index);
     printf("Title       : %s\n", r->title);
     printf("Release     : %s\n", r->release);
-    printf("License     : %s\n", r->license);
+    printf("License     : %s\n", r->license);  // NAO EXISTE
     printf("Copyright   : %s\n", r->copyright);
     printf("Description : %s\n", r->description_program);
-
     printf("\nAuthors (%d):\n", r->author_count);
     for(int i=0;i<r->author_count;i++) printf("  - %s\n", r->authors[i]);
-
     printf("\nImages (%d):\n", r->image_count);
     for(int i=0;i<r->image_count;i++) printf("  - %s\n", r->images[i]);
-
-    printf("\nOrigin: %s / %s\n", r->origin_type, r->origin_reference);
+    printf("\nOrigin:\n   Type: %s\n   Reference: %s\n", r->origin_type, r->origin_reference);
 
     printf("\n=================================================\n");
     printf("ROM\n");
@@ -412,40 +347,55 @@ void print_rom_result(const RomResult *r){
     printf("Embedded Title  : %s\n", r->embedded_title);
     printf("Description     : %s\n", r->description_rom);
     printf("Tickrate        : %d\n", r->tickrate);
-
     printf("\nPlatforms (%d):\n", r->platform_count);
     for(int i=0;i<r->platform_count;i++) printf("  - %s\n", r->platforms[i]);
-
-    printf("Chosen Platform : %s\n", r->chosen_platform);
-    printf("Quirky Platform : %s\n", r->quirky_platform);
-
-    printf("\nQuirks (%d):\n", r->quirk_count);
+        printf("Quirky Platform : %s\n", r->quirky_platform);
+    printf("  Quirks (%d):\n", r->quirk_count);
     for(int i=0;i<r->quirk_count;i++)
-        printf("  - %s = %s\n", r->quirk_keys[i], r->quirk_values[i]);
-
+        printf("     - %s = %s\n", r->quirk_keys[i], r->quirk_values[i]);
     printf("\nColors:\n");
     printf("  Buzzer  : %s\n", r->color_buzzer);
     printf("  Silence : %s\n", r->color_silence);
     for(int i=0;i<r->pixel_color_count;i++)
-        printf("  Pixel %d: %s\n", i, r->color_pixels[i]);
-
+        printf("  Pixel %d : %s\n", i, r->color_pixels[i]);
     printf("\nKeys (%d):\n", r->key_count);
     for(int i=0;i<r->key_count;i++)
         printf("  %s -> %s\n", r->keys[i][0], r->keys[i][1]);
 
-    printf("=================================================\n");
+    printf("\nChosen Platform : %s\n\n", r->chosen_platform);
+
+    printf("=================================================\n\n");
 }
-// --------------------------------- 2 -  END of Send the hash and receive program info ---------------------------------- //
+
+DB_PROGRAM_rom_info JSON_DB_query_program(const char *sha1){
+    DB_PROGRAM_rom_info rom_info_tmp;
+    memset(&rom_info_tmp, 0, sizeof(DB_PROGRAM_rom_info));
+
+    if(!sha1 || !sha1[0]){
+        fprintf(stderr, "[JSON_DB_query_program] Invalid hash\n");
+        return rom_info_tmp;
+    }
+
+    int ret = find_rom_by_hash(sha1, &rom_info_tmp);
+    if(ret != FIND_ROM_OK){
+        fprintf(stderr,
+                "[JSON_DB_query_program] ERROR: %s\n",
+                find_rom_strerror(ret));
+        memset(&rom_info_tmp, 0, sizeof(DB_PROGRAM_rom_info));
+    }
+
+    return rom_info_tmp;
+}
+
+// --------------------------------- 1 -  END of Send the hash and receive program info ---------------------------------- //
 
 
-
-
-// -------------------------------- 3 -  START of Send Platform and receive Platform info -------------------------------- //
+// -------------------------------- 2 -  START of Send Platform and receive Platform info -------------------------------- //
 
 /* =========================================================
  * Load platform information by ID from the JSON file
  * ========================================================= */
-int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
+int JSON_DB_query_platform(const char *platform_id, DB_PROGRAM_platform_info *out) {
     if (!platform_id || !out) return -1;
 
     FILE *f = fopen(JSON_PLATFORMS, "rb");
@@ -482,7 +432,7 @@ int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
         if (strcmp(platform_id, id->text_value) != 0) continue;
 
         /* Fill the output struct */
-        memset(out, 0, sizeof(PlatformInfo));
+        memset(out, 0, sizeof(DB_PROGRAM_platform_info));
         strncpy(out->id, id->text_value, MAX_STR - 1);
 
         const nx_json *name = nx_json_get(platform, "name");
@@ -527,14 +477,6 @@ int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
             LOAD_QUIRK(jump)
             LOAD_QUIRK(vblank)
             LOAD_QUIRK(logic)
-            // LOAD_QUIRK(clip)
-            // LOAD_QUIRK(scroll)
-            // LOAD_QUIRK(hiresCollision)
-            // LOAD_QUIRK(spriteWidth8)
-            // LOAD_QUIRK(waitVBlank)
-            // LOAD_QUIRK(planeMask)
-            // LOAD_QUIRK(audioPattern)
-            // LOAD_QUIRK(loadStore)
         }
 
         nx_json_free(root);
@@ -549,9 +491,12 @@ int load_platform_by_id(const char *platform_id, PlatformInfo *out) {
 /* =========================================================
  * Print platform information
  * ========================================================= */
-void print_platform_info(const PlatformInfo *p) {
+void JSON_DB_print_platform(const DB_PROGRAM_platform_info *p) {
     if (!p) return;
-
+    
+    printf("=================================================\n");
+    printf("DATABASE PLATFORM DATA\n");
+    printf("=================================================\n");
     printf("ID: %s\n", p->id);
     printf("Name: %s\n", p->name);
     printf("Description: %s\n", p->description);
@@ -576,17 +521,11 @@ void print_platform_info(const PlatformInfo *p) {
     PRINT_QUIRK(jump)
     PRINT_QUIRK(vblank)
     PRINT_QUIRK(logic)
-    // PRINT_QUIRK(clip)
-    // PRINT_QUIRK(scroll)
-    // PRINT_QUIRK(hiresCollision)
-    // PRINT_QUIRK(spriteWidth8)
-    // PRINT_QUIRK(waitVBlank)
-    // PRINT_QUIRK(planeMask)
-    // PRINT_QUIRK(audioPattern)
-    // PRINT_QUIRK(loadStore)
+
+    printf("\n");
 }
 
-// --------------------------------- 3 -  END of Send Platform and receive Platform info --------------------------------- //
+// --------------------------------- 2 -  END of Send Platform and receive Platform info --------------------------------- //
 
 
 

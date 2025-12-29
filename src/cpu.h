@@ -1,6 +1,5 @@
 #pragma once
 #include "typedef.h"
-#include "lib_json.h"
 
 // --------------------------------- External Variables --------------------------------- //
 
@@ -27,16 +26,24 @@ extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
 extern bool quirk_display_wait;
 extern char *filename;
 // GUI
-extern bool gui_menu_quirks_inactive;
+// extern bool gui_menu_quirks_inactive;
+// extern bool gui_menu_core_inactive; 
 extern char gui_statusbar_msg[120];
 // GUI DEBUG OPC
 extern char guiDebug_opc_description_msg[50];
 
 // --------------------------------- External Functions --------------------------------- //
+// Quirks
+extern void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_sha1);
 // Lib
-extern void handle_quirks(char *rom_sha1);
 extern void load_rom(char *filename, unsigned char *mem, unsigned int mem_size);
-extern RomInfo file_size_and_hash(char *filename);
+extern ROM_header file_size_and_hash(char *filename);
+// Lib_json
+extern DB_PROGRAM_rom_info JSON_DB_query_program(const char *sha1);
+extern int                 JSON_DB_query_platform(const char *platform_id, DB_PROGRAM_platform_info *out);
+extern void                JSON_DB_print_platform(const DB_PROGRAM_platform_info *p);
+
+
 // Input
 extern void input_keyboard_remaps(char *rom_sha1);
 // CHIP-8
@@ -125,7 +132,10 @@ bool            cosmac_vip_hw_2d8;           // Allow interpreter to understand 
                                              // (cosmac vip hardware routine call needed by CHIP8 hybrid CLOCK program)
 // Buggy Spaceflight 2091 rom workaround
 bool            workaround_Fx1E_Spacefight;	// Apply an workaround on FX1E to handle an bugged version of Spacefight 2091 rom
-   
+// CHIP-8 Core / Variant
+int             core = 0;                    // 0 = Cosmac VIP (Original), 1 = Modern CHIP-8, 2 = SuperCHIP 1.1
+int             core_current = 0;            // Detect core changes to reset the quirks
+bool            core_autodetection_enabled;  // Automatically try to load the core from programs.json
 
 // -------------------------------------- Functions ------------------------------------- //
 void cpu_initialize(void);

@@ -50,18 +50,19 @@ extern unsigned char display_pixel_ON_color;
 extern unsigned char display_pixel_OFF_color;
 extern bool debug_pixels;
 
-// Quirks
+// CHIP-8 Quirks
 extern bool quirk_Memory_IncByX_Fx55_Fx65;
 extern bool quirk_Memory_LeaveI_Fx55_Fx65;
 extern bool quirk_Shifting_legacy_8xy6_8xyE;
 extern bool quirk_Wrap_Dxyn;
+extern bool quirk_Jump_with_offset_Bnnn;
+extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
+extern bool quirk_display_wait;
+// Other platforms
 extern bool quirk_Resize_SCHIP_00FE_00FF;
 extern bool quirk_Scroll_SCHIP_00CN_00FB_00FC;
 extern bool quirk_ETI660_64x32_screen;
-extern bool quirk_Jump_with_offset_Bnnn;
 extern bool quirk_LoRes_Wide_Sprite_Dxy0;
-extern bool quirk_VF_Reset_8xy1_8xy2_8xy3;
-extern bool quirk_display_wait;
 
 // Workarounds
 extern bool workaround_Fx1E_Spacefight;

@@ -238,8 +238,82 @@ int menu(struct nk_context *ctx)
 
         // ----------------------------------- Menu EMULATION ----------------------------------- //
         nk_layout_row_push(ctx, 80);
-        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 400)))
+        if (nk_menu_begin_label(ctx, "Emulation", NK_TEXT_LEFT, nk_vec2(220, 420)))
         {
+            nk_layout_row_dynamic(ctx, 25, 1);
+            if ( nk_checkbox_label(ctx, "Auto detect CORE", &core_autodetection_enabled) ) {
+                if ( core_autodetection_enabled ) {
+                    gui_menu_core_inactive = true;
+                } else {
+                    gui_menu_core_inactive = false;
+                }
+            }
+
+            if (nk_tree_push(ctx, NK_TREE_NODE, "CHIP-8 CORE / Variant", NK_MAXIMIZED))
+            {
+
+                // Disable Core menu
+                if ( gui_menu_core_inactive ) {
+                    nk_widget_disable_begin(ctx);
+                }
+
+                static int option;
+                option = core;
+
+                nk_layout_row_static(ctx, 20, 172, 1);
+                option = nk_option_label(ctx, "1: CHIP-8 (Cosmac VIP)",  option == 0) ? 0 : option;
+                option = nk_option_label(ctx, "2: CHIP-8 (Modern)",  option == 1) ? 1 : option;
+                option = nk_option_label(ctx, "3: SuperCHIP 1.1 (beta)",  option == 2) ? 2 : option;
+
+                switch( option )
+                {
+                    // Original CHIP8
+                    case 0: {
+                        core = 0;
+                        // Detect core changes
+                        if ( core != core_current ) {
+                            // printf("Core changed to %d\n", core);
+                            // Update the current core
+                            core_current = core;
+                            handle_quirks(rom_info, platform_info, rom_header.hash_str);
+                        }
+
+                        break;
+                    }
+
+                    // Modern CHIP-8
+                    case 1: {
+                        core = 1;
+                        // Detect core changes
+                        if ( core != core_current ) {
+                            // printf("Core changed to %d\n", core);
+                            // Update the current core
+                            core_current = core;
+                            handle_quirks(rom_info, platform_info, rom_header.hash_str);
+                        }
+
+                        break;
+                    }
+
+                    // SuperCHIP 1.1
+                    case 2: {
+                        core = 2;
+                        // Detect core changes
+                        if ( core != core_current ) {
+                            // printf("Core changed to %d\n", core);
+                            // Update the current core
+                            core_current = core;
+                            handle_quirks(rom_info, platform_info, rom_header.hash_str);
+                        }
+
+                        break;
+                    }
+
+                }
+                nk_widget_disable_end(ctx);
+
+                nk_tree_pop(ctx);
+            }
 
             if (nk_tree_push(ctx, NK_TREE_NODE, "Emulator Theme", NK_MINIMIZED))
             {
@@ -407,28 +481,26 @@ int menu(struct nk_context *ctx)
         nk_layout_row_push(ctx, 55);
         if (nk_menu_begin_label(ctx, "Quirks", NK_TEXT_LEFT, nk_vec2(320, 200)))
         {
-            // Disable Quirks menu before rom loading
-            if ( gui_menu_quirks_inactive ) {
-                nk_widget_disable_begin(ctx);
-            }
-
             /* CHIP-8 Quirks */
-            if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MINIMIZED)) { 
+            if (nk_tree_push(ctx, NK_TREE_TAB, "CHIP-8", NK_MAXIMIZED)) { 
+                
+                // Disable Quirks menu before rom loading
+                if ( gui_menu_quirks_inactive ) {
+                    nk_widget_disable_begin(ctx);
+                }
 
-                nk_layout_row_dynamic(ctx, 20, 2);
+                nk_layout_row_dynamic(ctx, 24, 2);
                 nk_checkbox_label(ctx, "VF Reset", &quirk_VF_Reset_8xy1_8xy2_8xy3);
-                nk_checkbox_label(ctx, "Memory legacy", &quirk_Memory_IncByX_Fx55_Fx65);
                 if (nk_checkbox_label(ctx, "Display Wait", &quirk_display_wait)){
-
-
                     if ( quirk_display_wait ) {
                         SDL_RenderSetVSync(renderer, 1);
                     } else {
                         SDL_RenderSetVSync(renderer, 0);
                     }
-
                 };
+                nk_checkbox_label(ctx, "Memory Inc by X", &quirk_Memory_IncByX_Fx55_Fx65);
                 nk_checkbox_label(ctx, "Wrap", &quirk_Wrap_Dxyn);
+                nk_checkbox_label(ctx, "Memory Leave I", &quirk_Memory_LeaveI_Fx55_Fx65);
                 nk_checkbox_label(ctx, "Shifting", &quirk_Shifting_legacy_8xy6_8xyE);
                 nk_checkbox_label(ctx, "Jump with offset", &quirk_Jump_with_offset_Bnnn);
                 nk_tree_pop(ctx);
@@ -575,8 +647,10 @@ void gui_init(void)
     gui_pixel_logo_ON_color  = 0xFFFFFFFF; // White
 	gui_pixel_logo_OFF_color = 0xFF00FFAA; // Green
 
-    // Disable Quirks Menu until a rom is loaded
-    gui_menu_quirks_inactive = true;
+	// GUI
+	gui_menu_quirks_inactive = false; 	// Enable Quirks menu
+	core_autodetection_enabled = true;	// Try to locate core from programs.json database
+	gui_menu_core_inactive = true; 		// Disable Core Menu
 
     // Initialize msg string
     strcpy(gui_statusbar_msg, "No ROM loaded");

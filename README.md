@@ -214,7 +214,7 @@ Test memory leaks on binary:
 
 8) Disable old C Emulator
 
-9) Upgrade to SDL3
+9) Upgrade to SDL3 (Check if Nuklear will allow)
 
 
 ## GUI
@@ -240,3 +240,5 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 1) INPUT: When the first key is pressed, freeze the emulation by a second (with input_keyboard_remaps() enabled). Table and update value? Pointer?
 
 2) display_draw strange in main, review and set @60hz when debug or every cycle
+
+3) display_EMULATOR_RES_X e display_EMULATOR_RES_Y com tipos diferentes (procurar por unsigned)

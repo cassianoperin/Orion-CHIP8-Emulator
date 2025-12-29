@@ -9,13 +9,60 @@ void cpu_reset(void) {
 	// Initialize
 	cpu_initialize();
 
-	RomInfo rom;
+	// Get the rom size and sha1 hash
+	rom_header = file_size_and_hash(filename);
 
-	// Keep the rom size
-	rom = file_size_and_hash(filename);
+	// PROGRAMS.JSON Lookup - Send the hash and receive program information from database
+	rom_info = JSON_DB_query_program(rom_header.hash_str);
+	// JSON_DB_print_program(&rom_info);
+	// printf("\n\n\n\nChosen Platform: %s\n\n\n\n", rom_info.chosen_platform);
+
+	// PLATFORMS.JSON Lookup - Send the platform and receive the platform info
+	if (rom_info.chosen_platform[0] != '\0') {
+		if (JSON_DB_query_platform(rom_info.chosen_platform, &platform_info) == 0) {
+			// Plataform located, print information
+			// JSON_DB_print_platform(&platform_info);
+
+			if ( core_autodetection_enabled ) {
+				// Update the core based on Platform information from database
+				if (strcmp(rom_info.chosen_platform, "originalChip8") == 0) {
+					if ( core == 0 ) {
+						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
+					} else {
+						core = 0;
+						core_current = 0;
+						printf("Core set to %s\n", platform_info.name);
+					}
+
+				} else if (strcmp(rom_info.chosen_platform, "modernChip8") == 0) {
+					if ( core == 1 ) {
+						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
+					} else {
+						core = 1;
+						core_current = 1;
+						printf("Core set to %s\n", platform_info.name);
+					}
+				} else if (strcmp(rom_info.chosen_platform, "superchip") == 0) {
+					if ( core == 2 ) {
+						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
+					} else {
+						core = 2;
+						core_current = 2;
+						printf("Core set to %s\n", platform_info.name);
+					}			
+				} else {
+					printf("ERROR: Chosen platform %s not identified yet!\n", rom_info.chosen_platform);
+				}
+			}
+		} else {
+			printf("Platform '%s' not found on platforms.json database!\n", rom_info.chosen_platform);
+		}
+	}
+
+	
 
 	// If a rom is bigger than chip8 memory (invalid game or program)
-	if ( rom.file_len > (4096-512) ) {
+	if ( rom_header.file_len > (4096-512) ) {
 		cpu_initialize();
 
 		// Print a message
@@ -27,61 +74,19 @@ void cpu_reset(void) {
 		load_rom(filename, Memory, sizeof(Memory));
 		
 		// Print SHA1 Hash
-		printf("SHA1:\t\t%s\n", rom.hash_str);
+		printf("SHA1:\t\t%s\n", rom_header.hash_str);
 
 		// Check for Quirks
-		handle_quirks(rom.hash_str);
+		handle_quirks(rom_info, platform_info, rom_header.hash_str);
 
 		// Check for workarounds and exceptions
-		handle_workarounds(rom.hash_str);
-
-
-		// -------- JSON DATABASE LOOKUP START -------- //
-
-		// // Get the ID
-		// int json_rom_id = json_search_id(rom.hash_str);
-		// if (json_rom_id >= 0) {
-		// 	printf("JSON Database:\tID %d\n", json_rom_id);
-		// } else {
-		// 	printf("JSON Database:\tHash not found in database: %s\n", rom.hash_str);
-		// }
-		// printf("DEBUG hash_str = '%s'\n", rom.hash_str);
-
-		// Send the hash and receive program information
-		RomResult rom_info;
-		int ret = find_rom_by_hash(rom.hash_str, &rom_info);
-		if(ret != FIND_ROM_OK){
-			fprintf(stderr, "Error: %s\n",
-					find_rom_strerror(ret));
-			return;
-		}
-		print_rom_result(&rom_info);
-		printf("\n\n\n\nChosen Platform: %s\n\n\n\n", rom_info.chosen_platform);
-
-		// Send the platform and receive the platform info
-		PlatformInfo platform;
-		if (load_platform_by_id(rom_info.chosen_platform, &platform) == 0) {
-			// Plataforma encontrada, imprime informações
-			print_platform_info(&platform);
-		} else {
-			printf("Platform '%s' not found!\n", rom_info.chosen_platform);
-		}
-
-		// // Test 
-		// if (platform.quirks.logic.present) {
-		// printf("'logic' quirk exist with value: %s\n",
-		// 	platform.quirks.logic.value ? "true" : "false");
-		// } else {
-		// 	printf("'logic' quirk is not defined on this platform.\n");
-		// }
-
-		// --------- JSON DATABASE LOOKUP END --------- //
+		handle_workarounds(rom_header.hash_str);
 
 		// Load Fonts
 		cpu_load_fonts();
 
 		// Keyboard remaps
-		input_keyboard_remaps(rom.hash_str);
+		input_keyboard_remaps(rom_header.hash_str);
 
 		// Update StatusBar message
 		strcpy(gui_statusbar_msg, "ROM loaded");
@@ -99,7 +104,7 @@ void cpu_reset(void) {
 	cycle_cpu = 0;
 
 	// Release memory used by hash string after use
-	free(rom.hash_str);
+	free(rom_header.hash_str);
 }
 
 void cpu_initialize(void) {
@@ -122,36 +127,6 @@ void cpu_initialize(void) {
 			display_pixels[i] = display_pixel_OFF_color;
 	}
 
-	// New quirk pattern
-	quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset) - OK
-	quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
-	quirk_Memory_LeaveI_Fx55_Fx65	= false;		// Leave I untouched
-	quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
-	quirk_Jump_with_offset_Bnnn		= false;	// Jumping
-	quirk_display_wait				= false;	// Display wait
-	quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
-
-    // PlatformQuirk memoryIncrementByX;
-    // PlatformQuirk memoryLeaveIUnchanged;
-
-    // PlatformQuirk logic;
-
-	// // New quirk pattern
-	// quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// VF Reset
-	// quirk_Memory_legacy_Fx55_Fx65	= true;		// Memory
-	// quirk_display_wait				= false;	// Display wait
-	// quirk_Wrap_Dxyn					= false;	// Clipping
-	// quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
-	// quirk_Jump_with_offset_Bnnn		= false;	// Jumping
-
-	// // ETI
-	// quirk_ETI660_64x32_screen        	= false;
-	// // SCHIP
-	// quirk_Resize_SCHIP_00FE_00FF         = true;
-	// quirk_LoRes_Wide_Sprite_Dxy0         = false;
-	// quirk_Scroll_SCHIP_00CN_00FB_00FC    = false;
-	// Keyboard_slow_press                  = false;
-
 	// SCHIP Specific Variables
 	cpu_SCHIP_mode 		 = false;
 	cpu_SCHIP_LORES_mode = false;
@@ -168,9 +143,6 @@ void cpu_initialize(void) {
 
 	// Draw flag
 	cpu_draw_flag = 0;
-
-	// GUI
-	gui_menu_quirks_inactive = false; // Enable Quirks menu
 
 	// Debug messages
 	strcpy(guiDebug_opc_description_msg, "");
@@ -531,7 +503,7 @@ void cpu_invalid_opcode(unsigned short opc) {
 		cpu_rom_loaded = false;
 		// Return to original menu state
 		// quirk_display_wait = true;
-		gui_menu_quirks_inactive = true;
+		// gui_menu_quirks_inactive = true;
 }
 
 // Fetch (read the Opcode from PC and PC+1 bytes) and increment PC
