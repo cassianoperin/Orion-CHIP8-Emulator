@@ -71,7 +71,7 @@ void cpu_reset(void) {
 		}
 	} else {
 		// Disable core autodetection and enable menu
-		printf("Cannot load chosen platform from PROGRAMS.JSON database! Disabling Core auto detection");
+		printf("Cannot load chosen platform from PROGRAMS.JSON database! Disabling Core auto detection\n");
 		core_autodetection_enabled = false;
 		gui_menu_core_inactive = false;
 	}
@@ -189,7 +189,11 @@ void cpu_load_fonts(void) {
 
 }
 
-// Detected buggy version of Spaceflight and Clock program to apply workarounds and exceptions
+// Workarounds
+// - Detected buggy version of Spaceflight
+// - Clock program HybridVIP 0xxx opcode (02d8 hardware instruction)
+// - CHIP-8 c8_test.ch8 core and quirks
+// - CHIP-8 BC_test.ch8 core
 void handle_workarounds(char *rom_sha1) {
 
 	// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
@@ -200,10 +204,42 @@ void handle_workarounds(char *rom_sha1) {
 	}
 
 	// Check for a buggy rom version of Game "Space flight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
-	if ( !strcmp(rom_sha1, "aa4f1a282bd64a2364102abf5737a4205365a2b4") ) {
+	if ( !strcmp(rom_sha1, "aa4f1a282bd64a2364102abf5737a4205365a2b4") )
+	{
 		workaround_Fx1E_Spacefight = true;
 		printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled\n");
 	}
+
+	// Correct the core and quirks for c8_test program
+	if ( !strcmp(rom_sha1, "8e592d3620481e00ea36d29765b95287c7349a70") )	// Program: c8_test.ch8
+	{
+		printf("CHIP-8 c8_test workaround:\nCHIP-8 CORE: Original CHIP-8 (Cosmac VIP)\n'Quirks applied + Memory Leave I\n\n");
+		core = 0;
+		core_current = 0;
+		quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// Logic (VF Reset)
+		quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
+		quirk_Memory_LeaveI_Fx55_Fx65	= true;	// Leave I untouched
+		quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
+		quirk_Jump_with_offset_Bnnn		= false;	// Jumping
+		quirk_display_wait				= true;		// Display wait
+		quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
+	}
+
+	// Correct the core and quirks for CHIP-8 BC_test.ch8
+	if ( !strcmp(rom_sha1, "9df1689015a0d1d95144f141903296f9f1c35fc5") )	// Program: BC_test.ch8
+	{
+		printf("CHIP-8 BC_test.ch8 workaround:\nCHIP-8 CORE: SuperCHIP 1.1\nQuirks applied'\n\n");
+		core = 2;
+		core_current = 2;
+		quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset)
+		quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
+		quirk_Memory_LeaveI_Fx55_Fx65	= true;		// Leave I untouched
+		quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
+		quirk_Jump_with_offset_Bnnn		= true;		// Jumping
+		quirk_display_wait				= false;	// Display wait
+		quirk_Shifting_legacy_8xy6_8xyE	= true;		// Shifting
+	}
+
 }
 
 // Debug

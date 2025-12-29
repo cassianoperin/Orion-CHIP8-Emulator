@@ -107,7 +107,7 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 		{
 			// Original CHIP8
 			case 0: {
-				quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// Logic (VF Reset) - OK
+				quirk_VF_Reset_8xy1_8xy2_8xy3	= true;		// Logic (VF Reset)
 				quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
 				quirk_Memory_LeaveI_Fx55_Fx65	= false;	// Leave I untouched
 				quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
@@ -120,7 +120,7 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 
 			// Modern CHIP-8
 			case 1: {
-				quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset) - OK
+				quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset)
 				quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
 				quirk_Memory_LeaveI_Fx55_Fx65	= false;	// Leave I untouched
 				quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
@@ -133,7 +133,7 @@ void handle_quirks(DB_PROGRAM_rom_info r, DB_PROGRAM_platform_info p, char *rom_
 
 			// Superchip 1.1
 			case 2: {
-				quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset) - OK
+				quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset)
 				quirk_Memory_IncByX_Fx55_Fx65	= false;	// I incremented by X or X+1
 				quirk_Memory_LeaveI_Fx55_Fx65	= true;		// Leave I untouched
 				quirk_Wrap_Dxyn					= false;	// Wrap (Clipping)
