@@ -48,12 +48,13 @@ extern int win_debug_opc(struct nk_context *ctx);
 // Window size
 unsigned int display_WINDOW_WIDTH_X;
 unsigned int display_WINDOW_HEIGHT_Y;
-
-// Display (Screen size)
+unsigned int display_menu_heigth;
+unsigned int display_WINDOW_PIXELS_X; // Main Window X pixel number (ORION LOGO)
+unsigned int display_WINDOW_PIXELS_Y; // Main Window Y pixel number (ORION LOGO)
+// Emulator Display 
 unsigned int display_EMULATOR_RES_X;
 unsigned int display_EMULATOR_RES_Y;
 unsigned int display_EMULATOR_RES_SCALE;
-unsigned int display_menu_heigth;
 
 bool display_fullscreen;
 // Colors

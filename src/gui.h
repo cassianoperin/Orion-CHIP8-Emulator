@@ -56,8 +56,10 @@ extern bool sound_enabled;
 // Display
 extern unsigned int display_WINDOW_WIDTH_X;
 extern unsigned int display_WINDOW_HEIGHT_Y;
-extern unsigned int display_EMULATOR_RES_X;
-extern unsigned int display_EMULATOR_RES_Y;
+// extern unsigned int display_EMULATOR_RES_X;
+// extern unsigned int display_EMULATOR_RES_Y;
+extern unsigned int display_WINDOW_PIXELS_X;
+extern unsigned int display_WINDOW_PIXELS_Y;
 extern unsigned int display_EMULATOR_RES_SCALE;
 extern unsigned int display_WINDOW_WIDTH_X_tmp;
 extern unsigned int display_WINDOW_HEIGHT_Y_tmp;

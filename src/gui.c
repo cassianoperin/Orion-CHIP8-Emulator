@@ -405,7 +405,7 @@ int menu(struct nk_context *ctx)
                     display_WINDOW_WIDTH_X_tmp = display_WINDOW_WIDTH_X;
                     display_WINDOW_HEIGHT_Y_tmp = display_WINDOW_HEIGHT_Y;
                     display_EMULATOR_RES_SCALE = 9;
-                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 4, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
+                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE) + 4, (display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE) + 34 ) );
 
                     // Set debug resolution (720p)
                     display_WINDOW_WIDTH_X		= 1280;
@@ -435,7 +435,7 @@ int menu(struct nk_context *ctx)
                     SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
                     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
                     // Draw Emulator Window
-                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE ));
+                    nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE, display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE ));
                 }
 
 
@@ -464,7 +464,7 @@ int menu(struct nk_context *ctx)
             // Check if the scale was changed and update the window size
             if ( initial_scale_value != display_EMULATOR_RES_SCALE) {
                 // Resize Emulator Window
-                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 4, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
+                nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE) + 4, (display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE) + 34 ) );
             }
 
             nk_widget_disable_end(ctx);
@@ -560,8 +560,8 @@ int menu(struct nk_context *ctx)
         const int popup_size_x = 420;
         const int popup_size_y = 140;
         const int popup_size_header = 20;
-        const int popup_initial_x_pos = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE / 2 - popup_size_x / 2;
-        const int popup_initial_y_pos = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+        const int popup_initial_x_pos = display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE / 2 - popup_size_x / 2;
+        const int popup_initial_y_pos = display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
 
         struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
         if (nk_popup_begin(ctx, NK_POPUP_STATIC, "About", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))
@@ -582,8 +582,8 @@ int menu(struct nk_context *ctx)
         const int popup_size_x = 500;
         const int popup_size_y = 200;
         const int popup_size_header = 20;
-        const int popup_initial_x_pos = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE  / 2 - popup_size_x / 2;
-        const int popup_initial_y_pos = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
+        const int popup_initial_x_pos = display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE  / 2 - popup_size_x / 2;
+        const int popup_initial_y_pos = display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE / 2 - popup_size_y / 2 - popup_size_header;
 
         struct nk_rect s = {popup_initial_x_pos, popup_initial_y_pos, popup_size_x, popup_size_y};
         if (nk_popup_begin(ctx, NK_POPUP_STATIC, "CHIP-8 Quirk Help", NK_WINDOW_BORDER | NK_WINDOW_CLOSABLE, s))

@@ -7,11 +7,13 @@ bool display_init(void)
 	bool success = true;
 
 	// Variables
-	// Menus height sum
-	display_menu_heigth = 36+25;
-	// Main Window
-	display_WINDOW_WIDTH_X		= 640;
-	display_WINDOW_HEIGHT_Y 	= 320 + display_menu_heigth;
+	// ---- Main Window ---- //
+	display_menu_heigth 		= 36+25;	// Menus height sum
+	display_WINDOW_WIDTH_X		= 640;		// Main Window Width
+	display_WINDOW_HEIGHT_Y 	= 320 + display_menu_heigth;	// Main Window Height
+	display_WINDOW_PIXELS_X		= 64;		// Main Window X pixel number (ORION LOGO)
+	display_WINDOW_PIXELS_Y		= 32;		// Main Window Y pixel number (ORION LOGO)
+
 	// Emulator screen
 	display_EMULATOR_RES_X  	   = 64;
 	display_EMULATOR_RES_Y		   = 32;
@@ -33,9 +35,9 @@ bool display_init(void)
 	else
 	{
 		// Create window
-		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI );
-		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN);
+		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE, display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI );
+		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE, display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		// window = SDL_CreateWindow( "CHIP8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_WINDOW_PIXELS_X * display_EMULATOR_RES_SCALE, display_WINDOW_PIXELS_Y * display_EMULATOR_RES_SCALE, SDL_WINDOW_SHOWN);
 		window = SDL_CreateWindow( "ORION CHIP-8 Emulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y, SDL_WINDOW_SHOWN);
 		if( window == NULL )
 		{
@@ -59,7 +61,7 @@ bool display_init(void)
 				success = false;
 			} else {
 				// Create texture
-				texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, display_EMULATOR_RES_X, display_EMULATOR_RES_Y);
+				texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, display_WINDOW_PIXELS_X, display_WINDOW_PIXELS_Y);
 				if( renderer == NULL )
 				{
 					printf( "Texture could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -106,7 +108,7 @@ bool display_draw(void)
 	}
 
 	// Update the Screen
-	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_EMULATOR_RES_X * sizeof(uint32_t));
+	SDL_UpdateTexture(texture, NULL, gui_pixels_logo, display_WINDOW_PIXELS_X * sizeof(uint32_t));
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 
 	// GUI flags
@@ -200,5 +202,5 @@ void draw_graphics_console(void) {
 
 void display_updateWindowSize(unsigned int pixel_scale)
 {
-	SDL_SetWindowSize(window, display_EMULATOR_RES_X * pixel_scale , display_EMULATOR_RES_Y * pixel_scale);
+	SDL_SetWindowSize(window, display_WINDOW_PIXELS_X * pixel_scale , display_WINDOW_PIXELS_Y * pixel_scale);
 }
