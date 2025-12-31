@@ -62,13 +62,13 @@ void win_emulator(struct nk_context *ctx)
             win_height = display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE;
             win_width  = display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE;
         }
-
+        
         if (canvas_begin(ctx, &canvas, window_flags, 0, 36, win_width , win_height , nk_rgb(bg_R,bg_G,bg_B))) {
             float x = canvas.painter->clip.x, y = canvas.painter->clip.y;
 
             int rect_size = display_EMULATOR_RES_SCALE;
 
-            // Screen calibration
+            // // Screen calibration
             // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*0, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
             // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*1, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
             // nk_fill_rect(canvas.painter,   nk_rect(x + rect_size*2, y + 0, rect_size, rect_size), 0, nk_rgb(255,255,255));
@@ -91,22 +91,23 @@ void win_emulator(struct nk_context *ctx)
             // Fill canvas with pixel array
             int line, column, index = 0;
 
-            while ( index < 2048 )
+            // while ( index < 8192 )
+            while ( index < (display_EMULATOR_RES_X * display_EMULATOR_RES_Y) )
             {
                 // Lines
-                for ( line = 0 ; line < 32 ; line ++ ) {
+                for ( line = 0 ; line < display_EMULATOR_RES_Y ; line ++ ) {
                     // 00 ..  63
                     // 64 .. 127
 
                     // Columns
-                    for ( column = 0 ; column < 64 ; column ++ ) {
+                    for ( column = 0 ; column < display_EMULATOR_RES_X ; column ++ ) {
                         if ( display_pixels[index+(int)column] == display_pixel_ON_color ) {
                             nk_fill_rect(canvas.painter, nk_rect(x + rect_size*(float)column, y + rect_size*(float)line, rect_size, rect_size), 0, nk_rgb(px_R, px_G, px_B));
                         }
                     }
 
                     // Increment the index
-                    index += 64;
+                    index += display_EMULATOR_RES_X;
                 }
             }
 

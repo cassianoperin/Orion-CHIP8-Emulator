@@ -289,6 +289,12 @@ void cpu_interpreter(void) {
 					opc_chip8_00EE();
 					break;
 
+				// 00FF (SCHIP)
+				// 00FF - In ETI-660, 00FF is a NO OP (do nothing)
+				case 0x00FF:
+					opc_schip_00FF();
+					break;
+
 				default:
 					/* 0NNN - RCA 1802 routine (Cosmac VIP) */
 					if (cosmac_vip_hw_2d8) {

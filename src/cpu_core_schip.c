@@ -33,6 +33,7 @@ void opc_schip_00FF(void) {
 	// Set SCHIP Resolution
 	display_EMULATOR_RES_X = 128;
 	display_EMULATOR_RES_Y = 64;
+	display_EMULATOR_RES_SCALE = 5;
 
 	// if Resize_Quirk_00FE_00FF {
 	// 	// Clear the screen when changing graphic mode
@@ -45,7 +46,7 @@ void opc_schip_00FF(void) {
 	PC += 2;
 
     if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
+		printf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
 
 }
 

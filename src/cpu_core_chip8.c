@@ -424,7 +424,7 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 
 	// Print header of pixels to console
 	if ( debug_pixels )
-		printf("Sprite (x3): Position Line: %d\tColumn:%d\tBytes: %d\n", V[y]%64, V[x]%64, n);
+		printf("Sprite (x3): Position Line: %d\tColumn:%d\tBytes: %d\n", V[y]%display_EMULATOR_RES_Y, V[x]%display_EMULATOR_RES_X, n);
 	
   	for (byte = 0; byte < n; byte++)
   	{
@@ -438,13 +438,13 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 		// --------- Row --------- //
 		if ( quirk_Wrap_Dxyn ) { 
 			// Slit the sprite between screen top and down
-			// if line (y) plus n bytes > 31
-			row = (Vy + byte) % 32;
+			// if line (y) plus n bytes > 31 or > 63
+			row = (Vy + byte) % display_EMULATOR_RES_Y;
 		} else {
 			// Do not split the sprite between screen top and down
-			// If the line (y) plus n bytes > 31, then do not print
-			row = ((Vy % 32) + byte);
-			if ( row > 31 ) {
+			// If the line (y) plus n bytes > 31 or > 63, then do not print
+			row = ((Vy % display_EMULATOR_RES_Y) + byte);
+			if ( row > display_EMULATOR_RES_Y - 1 ) {
 				sprite = 0;
 			}
 		}
@@ -457,12 +457,12 @@ void opc_chip8_DXYN(unsigned char x, unsigned char y, unsigned char n) {
 			
 			// ------- Column -------- //
 			if ( quirk_Wrap_Dxyn ) {
-				column = (Vx + bit) % 64;
+				column = (Vx + bit) % display_EMULATOR_RES_X;
 			} else {
 				// Do not split the sprite between screen right and left
 				// If the row (x) plus number of bits > 63, then do not print
-				column = ((Vx% 64) + bit);
-				if ( column > 63 ) {
+				column = ((Vx % display_EMULATOR_RES_X) + bit);
+				if ( column > display_EMULATOR_RES_X - 1 ) {
 					bit_value = 0;
 				}
 			}

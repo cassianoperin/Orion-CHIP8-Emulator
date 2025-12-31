@@ -160,13 +160,13 @@ void draw_graphics_console(void) {
 
 	int line, column, index = 0;
 
-	while ( index < 2048 )
+	while ( index < (display_EMULATOR_RES_X * display_EMULATOR_RES_Y) )
 	{
 		// Add an border
 		printf("----------------------------------------------------------------------------------------------------------------------------------\n");
 
 		// Lines
-		for ( line = 0 ; line < 32 ; line ++ ) {
+		for ( line = 0 ; line < display_EMULATOR_RES_Y ; line ++ ) {
 
 			// Add an border
 			printf("|");
@@ -174,7 +174,7 @@ void draw_graphics_console(void) {
 			// 00 ..  63
 			// 64 .. 127
 			// Columns
-			for ( column = 0 ; column < 64 ; column ++ ) {
+			for ( column = 0 ; column < display_EMULATOR_RES_X ; column ++ ) {
 				if ( display_pixels[index+column] == display_pixel_ON_color ) {
 					// printf("[] ");
 					printf("X ");
@@ -188,7 +188,7 @@ void draw_graphics_console(void) {
 			printf("\n");
 
 			// Increment the index
-			index += 64;
+			index += display_EMULATOR_RES_X;
 		}
 	}
 
