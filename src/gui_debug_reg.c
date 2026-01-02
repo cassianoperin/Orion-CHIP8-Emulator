@@ -12,7 +12,7 @@ int win_debug_reg(struct nk_context *ctx)
     ctx->style.window.header.align = header_align;
 
     actual_window_flags = window_flags;
-    if (nk_begin(ctx, "Registers and Flags", nk_rect(0, 360, 580, 334), actual_window_flags))
+    if (nk_begin(ctx, "Registers and Flags", nk_rect(0, 328, 580, 366), actual_window_flags))
     {
         // Layouts
         static const float ratio_1column[] = {100};

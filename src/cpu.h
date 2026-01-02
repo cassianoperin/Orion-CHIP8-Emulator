@@ -31,6 +31,8 @@ extern bool gui_menu_core_inactive;
 extern char gui_statusbar_msg[120];
 // GUI DEBUG OPC
 extern char guiDebug_opc_description_msg[50];
+// Display
+extern unsigned int display_EMULATOR_RES_SCALE;
 
 // --------------------------------- External Functions --------------------------------- //
 // Quirks

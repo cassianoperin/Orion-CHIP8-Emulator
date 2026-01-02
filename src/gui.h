@@ -50,14 +50,15 @@ extern int          core;
 extern int          core_current;
 extern bool 	    cpu_pause;
 extern bool         core_autodetection_enabled;
+extern bool         cpu_SCHIP_mode;
 
 // Sound
 extern bool sound_enabled;
 // Display
 extern unsigned int display_WINDOW_WIDTH_X;
 extern unsigned int display_WINDOW_HEIGHT_Y;
-// extern unsigned int display_EMULATOR_RES_X;
-// extern unsigned int display_EMULATOR_RES_Y;
+extern unsigned int display_EMULATOR_RES_X;
+extern unsigned int display_EMULATOR_RES_Y;
 extern unsigned int display_WINDOW_PIXELS_X;
 extern unsigned int display_WINDOW_PIXELS_Y;
 extern unsigned int display_EMULATOR_RES_SCALE;
@@ -101,6 +102,4 @@ unsigned int gui_pixel_logo_OFF_color;
 void gui_init(void);
 int menu(struct nk_context *ctx);
 int status_bar(struct nk_context *ctx);
-
-
-extern void cpu_reset(void);
+void gui_debug_resize(void);

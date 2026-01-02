@@ -37,6 +37,7 @@ extern bool cpu_pause;
 extern bool cpu_debug_mode;
 extern bool cpu_rom_loaded;
 extern unsigned int CPU_CLOCK;
+extern bool cpu_SCHIP_mode;
 // Sound
 extern bool sound_enabled;
 // GUI
@@ -48,6 +49,8 @@ extern void cpu_reset(void);
 extern void cpu_interpreter(void);
 // Display
 extern void display_updateWindowSize(unsigned int pixel_scale);
+// GUI
+extern void gui_debug_resize(void);
 
 // ---------------------------------- Global Variables ---------------------------------- //
 bool            input_remap_flag;

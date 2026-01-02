@@ -297,46 +297,7 @@ void input_keyboard(void) {
 				// Debug
 				case SDLK_9:
 					cpu_debug_mode = !cpu_debug_mode;
-
-					if ( cpu_debug_mode ) {
-						// Resize main Window
-						display_EMULATOR_RES_SCALE_tmp = display_EMULATOR_RES_SCALE;
-						display_WINDOW_WIDTH_X_tmp = display_WINDOW_WIDTH_X;
-						display_WINDOW_HEIGHT_Y_tmp = display_WINDOW_HEIGHT_Y;
-						display_EMULATOR_RES_SCALE = 9;
-						nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, (display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE) + 4, (display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE) + 34 ) );
-
-						// Set debug resolution (720p)
-						display_WINDOW_WIDTH_X		= 1280;
-						display_WINDOW_HEIGHT_Y 	=  720;
-						SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
-						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
-						// Set Emulation Windows focus
-						nk_window_set_focus(ctx, "Emulator");
-					
-					} else {
-
-						// Set the default emulator message status in status bar
-						if ( cpu_rom_loaded )
-							strcpy(gui_statusbar_msg, "ROM loaded");
-						else
-							strcpy(gui_statusbar_msg, "No ROM loaded");
-
-						nk_window_set_focus(ctx, "Emulator");
-						
-						// Resize main Window
-						display_WINDOW_WIDTH_X     = display_WINDOW_WIDTH_X_tmp;
-						display_WINDOW_HEIGHT_Y    = display_WINDOW_HEIGHT_Y_tmp;
-						display_EMULATOR_RES_SCALE = display_EMULATOR_RES_SCALE_tmp;
-
-						// Return main window size
-						SDL_SetWindowSize (window, display_WINDOW_WIDTH_X, display_WINDOW_HEIGHT_Y);
-						SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-						// Draw Emulator Window
-						nk_window_set_bounds(ctx, "Emulator", nk_rect(0, 36, display_EMULATOR_RES_X * 1, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE ));
-					}
-
+					gui_debug_resize();
 
 					break;
 

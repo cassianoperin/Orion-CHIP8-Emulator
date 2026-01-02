@@ -53,10 +53,13 @@ void win_debug_sprite(struct nk_context *ctx)
 
         int x_pos, y_pos, x_length, y_height, rect_size;
         x_pos=582;
-        y_pos=360;
+        y_pos=328;
         x_length=270;
-        y_height=334;
+        y_height=366;
         rect_size = x_length / 8;
+
+            // if (nk_begin(ctx, "Registers and Flags", nk_rect(0, 328, 580, 366), actual_window_flags))
+
 
         if (canvas_begin(ctx, &canvas, NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_MINIMIZABLE,  \
                                                     x_pos, y_pos, x_length ,y_height , nk_rgb(0,0,0)))

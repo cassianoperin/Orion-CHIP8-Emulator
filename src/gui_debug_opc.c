@@ -13,11 +13,11 @@ int win_debug_opc(struct nk_context *ctx)
     ctx->style.window.header.align = header_align;
 
     actual_window_flags = window_flags;
-    if (nk_begin(ctx, "Disassembler", nk_rect(582, 36, 270, 322), actual_window_flags))
+    if (nk_begin(ctx, "Disassembler", nk_rect(518, 36, 334, 290), actual_window_flags))
     {
 
         // Line with 1 columns
-        static const float ratio_1column[] = {258};
+        static const float ratio_1column[] = {320};
         nk_layout_row(ctx, NK_STATIC, 130, 1, ratio_1column);
 
         // Opcode Group
@@ -87,7 +87,7 @@ int win_debug_opc(struct nk_context *ctx)
         }
 
         // Line with 1 columns
-        nk_layout_row(ctx, NK_STATIC, 130, 1, ratio_1column);
+        nk_layout_row(ctx, NK_STATIC, 90, 1, ratio_1column);
 
         // Opcode Group Next
         if (nk_group_begin(ctx, "OpcodesGrpNext", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
@@ -97,7 +97,7 @@ int win_debug_opc(struct nk_context *ctx)
                 nk_layout_row(ctx, NK_STATIC, 10, 3, ratio);
 
                 char str[50];
-                int opc_lines = 20;
+                int opc_lines = 14;
                 int opc_tmp = 0; 
 
                 // Show next opcodes

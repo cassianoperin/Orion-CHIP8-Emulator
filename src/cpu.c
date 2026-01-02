@@ -76,8 +76,6 @@ void cpu_reset(void) {
 		gui_menu_core_inactive = false;
 	}
 
-	
-
 	// If a rom is bigger than chip8 memory (invalid game or program)
 	if ( rom_header.file_len > (4096-512) ) {
 		cpu_initialize();
@@ -107,6 +105,21 @@ void cpu_reset(void) {
 
 		// Update StatusBar message
 		strcpy(gui_statusbar_msg, "ROM loaded");
+	}
+
+	// Update the Pixel Scale
+	if ( !cpu_SCHIP_mode ) { //CHIP-8 RESOLUTION MODE
+		if ( !cpu_debug_mode ) {
+			display_EMULATOR_RES_SCALE = 10;
+		} else {
+			display_EMULATOR_RES_SCALE = 8;
+		}
+	} else { // SUPERCHIP RESOLUTION MODE
+		if ( !cpu_debug_mode ) {
+			display_EMULATOR_RES_SCALE = 5;
+		} else {
+			display_EMULATOR_RES_SCALE = 4;
+		}
 	}
 
 	if ( cpu_rom_loaded ) {
