@@ -46,8 +46,20 @@ extern unsigned int   display_EMULATOR_RES_SCALE;
 extern unsigned char  display_pixel_ON_color;
 extern unsigned char  display_pixel_OFF_color;
 extern unsigned char  display_pixels[8192];
+// Quirks
+extern bool quirk_Wrap_Dxyn;
 
 
 // -------------------------------------- Functions ------------------------------------- //
+// Super-CHIP 1.0 opcodes
+// 00FD: Exit interpreter
+void opc_schip_00FE(void);
 void opc_schip_00FF(void);
-void opc_schip_DXY0(void);
+void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n);
+// FX75: Store V0..VX in RPL user flags (X <= 7)
+// FX85: Read V0..VX from RPL user flags (X <= 7)
+// ---------------------------- 04 Super-CHIP 1.1 opcodes ---------------------------- //
+void opc_schip_00CN(unsigned char n);
+// 00FB: Scroll right by 4 pixels; in low resolution mode, 2 pixels
+// 00FC: Scroll left by 4 pixels; in low resolution mode, 2 pixels
+void opc_schip_FX30(unsigned char x);

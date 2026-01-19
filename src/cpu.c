@@ -287,19 +287,23 @@ void cpu_interpreter(void) {
 	switch ( Opcode & 0xF000 )
 	{
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
-		// 0NNN: Execute RCA 1802 machine language routine at address NNN (needed for CHIP8 CLOCK program)
-		// 00E0: Clear the screen
-		// 00EE: Return from subroutine
-		case 0x0000: {  // 0NNN / 00E0 / 00EE
+		case 0x0000: {
 
 			switch (Opcode & 0x00FF) {
 
+				// 00E0 (CHIP-8) Clear the screen
 				case 0x00E0:
 					opc_chip8_00E0();
 					break;
 
+				// 00EE (CHIP-8) Return from subroutine
 				case 0x00EE:
 					opc_chip8_00EE();
+					break;
+				
+				// 00FE (SCHIP)
+				case 0x00FE:
+					opc_schip_00FE();
 					break;
 
 				// 00FF (SCHIP)
@@ -309,6 +313,18 @@ void cpu_interpreter(void) {
 					break;
 
 				default:
+
+					// 00CN (SCHIP)
+					if ((Opcode & 0x00F0) == 0x00C0) {
+						if ( cpu_SCHIP_mode ) {
+							opc_schip_00CN(n);
+							break;
+						} else {
+							cpu_invalid_opcode(Opcode);
+							break;
+						}
+					}
+
 					/* 0NNN - RCA 1802 routine (Cosmac VIP) */
 					if (cosmac_vip_hw_2d8) {
 
@@ -447,7 +463,18 @@ void cpu_interpreter(void) {
 
 		// ---------------------------- CHIP-8 Dxxx instruction set ---------------------------- //
 		case 0xD000: // Dxyn (CHIP-8)
-			opc_chip8_DXYN(x, y, n);
+
+			// 00CN (SCHIP)
+			if ( cpu_SCHIP_mode ) {
+				if ((Opcode & 0x000F) == 0x0000) {
+					opc_schip_DXY0(x, y, n);
+				} else {
+					opc_chip8_DXYN(x, y, n);
+				}
+			} else {
+				opc_chip8_DXYN(x, y, n);
+			}
+
 			break;
 
 		// ---------------------------- CHIP-8 Exxx instruction set ---------------------------- //
@@ -512,6 +539,11 @@ void cpu_interpreter(void) {
 				// Fx29 (CHIP-8)
 				case 0x0029:
 					opc_chip8_FX29(x);
+					break;
+
+				// Fx30 (SCHIP)
+				case 0x0030:
+					opc_schip_FX30(x);
 					break;
 
 				// Fx33 (CHIP-8)
@@ -594,41 +626,75 @@ void cpu_decode_opcode(int opc) {
 		// ---------------------------- CHIP-8 0xxx instruction set ---------------------------- //
         case 0x0000:
         {
-			switch(opc & 0x00F0)
+			switch(opc & 0x00FF)
             {
-				case 0x0000: // --0-
-                {
-					// Just to handle the not loaded memories, its not an opcode
-					break;
-				}
+				// case 0x0000: // --0-
+                // {
+				// 	// Just to handle the not loaded memories, its not an opcode
+				// 	break;
+				// }
 
                 case 0x00E0: // --E-
                 {
 					switch(opc & 0x000F)
 					{
 						// 0_E0
-						case 0x0000:
-						{
+						case 0x0000: {
 							sprintf(guiDebug_opc_description_msg, "CLS");
 							break;
 						}
 
 						// 0_EE
-						case 0x000E:
-						{
+						case 0x000E: {
 							sprintf(guiDebug_opc_description_msg, "RET  #%04X", Stack[SP]+2);
 							break;
 						}
+
+						// 00FF (SCHIP)
+						// 00FF - In ETI-660, 00FF is a NO OP (do nothing)
+						case 0x00FF: {
+							sprintf(guiDebug_opc_description_msg, "HIGH");
+							break;
+						}
+
 						default :
 						{
-							sprintf(guiDebug_opc_description_msg, "-");
-							// printf("Opcode 0: Nibble 4 not mapped: %04X\n\n", opc);
-							// exit(2);
+							// 00CN (SCHIP)
+							if ((Opcode & 0x00F0) == 0x00C0) {
+								if ( cpu_SCHIP_mode ) {
+									sprintf(guiDebug_opc_description_msg, "SCD %d lines", Opcode & 0x000F);
+									break;
+								} else {
+									sprintf(guiDebug_opc_description_msg, "-");
+								}
+							}
+
+
+							/* 0NNN - RCA 1802 routine (Cosmac VIP) */
+							if (cosmac_vip_hw_2d8) {
+
+								switch (Opcode & 0x0FFF) {
+
+									case 0x02D8:
+										sprintf(guiDebug_opc_description_msg, "CVH %d machine code", Opcode & 0x0FFF);
+										break;
+
+									default:
+										sprintf(guiDebug_opc_description_msg, "hybridVIP ");
+										break;
+								}
+
+							} else {
+								sprintf(guiDebug_opc_description_msg, "-");
+							}
+							break;
 						}
 					}
 
                     break;
                 }
+
+
 
                 default : {
 					sprintf(guiDebug_opc_description_msg, "-");

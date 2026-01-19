@@ -244,3 +244,6 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 
 2) display_draw strange in main, review and set @60hz when debug or every cycle
 
+3) void cpu_decode_opcode(int opc) BEM ERRADA
+
+4 - schip demo robot Position: 8303	Bigger than 2048 or 8192 x: 128 y:64 

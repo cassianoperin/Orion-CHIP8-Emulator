@@ -87,8 +87,11 @@ extern void opc_chip8_FX65(unsigned char x);
 // CHIP-8 Undocumented
 extern void opc_cosmac_vip_hw_2d8(void);
 // SCHIP
+extern void opc_schip_00FE(void);
 extern void opc_schip_00FF(void);
-extern void opc_schip_DXY0(void);
+extern void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n);
+extern void opc_schip_00CN(unsigned char n);
+extern void opc_schip_FX30(unsigned char x);
 // extern void opc_schip_00FE(void);
 
 // ---------------------------------- Global Constants ---------------------------------- //

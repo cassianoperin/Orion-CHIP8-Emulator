@@ -1,3 +1,6 @@
+// ---------------------------- Original HybridVIP opcodes ---------------------------- //
+//0XXX - Run hardware instruction XXX - 02D8 COSMAC VIP Machine Code Routine used by CLOCK Program
+
 #pragma once
 #include "typedef.h"
 
