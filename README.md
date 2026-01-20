@@ -247,3 +247,7 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 3) void cpu_decode_opcode(int opc) BEM ERRADA
 
 4 - schip demo robot Position: 8303	Bigger than 2048 or 8192 x: 128 y:64 
+
+5 - Debug pixel not dealing with 16x16 sprites
+
+6 - SCHIP lores tests

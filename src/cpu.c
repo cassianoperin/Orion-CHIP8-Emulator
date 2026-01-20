@@ -300,6 +300,30 @@ void cpu_interpreter(void) {
 				case 0x00EE:
 					opc_chip8_00EE();
 					break;
+
+				// 00FB (SCHIP)
+				case 0x00FB:
+					opc_schip_00FB();
+					break;
+				
+				// 00FC (SCHIP)
+				// //00FC (ETI-660) - Turn display off
+				case 0x00FC:
+					// // ETI-660 Opcode
+					// if Global.Hybrid_ETI_660_HW {
+					// 	opc_chip8_ETI660_00FC()
+					// 	break
+
+					// SCHIP Opcode
+					// } else {
+						opc_schip_00FC();
+						break;
+					// }
+
+				// 00FD (SCHIP)
+				case 0x00FD:
+					opc_schip_00FD();
+					break;
 				
 				// 00FE (SCHIP)
 				case 0x00FE:
@@ -559,6 +583,16 @@ void cpu_interpreter(void) {
 				// Fx65 (CHIP-8)
 				case 0x0065:
 					opc_chip8_FX65(x);
+					break;
+				
+				// FX75 (SCHIP)
+				case 0x0075:
+					opc_schip_FX75(x);
+					break;
+
+				// FX85 (SCHIP)
+				case 0x0085:
+					opc_schip_FX85(x);
 					break;
 
 				default:

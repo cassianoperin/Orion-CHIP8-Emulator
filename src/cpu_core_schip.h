@@ -38,6 +38,10 @@ extern bool             cpu_draw_flag;
 // extern unsigned char    key_FX0A;
 // extern bool             key_FX0A_pressed;
 extern bool            cpu_pause;
+extern unsigned char	RPL[8];
+// CPU Constants
+extern const int CHIP8_DEFAULT_CLOCK;
+extern const int SCHIP_DEFAULT_CLOCK;
 
 // Display
 extern unsigned int   display_EMULATOR_RES_X;
@@ -49,17 +53,23 @@ extern unsigned char  display_pixels[8192];
 // Quirks
 extern bool quirk_Wrap_Dxyn;
 
+// GUI
+extern char gui_statusbar_msg[120];
+
+// --------------------------------- External Functions --------------------------------- //
+// CPU
+extern void cpu_initialize(void);
 
 // -------------------------------------- Functions ------------------------------------- //
 // Super-CHIP 1.0 opcodes
-// 00FD: Exit interpreter
+void opc_schip_00FD(void);
 void opc_schip_00FE(void);
 void opc_schip_00FF(void);
 void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n);
-// FX75: Store V0..VX in RPL user flags (X <= 7)
-// FX85: Read V0..VX from RPL user flags (X <= 7)
+void opc_schip_FX75(unsigned char x);
+void opc_schip_FX85(unsigned char x);
 // ---------------------------- 04 Super-CHIP 1.1 opcodes ---------------------------- //
 void opc_schip_00CN(unsigned char n);
-// 00FB: Scroll right by 4 pixels; in low resolution mode, 2 pixels
-// 00FC: Scroll left by 4 pixels; in low resolution mode, 2 pixels
+void opc_schip_00FB(void);
+void opc_schip_00FC(void);
 void opc_schip_FX30(unsigned char x);

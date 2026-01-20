@@ -87,15 +87,21 @@ extern void opc_chip8_FX65(unsigned char x);
 // CHIP-8 Undocumented
 extern void opc_cosmac_vip_hw_2d8(void);
 // SCHIP
+extern void opc_schip_00FB(void);
+extern void opc_schip_00FC(void);
+extern void opc_schip_00FD(void);
 extern void opc_schip_00FE(void);
 extern void opc_schip_00FF(void);
 extern void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n);
 extern void opc_schip_00CN(unsigned char n);
 extern void opc_schip_FX30(unsigned char x);
 // extern void opc_schip_00FE(void);
+extern void opc_schip_FX75(unsigned char x);
+extern void opc_schip_FX85(unsigned char x);
 
 // ---------------------------------- Global Constants ---------------------------------- //
 const int CHIP8_DEFAULT_CLOCK = 500;
+const int SCHIP_DEFAULT_CLOCK = 1500;
 
 // ---------------------------------- Global Variables ---------------------------------- //
 unsigned char	Memory[4096];		        // Memory
@@ -142,6 +148,9 @@ int             core = 0;                    // 0 = Cosmac VIP (Original), 1 = M
                                              // 3 = hybridVIP
 int             core_current = 0;            // Detect core changes to reset the quirks
 bool            core_autodetection_enabled;  // Automatically try to load the core from programs.json
+
+// SCHIP
+unsigned char	RPL[8];                    // HP-48 RPL user flags
 
 // -------------------------------------- Functions ------------------------------------- //
 void cpu_initialize(void);

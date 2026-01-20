@@ -3,6 +3,22 @@
 #include <string.h>
 #include "cpu_core_schip.h"
 
+// --------------------------- SCHIP 1.0 --------------------------- //
+
+// SCHIP 1.0 - 00FD
+// Exit Emulator
+void opc_schip_00FD(void) {
+
+	if (cpu_debug_mode)
+        sprintf(cpu_debug_message, "SCHIP 00FD: Exit emulator");
+	
+	// Reset
+	cpu_initialize();
+
+	// Update StatusBar message
+	strcpy(gui_statusbar_msg, "No ROM loaded");
+}
+
 
 // SCHIP 1.0 - 00FE
 // Enable Low-Res Mode (64 x 32 resolution)
@@ -10,10 +26,9 @@ void opc_schip_00FE(void) {
 	// Disable SCHIP Mode
 	cpu_SCHIP_mode = true;
 	cpu_SCHIP_LORES_mode = true;
-	// scrollQuirks_00CN_00FB_00FC = true
-
+	
 	// Set the clock to CHIP-8 Speed
-	CPU_CLOCK = 500;
+	CPU_CLOCK = CHIP8_DEFAULT_CLOCK;
 
 	// Set SCHIP Resolution
 	display_EMULATOR_RES_X = 64;
@@ -24,10 +39,10 @@ void opc_schip_00FE(void) {
 		display_EMULATOR_RES_SCALE = 8;
 	}
 
-	// if Resize_Quirk_00FE_00FF {
-	// 	// Clear the screen when changing graphic mode
-	// 	Graphics = [128 * 64]byte{}
-	// }
+	// Clear the screen when changing graphic mode
+	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+		display_pixels[i] = display_pixel_OFF_color;
+	}
 
 	if ( cpu_debug_mode )
 		printf(cpu_debug_message, "SCHIP 00FE: Enable low res (64 x 32) mode");
@@ -40,10 +55,9 @@ void opc_schip_00FE(void) {
 void opc_schip_00FF(void) {
 	cpu_SCHIP_mode = true;
 	cpu_SCHIP_LORES_mode = false;
-	// scrollQuirks_00CN_00FB_00FC = false;
 
 	// Set the clock to SCHIP
-	CPU_CLOCK = 1500;
+	CPU_CLOCK = SCHIP_DEFAULT_CLOCK;
 
 	// Set SCHIP Resolution
 	display_EMULATOR_RES_X = 128;
@@ -54,56 +68,18 @@ void opc_schip_00FF(void) {
 		display_EMULATOR_RES_SCALE = 4;
 	}
 
-	// if Resize_Quirk_00FE_00FF {
-	// 	// Clear the screen when changing graphic mode
-	// 	Graphics = [128 * 64]byte{}
-	// }
-
-    // SDL_SetWindowSize (window, display_EMULATOR_RES_X * display_EMULATOR_RES_SCALE, display_EMULATOR_RES_Y * display_EMULATOR_RES_SCALE);
-    // SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
-    if ( cpu_debug_mode )
-		printf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
-
-}
-
-
-// SCHIP 1.1 - 00CN
-// Scroll display N lines down
-void opc_schip_00CN(unsigned char n) {
-
-	unsigned int i, shift = n * 128;
-
-	cpu_SCHIP_mode = true;
-
-	// // If in SCHIP Low Res mode, scroll N/2 lines only
-	// if scrollQuirks_00CN_00FB_00FC {
-	// 	shift = (int(x) * 128) / 2
-	// }
-
-	// Shift Right N lines on Graphics Array
-	for ( i = (display_EMULATOR_RES_X * display_EMULATOR_RES_Y) - 1 ; i >= shift ; i-- )
-	{
-		display_pixels[i] = display_pixels[i-shift];
-	}
-
-	// Clean the shifted display bytes
-	for ( i = 0 ; i < shift ; i++ ) {
+	// Clear the screen when changing graphic mode
+	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
 		display_pixels[i] = display_pixel_OFF_color;
 	}
 
-	if ( cpu_debug_mode )
-		printf(cpu_debug_message, "SCHIP 00CN: Scroll display %d lines down", n);
+    if ( cpu_debug_mode )
+		printf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
 }
 
 
-
-// Dxyn - DRW Vx, Vy, nibble
+// SCHIP - DXY0 - draw 16x16 sprites
 // Draw n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
-
-// SCHIP - DXY0
-// SCHIP in HI-RES will draw 16x16 sprites
-// SCHIP LOW-RES MODE will draw 16x8 sprites
 void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 	
 	// Draw in Chip-8 Low Resolution mode
@@ -123,8 +99,6 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 	// Clear the carry before start
 	V[0xF] = 0;
 
-
-
 	// Print N Bytes from address I in V[x]V[y] position of the screen
 	// Each byte is a line of 8 bits
 
@@ -136,13 +110,13 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
   	{
 		
 		// if in LOW-RES (16x8), update to traditional sprite storage mode in memory
-		if ( cpu_SCHIP_LORES_mode) {
-			sprite = Memory[I+byte];
-		} else {
+		// if ( cpu_SCHIP_LORES_mode) {
+		// 	sprite = Memory[I+byte];
+		// } else {
 			// if in HI-RES (16x16) get the bytes in pairs
 			sprite = Memory[I+(byte*2)];
 			sprite2 = Memory[I+(byte*2)+1];
-		}
+		// }
 
 		// // Print byte to console
 		// if ( debug_pixels )
@@ -197,7 +171,7 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 		}
 
 
-		if ( !cpu_SCHIP_LORES_mode ) {
+		// if ( !cpu_SCHIP_LORES_mode ) {
 			// Print 8 bits from SECOND SPRITE
 			for ( bit = 0; bit < 8; bit++ ) {
 
@@ -229,12 +203,9 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 				sprite2 <<= 1;
 
 			}
-		}
+		// }
 
  	}
-
-
-
 
 	// // Print a new line after the pixel
 	// if ( debug_pixels )
@@ -242,10 +213,126 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 
 	// Ask to draw screen
 	cpu_draw_flag = true;	
-	
 }
 
-// SCHIP Fx30 - LD F, Vx
+// SCHIP 1.0 - FX75
+// Store V0 through VX to HP-48 RPL user flags (X <= 7).
+void opc_schip_FX75(unsigned char x) {
+	for (int i = 0; i <= x; i++) {
+		RPL[i] = V[i];
+	}
+
+	if (cpu_debug_mode)
+	sprintf(cpu_debug_message, "SCHIP Fx75: Store registers V[0] through V[x(%d)] in RPL user flags from 0 to %d", x, x);
+
+}
+
+// SCHIP 1.0 - FX85
+// Read V0 through VX to HP-48 RPL user flags (X <= 7).
+void opc_schip_FX85(unsigned char x) {
+	for (int i = 0; i <= x; i++) {
+		V[i] = RPL[i];
+	}
+
+ if (cpu_debug_mode)
+        sprintf(cpu_debug_message, "SCHIP FX85: Read registers V[0] through V[x(%d)] and store in RPL user flags", x);
+}
+
+
+// --------------------------- SCHIP 1.1 --------------------------- //
+
+// SCHIP 1.1 - 00CN
+// Scroll display N lines down
+void opc_schip_00CN(unsigned char n) {
+
+	unsigned int i, shift = n * 128;
+
+	cpu_SCHIP_mode = true;
+
+	// // If in SCHIP Low Res mode, scroll N/2 lines only
+	// if scrollQuirks_00CN_00FB_00FC {
+	// 	shift = (int(x) * 128) / 2
+	// }
+
+	// Shift Right N lines on Graphics Array
+	for ( i = (display_EMULATOR_RES_X * display_EMULATOR_RES_Y) - 1 ; i >= shift ; i-- )
+	{
+		display_pixels[i] = display_pixels[i-shift];
+	}
+
+	// Clean the shifted display bytes
+	for ( i = 0 ; i < shift ; i++ ) {
+		display_pixels[i] = display_pixel_OFF_color;
+	}
+
+	if ( cpu_debug_mode )
+		printf(cpu_debug_message, "SCHIP 00CN: Scroll display %d lines down", n);
+}
+
+
+// SCHIP 1.1 - 00FB
+// Scroll display 4 pixels right (hi-res). In lo-res, scroll 2 pixels right.
+void opc_schip_00FB(void) {
+    unsigned int width  = cpu_SCHIP_mode ? 128 : 64;
+    unsigned int height = cpu_SCHIP_mode ? 64  : 32;
+
+    unsigned int shift = cpu_SCHIP_LORES_mode ? 2 : 4;
+
+	// Shift Right N pixels on Graphics Array
+    for (unsigned int y = 0; y < height; y++) {
+        unsigned int base = y * width;
+
+		// Shift pixels to the right (from the end to the beginning)
+        for (int x = width - 1; x >= (int)shift; x--) {
+            display_pixels[base + x] = display_pixels[base + x - shift];
+        }
+
+        // Clear the first 'shift' pixels of the line
+        for (unsigned int x = 0; x < shift; x++) {
+            display_pixels[base + x] = display_pixel_OFF_color;
+        }
+    }
+
+    cpu_draw_flag = true;
+
+    if (cpu_debug_mode) {
+        sprintf(cpu_debug_message, "SCHIP 00FB: Scroll display right");
+    }
+}
+
+
+// SCHIP 1.1 - 00FC
+// Scroll 4 pixels left (hires), 2 pixels (lores)
+void opc_schip_00FC(void) {
+    unsigned int width  = cpu_SCHIP_mode ? 128 : 64;
+    unsigned int height = cpu_SCHIP_mode ? 64  : 32;
+
+	// Shift 4 pixels left (hires) or 2 pixels left (lores)
+    unsigned int shift = cpu_SCHIP_LORES_mode ? 2 : 4;
+
+	// Shift Left N pixels on Graphics Array
+    for (unsigned int y = 0; y < height; y++) {
+        unsigned int base = y * width;
+
+        // Move line pixels to the left
+        for (unsigned int x = 0; x < width - shift; x++) {
+            display_pixels[base + x] = display_pixels[base + x + shift];
+        }
+
+        // Clean the last (shift value) pixels of the line
+        for (unsigned int x = width - shift; x < width; x++) {
+            display_pixels[base + x] = display_pixel_OFF_color;
+        }
+    }
+
+    cpu_draw_flag = true;
+
+    if (cpu_debug_mode)
+        sprintf(cpu_debug_message, "SCHIP 00FC: Scroll display left");
+}
+
+
+// SCHIP 1.1 - Fx30 - LD F, Vx
 // Set I = location of sprite for digit Vx.
 // The value of I is set to the location for the hexadecimal sprite corresponding to the value of Vx.
 void opc_schip_FX30(unsigned char x) {
@@ -256,5 +343,6 @@ void opc_schip_FX30(unsigned char x) {
 	if ( cpu_debug_mode )
 		sprintf(cpu_debug_message, "SCHIP Fx30: Set I(%X) = location of sprite for digit V[x(%d)]:%d (*10)", I, x, V[x] );
 }
+
 
 
