@@ -151,6 +151,7 @@ void cpu_initialize(void) {
 	SP      = 0;
 	I       = 0;
 	Opcode  = 0;
+	memset(RPL, 0x00, sizeof(RPL));                                  // Clean RPL Register (SuperCHIP)
 	
 	// Initialization - Clean pixels array
 	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {

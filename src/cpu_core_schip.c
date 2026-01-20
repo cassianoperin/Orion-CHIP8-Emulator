@@ -23,7 +23,7 @@ void opc_schip_00FD(void) {
 // SCHIP 1.0 - 00FE
 // Enable Low-Res Mode (64 x 32 resolution)
 void opc_schip_00FE(void) {
-	// Disable SCHIP Mode
+	// Enable SCHIP Mode
 	cpu_SCHIP_mode = true;
 	cpu_SCHIP_LORES_mode = true;
 	
@@ -40,12 +40,17 @@ void opc_schip_00FE(void) {
 	}
 
 	// Clear the screen when changing graphic mode
-	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+	unsigned int gfx_len = display_EMULATOR_RES_X * display_EMULATOR_RES_Y;
+	for (unsigned int i = 0; i < gfx_len; i++) {
 		display_pixels[i] = display_pixel_OFF_color;
 	}
 
-	if ( cpu_debug_mode )
-		printf(cpu_debug_message, "SCHIP 00FE: Enable low res (64 x 32) mode");
+	cpu_draw_flag = true;
+
+	if (cpu_debug_mode) {
+		sprintf(cpu_debug_message, "SCHIP 00FE: Enable low res (64 x 32) mode");
+		puts(cpu_debug_message);
+	}
 }
 
 
@@ -69,12 +74,17 @@ void opc_schip_00FF(void) {
 	}
 
 	// Clear the screen when changing graphic mode
-	for ( int i = 0 ; i < (int)( sizeof(display_pixels) / sizeof(display_pixels[0])) ; i++ ) {
+	unsigned int gfx_len = display_EMULATOR_RES_X * display_EMULATOR_RES_Y;
+	for (unsigned int i = 0; i < gfx_len; i++) {
 		display_pixels[i] = display_pixel_OFF_color;
 	}
 
-    if ( cpu_debug_mode )
-		printf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
+	cpu_draw_flag = true;
+
+	if (cpu_debug_mode) {
+		sprintf(cpu_debug_message, "SCHIP 00FF: Enable high res (128 x 64) mode");
+		puts(cpu_debug_message);
+	}
 }
 
 
@@ -218,6 +228,9 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 // SCHIP 1.0 - FX75
 // Store V0 through VX to HP-48 RPL user flags (X <= 7).
 void opc_schip_FX75(unsigned char x) {
+	// Limit to 7
+	if (x > 7) x = 7;
+
 	for (int i = 0; i <= x; i++) {
 		RPL[i] = V[i];
 	}
@@ -230,6 +243,9 @@ void opc_schip_FX75(unsigned char x) {
 // SCHIP 1.0 - FX85
 // Read V0 through VX to HP-48 RPL user flags (X <= 7).
 void opc_schip_FX85(unsigned char x) {
+	// Limit to 7
+	if (x > 7) x = 7;
+
 	for (int i = 0; i <= x; i++) {
 		V[i] = RPL[i];
 	}
@@ -245,9 +261,9 @@ void opc_schip_FX85(unsigned char x) {
 // Scroll display N lines down
 void opc_schip_00CN(unsigned char n) {
 
-	unsigned int i, shift = n * 128;
+	unsigned int i, shift = n * display_EMULATOR_RES_X;
 
-	cpu_SCHIP_mode = true;
+	// cpu_SCHIP_mode = true;
 
 	// // If in SCHIP Low Res mode, scroll N/2 lines only
 	// if scrollQuirks_00CN_00FB_00FC {
@@ -264,6 +280,8 @@ void opc_schip_00CN(unsigned char n) {
 	for ( i = 0 ; i < shift ; i++ ) {
 		display_pixels[i] = display_pixel_OFF_color;
 	}
+
+	cpu_draw_flag = true;
 
 	if ( cpu_debug_mode )
 		printf(cpu_debug_message, "SCHIP 00CN: Scroll display %d lines down", n);
