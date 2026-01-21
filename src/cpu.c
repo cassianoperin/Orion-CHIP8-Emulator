@@ -42,7 +42,7 @@ void cpu_reset(void) {
 						core_current = 1;
 						printf("Core set to %s\n", platform_info.name);
 					}
-				} else if (strcmp(rom_info.chosen_platform, "superchip") == 0) {
+				} else if (strcmp(rom_info.chosen_platform, "superchip1") == 0) {
 					if ( core == 2 ) {
 						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
 					} else {
@@ -50,12 +50,20 @@ void cpu_reset(void) {
 						core_current = 2;
 						printf("Core set to %s\n", platform_info.name);
 					}
-				} else if (strcmp(rom_info.chosen_platform, "hybridVIP") == 0) {
+				} else if (strcmp(rom_info.chosen_platform, "superchip") == 0) {
 					if ( core == 3 ) {
 						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
 					} else {
 						core = 3;
 						core_current = 3;
+						printf("Core set to %s\n", platform_info.name);
+					}
+				} else if (strcmp(rom_info.chosen_platform, "hybridVIP") == 0) {
+					if ( core == 4 ) {
+						printf("Core %s already set, nothing to do\n", rom_info.chosen_platform);
+					} else {
+						core = 4;
+						core_current = 4;
 						printf("Core set to %s\n", platform_info.name);
 					}				
 				} else {
@@ -181,6 +189,10 @@ void cpu_initialize(void) {
 	// Reset ROM loaded status
 	cpu_rom_loaded = false;
 
+	// Reset workarounds
+	workaround_DXY0_loresWideSprite = false;
+	workaround_Fx1E_Spacefight = false;
+
 	// Debug
 	// cpu_debug_mode	       = false;
 	// cpu_debug_print_console = true;
@@ -210,13 +222,15 @@ void cpu_load_fonts(void) {
 // - CHIP-8 BC_test.ch8 core
 void handle_workarounds(char *rom_sha1) {
 
+	// CHIP-8 Program: Clock Program [Bill Fisher, 1981].ch8
 	// Check for CHIP8 Clock Program that needs an cosmac vip hybrid hardware routine call exception in interpreter
-	if ( !strcmp(rom_sha1, "016345d75eef34448840845a9590d41e6bfdf46a") || !strcmp(rom_info.chosen_platform, "hybridVIP") )	// Program: Clock Program [Bill Fisher, 1981].ch8
+	if ( !strcmp(rom_sha1, "016345d75eef34448840845a9590d41e6bfdf46a") || !strcmp(rom_info.chosen_platform, "hybridVIP") )
 	{
 		printf("hybridVIP workaround applied for Clock program");
 		cosmac_vip_hw_2d8 = true;
 	}
 
+	// CHIP-8 Game: Space flight 2091 [Carsten Soerensen, 1992].ch8
 	// Check for a buggy rom version of Game "Space flight 2091 [Carsten Soerensen, 1992].ch8" and apply an workaround
 	if ( !strcmp(rom_sha1, "aa4f1a282bd64a2364102abf5737a4205365a2b4") )
 	{
@@ -224,8 +238,9 @@ void handle_workarounds(char *rom_sha1) {
 		printf("Buggy Spaceflight 2091 rom detected, FX1E workaround enabled\n");
 	}
 
-	// Correct the core and quirks for c8_test program
-	if ( !strcmp(rom_sha1, "8e592d3620481e00ea36d29765b95287c7349a70") )	// Program: c8_test.ch8
+	// CHIP-8 Test Program: c8_test.ch8
+	// Correct the core and quirks
+	if ( !strcmp(rom_sha1, "8e592d3620481e00ea36d29765b95287c7349a70") )
 	{
 		printf("CHIP-8 c8_test workaround:\nCHIP-8 CORE: Original CHIP-8 (Cosmac VIP)\n'Quirks applied + Memory Leave I\n\n");
 		core = 0;
@@ -239,10 +254,11 @@ void handle_workarounds(char *rom_sha1) {
 		quirk_Shifting_legacy_8xy6_8xyE	= false;	// Shifting
 	}
 
-	// Correct the core and quirks for CHIP-8 BC_test.ch8
-	if ( !strcmp(rom_sha1, "9df1689015a0d1d95144f141903296f9f1c35fc5") )	// Program: BC_test.ch8
+	// CHIP-8 Test Program: BC_test.ch8
+	// Correct the core and quirks
+	if ( !strcmp(rom_sha1, "9df1689015a0d1d95144f141903296f9f1c35fc5") )
 	{
-		printf("CHIP-8 BC_test.ch8 workaround:\nCHIP-8 CORE: SuperCHIP 1.1\nQuirks applied'\n\n");
+		printf("CHIP-8 BC_test.ch8 workaround:\nCHIP-8 CORE: SuperCHIP 1.1\nQuirks applied\n\n");
 		core = 2;
 		core_current = 2;
 		quirk_VF_Reset_8xy1_8xy2_8xy3	= false;	// Logic (VF Reset)
@@ -253,6 +269,19 @@ void handle_workarounds(char *rom_sha1) {
 		quirk_display_wait				= false;	// Display wait
 		quirk_Shifting_legacy_8xy6_8xyE	= true;		// Shifting
 	}
+
+	// ---------------------------------- SuperCHIP  ---------------------------------- //
+
+	// SCHIP Test Program: Robot.ch8
+	// This program need to draw 16 bytes sprites in low res mode
+	if ( !strcmp(rom_sha1, "dd6ef80cadef1e7b42f71ad99573b1af2299e27d") )
+	{
+		printf("SCHIP Robot.ch8 workaround:\nSCHIP CORE: SuperCHIP 1.1\nQuirks applied'\n\n");
+		printf("hybridVIP workaround applied for Clock program");
+		workaround_DXY0_loresWideSprite = true;
+	}
+
+	
 
 }
 

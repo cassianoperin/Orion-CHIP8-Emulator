@@ -23,25 +23,20 @@ extern unsigned int     CPU_CLOCK;
 extern bool             cpu_SCHIP_mode;
 extern bool             cpu_SCHIP_LORES_mode;
 extern unsigned short	PC;
-// extern unsigned short	Stack[];
-// extern unsigned char	SP;
 extern bool             cpu_debug_mode;
 extern char             cpu_debug_message[120];
 extern unsigned short	Opcode;
 extern unsigned char	V[16];
 extern unsigned short	I;
 extern unsigned char	Memory[4096];
-// extern unsigned char    Key[16];
-// extern unsigned char	DelayTimer;
-// extern unsigned char	SoundTimer;
 extern bool             cpu_draw_flag;
-// extern unsigned char    key_FX0A;
-// extern bool             key_FX0A_pressed;
-extern bool            cpu_pause;
+extern bool             cpu_pause;
 extern unsigned char	RPL[8];
 // CPU Constants
-extern const int CHIP8_DEFAULT_CLOCK;
-extern const int SCHIP_DEFAULT_CLOCK;
+extern const int        CHIP8_DEFAULT_CLOCK;
+extern const int        SCHIP_DEFAULT_CLOCK;
+// Workarounds
+extern bool             workaround_DXY0_loresWideSprite;
 
 // Display
 extern unsigned int   display_EMULATOR_RES_X;
@@ -59,6 +54,7 @@ extern char gui_statusbar_msg[120];
 // --------------------------------- External Functions --------------------------------- //
 // CPU
 extern void cpu_initialize(void);
+// extern void cpu_reset(void);
 
 // -------------------------------------- Functions ------------------------------------- //
 // Super-CHIP 1.0 opcodes

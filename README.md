@@ -251,3 +251,13 @@ https://www.reddit.com/r/EmuDev/comments/n9dcli/comment/gxnnzdw/
 5 - Debug pixel not dealing with 16x16 sprites
 
 6 - SCHIP lores tests
+
+7 - opc_schip_00FD reset instead of leave
+
+8 - limit opcodes per selected core
+
+9 - where to put workarounds
+
+10 - cpu_debug_print_console
+
+11 - print_bin

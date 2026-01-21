@@ -9,11 +9,14 @@
 // Exit Emulator
 void opc_schip_00FD(void) {
 
-	if (cpu_debug_mode)
-        sprintf(cpu_debug_message, "SCHIP 00FD: Exit emulator");
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP 00FD: Exit emulator");
+		puts(cpu_debug_message);
+	}
 	
 	// Reset
 	cpu_initialize();
+    // cpu_reset();
 
 	// Update StatusBar message
 	strcpy(gui_statusbar_msg, "No ROM loaded");
@@ -89,141 +92,95 @@ void opc_schip_00FF(void) {
 
 
 // SCHIP - DXY0 - draw 16x16 sprites
-// Draw n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
+// Draw 16x16 sprite starting at memory location I at (Vx, Vy), set VF = collision.
+// In LOW-RES (64x32), if workaround_DXY0_loresWideSprite == false,
+// only the first 8 pixels are drawn (8x16 behavior).
 void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
-	
-	// Draw in Chip-8 Low Resolution mode
-    unsigned short gpx_position, row, column = 0;
+
+    unsigned int gpx_position, row, column = 0;
     unsigned char Vx, Vy, byte, bit, bit_value, sprite = 0, sprite2 = 0;
 
-	// Is NOT allowed to use the vx/vy directly in the draw loop itself, you must make a copy of the coordinates
-	// because either of them could be the vf register
-	Vx = V[x];
-	Vy = V[y];
+    Vx = V[x];
+    Vy = V[y];
+    n  = 16;
 
-	n = 16;
+    V[0xF] = 0;
 
-	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "CHIP-8 Dxyn: DRAW GRAPHICS - Address I: %d Position V[x(%d)]: %d V[y(%d)]: %d N: %d", I, x, V[x], y, V[y], n);
-	
-	// Clear the carry before start
-	V[0xF] = 0;
+    for (byte = 0; byte < n; byte++) {
 
-	// Print N Bytes from address I in V[x]V[y] position of the screen
-	// Each byte is a line of 8 bits
+        // Always fetch as 16x16 source (2 bytes per row)
+        sprite  = Memory[I + (byte * 2)];
+        sprite2 = Memory[I + (byte * 2) + 1];
 
-	// // Print header of pixels to console
-	// if ( debug_pixels )
-	// 	printf("Sprite (x3): Position Line: %d\tColumn:%d\tBytes: %d\n", V[y]%display_EMULATOR_RES_Y, V[x]%display_EMULATOR_RES_X, n);
-	
-  	for (byte = 0; byte < n; byte++)
-  	{
-		
-		// if in LOW-RES (16x8), update to traditional sprite storage mode in memory
-		// if ( cpu_SCHIP_LORES_mode) {
-		// 	sprite = Memory[I+byte];
-		// } else {
-			// if in HI-RES (16x16) get the bytes in pairs
-			sprite = Memory[I+(byte*2)];
-			sprite2 = Memory[I+(byte*2)+1];
-		// }
+        // --------- Row --------- //
+        if (quirk_Wrap_Dxyn) {
+            row = (Vy + byte) % display_EMULATOR_RES_Y;
+        } else {
+            row = (Vy % display_EMULATOR_RES_Y) + byte;
+            if (row >= (unsigned)display_EMULATOR_RES_Y)
+                continue;
+        }
 
-		// // Print byte to console
-		// if ( debug_pixels )
-		// 	print_bin(sprite);
+        // --------- First 8 pixels (left byte) --------- //
+        for (bit = 0; bit < 8; bit++) {
 
-		// --------- Row --------- //
-		if ( quirk_Wrap_Dxyn ) { 
-			// Slit the sprite between screen top and down
-			// if line (y) plus n bytes > 31 or > 63
-			row = (Vy + byte) % display_EMULATOR_RES_Y;
-		} else {
-			// Do not split the sprite between screen top and down
-			// If the line (y) plus n bytes > 31 or > 63, then do not print
-			row = ((Vy % display_EMULATOR_RES_Y) + byte);
-			if ( row > display_EMULATOR_RES_Y - 1 ) {
-				sprite = 0;
-			}
-		}
+            bit_value = (sprite & 0x80) >> 7;
 
-		// Always print 8 bits of the byte
-		for (bit = 0; bit < 8; bit++)
-		{
-			// Bit
-			bit_value = (sprite & 0x80) >> 7;	// MSB (Most Significant Bit), 1 will draw, 0 don't
-			
-			// ------- Column -------- //
-			if ( quirk_Wrap_Dxyn ) {
-				column = (Vx + bit) % display_EMULATOR_RES_X;
-			} else {
-				// Do not split the sprite between screen right and left
-				// If the row (x) plus number of bits > 63, then do not print
-				column = ((Vx % display_EMULATOR_RES_X) + bit);
-				if ( column > display_EMULATOR_RES_X - 1 ) {
-					bit_value = 0;
-				}
-			}
+            if (quirk_Wrap_Dxyn) {
+                column = (Vx + bit) % display_EMULATOR_RES_X;
+            } else {
+                column = (Vx % display_EMULATOR_RES_X) + bit;
+                if (column >= (unsigned)display_EMULATOR_RES_X)
+                    bit_value = 0;
+            }
 
-			// Translate the x and Y to the Graphics Vector
-			gpx_position = (row * display_EMULATOR_RES_X) + column; 
+            if (bit_value) {
+                gpx_position = row * display_EMULATOR_RES_X + column;
+                if (gpx_position < (unsigned)(display_EMULATOR_RES_X * display_EMULATOR_RES_Y)) {
+                    if (display_pixels[gpx_position] == display_pixel_ON_color)
+                        V[0xF] = 1;
+                    display_pixels[gpx_position] ^= display_pixel_ON_color;
+                }
+            }
 
-			if (bit_value == 1) {
-				// Set colision case graphics[index] is already 1
-				if (display_pixels[gpx_position] == display_pixel_ON_color) {
-					V[0xF] = 1;
-				}
-				// XOR to toggle between the two colors (ON/OFF)
-				display_pixels[gpx_position] ^= display_pixel_ON_color;
-			}
+            sprite <<= 1;
+        }
 
-			// Shift left to get the next bit on the MSB (Most Significant Bit) positon
-			sprite <<= 1;
-		}
+        // --------- Second 8 pixels (right byte) --------- //
+        if (!cpu_SCHIP_LORES_mode || workaround_DXY0_loresWideSprite) {
 
+            for (bit = 0; bit < 8; bit++) {
 
-		// if ( !cpu_SCHIP_LORES_mode ) {
-			// Print 8 bits from SECOND SPRITE
-			for ( bit = 0; bit < 8; bit++ ) {
+                bit_value = (sprite2 & 0x80) >> 7;
 
-				// Get the value of the byte
-				bit_value = (sprite2 & 0x80) >> 7;
-				// bit_value = sprite2 >> (7 - bit) & 1;
+                unsigned int col2;
+                if (quirk_Wrap_Dxyn) {
+                    col2 = (Vx + 8 + bit) % display_EMULATOR_RES_X;
+                } else {
+                    col2 = (Vx % display_EMULATOR_RES_X) + 8 + bit;
+                    if (col2 >= (unsigned)display_EMULATOR_RES_X)
+                        bit_value = 0;
+                }
 
-				// Set the index to write the 8 bits of each pixel
-				// gfx_index := uint16(gpx_position) + uint16(8+bit) + (byte * uint16(Global.SizeX))
-				gpx_position = (row * display_EMULATOR_RES_X) + (column+bit+1); 
+                if (bit_value) {
+                    gpx_position = row * display_EMULATOR_RES_X + col2;
+                    if (gpx_position < (unsigned)(display_EMULATOR_RES_X * display_EMULATOR_RES_Y)) {
+                        if (display_pixels[gpx_position] == display_pixel_ON_color)
+                            V[0xF] = 1;
+                        display_pixels[gpx_position] ^= display_pixel_ON_color;
+                    }
+                }
 
+                sprite2 <<= 1;
+            }
+        }
+    }
 
-				// If tryes to draw bits outside the vector size, ignore
-				if ( gpx_position >= display_EMULATOR_RES_X * display_EMULATOR_RES_Y) {
-					printf("Position: %d\tBigger than 2048 or 8192 x: %d y:%d \n",gpx_position, display_EMULATOR_RES_X, display_EMULATOR_RES_Y );
-					// exit(2);
-				}
-
-				if (bit_value == 1) {
-					// Set colision case graphics[index] is already 1
-					if (display_pixels[gpx_position] == display_pixel_ON_color) {
-						V[0xF] = 1;
-					}
-					// XOR to toggle between the two colors (ON/OFF)
-					display_pixels[gpx_position] ^= display_pixel_ON_color;
-				}
-
-				// Shift left to get the next bit on the MSB (Most Significant Bit) positon
-				sprite2 <<= 1;
-
-			}
-		// }
-
- 	}
-
-	// // Print a new line after the pixel
-	// if ( debug_pixels )
-	// 	printf("\n");
-
-	// Ask to draw screen
-	cpu_draw_flag = true;	
+    cpu_draw_flag = true;
 }
+
+
+
 
 // SCHIP 1.0 - FX75
 // Store V0 through VX to HP-48 RPL user flags (X <= 7).
@@ -235,8 +192,10 @@ void opc_schip_FX75(unsigned char x) {
 		RPL[i] = V[i];
 	}
 
-	if (cpu_debug_mode)
-	sprintf(cpu_debug_message, "SCHIP Fx75: Store registers V[0] through V[x(%d)] in RPL user flags from 0 to %d", x, x);
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP Fx75: Store registers V[0] through V[x(%u)] in RPL user flags from 0 to %u", (unsigned)x, (unsigned)x);
+		puts(cpu_debug_message);
+	}
 
 }
 
@@ -250,8 +209,10 @@ void opc_schip_FX85(unsigned char x) {
 		V[i] = RPL[i];
 	}
 
- if (cpu_debug_mode)
-        sprintf(cpu_debug_message, "SCHIP FX85: Read registers V[0] through V[x(%d)] and store in RPL user flags", x);
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP Fx85: Read registers V[0] through V[x(%u)] and store in RPL user flags", (unsigned)x);
+		puts(cpu_debug_message);
+	}
 }
 
 
@@ -260,41 +221,52 @@ void opc_schip_FX85(unsigned char x) {
 // SCHIP 1.1 - 00CN
 // Scroll display N lines down
 void opc_schip_00CN(unsigned char n) {
+    unsigned int width   = display_EMULATOR_RES_X;
+    unsigned int height  = display_EMULATOR_RES_Y;
+    unsigned int gfx_len = width * height;
 
-	unsigned int i, shift = n * display_EMULATOR_RES_X;
+    if (n == 0) {
+        cpu_draw_flag = true;
+        return;
+    }
 
-	// cpu_SCHIP_mode = true;
+    unsigned int shift = (unsigned int)n * width;
 
-	// // If in SCHIP Low Res mode, scroll N/2 lines only
-	// if scrollQuirks_00CN_00FB_00FC {
-	// 	shift = (int(x) * 128) / 2
-	// }
+    // If shift is >= whole screen, clear everything
+    if (shift >= gfx_len) {
+        for (unsigned int i = 0; i < gfx_len; i++) {
+            display_pixels[i] = display_pixel_OFF_color;
+        }
+        cpu_draw_flag = true;
+        return;
+    }
 
-	// Shift Right N lines on Graphics Array
-	for ( i = (display_EMULATOR_RES_X * display_EMULATOR_RES_Y) - 1 ; i >= shift ; i-- )
-	{
-		display_pixels[i] = display_pixels[i-shift];
-	}
+    // Move pixels down by 'shift' (copy from bottom to top)
+    for (unsigned int i = gfx_len; i-- > shift; ) {
+        display_pixels[i] = display_pixels[i - shift];
+    }
 
-	// Clean the shifted display bytes
-	for ( i = 0 ; i < shift ; i++ ) {
-		display_pixels[i] = display_pixel_OFF_color;
-	}
+    // Clear the top 'shift' pixels
+    for (unsigned int i = 0; i < shift; i++) {
+        display_pixels[i] = display_pixel_OFF_color;
+    }
 
-	cpu_draw_flag = true;
+    cpu_draw_flag = true;
 
-	if ( cpu_debug_mode )
-		printf(cpu_debug_message, "SCHIP 00CN: Scroll display %d lines down", n);
+    if (cpu_debug_mode) {
+        snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP 00CN: Scroll display %u lines down", (unsigned)n);
+        puts(cpu_debug_message);
+    }
 }
+
 
 
 // SCHIP 1.1 - 00FB
 // Scroll display 4 pixels right (hi-res). In lo-res, scroll 2 pixels right.
 void opc_schip_00FB(void) {
-    unsigned int width  = cpu_SCHIP_mode ? 128 : 64;
-    unsigned int height = cpu_SCHIP_mode ? 64  : 32;
-
-    unsigned int shift = cpu_SCHIP_LORES_mode ? 2 : 4;
+	unsigned int width  = display_EMULATOR_RES_X;
+	unsigned int height = display_EMULATOR_RES_Y;
+	unsigned int shift  = (width == 64) ? 2 : 4;
 
 	// Shift Right N pixels on Graphics Array
     for (unsigned int y = 0; y < height; y++) {
@@ -313,17 +285,18 @@ void opc_schip_00FB(void) {
 
     cpu_draw_flag = true;
 
-    if (cpu_debug_mode) {
-        sprintf(cpu_debug_message, "SCHIP 00FB: Scroll display right");
-    }
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP 00FB: Scroll display right");
+		puts(cpu_debug_message);
+	}
 }
 
 
 // SCHIP 1.1 - 00FC
 // Scroll 4 pixels left (hires), 2 pixels (lores)
 void opc_schip_00FC(void) {
-    unsigned int width  = cpu_SCHIP_mode ? 128 : 64;
-    unsigned int height = cpu_SCHIP_mode ? 64  : 32;
+	unsigned int width  = cpu_SCHIP_LORES_mode ? 64 : 128;
+	unsigned int height = cpu_SCHIP_LORES_mode ? 32 : 64;
 
 	// Shift 4 pixels left (hires) or 2 pixels left (lores)
     unsigned int shift = cpu_SCHIP_LORES_mode ? 2 : 4;
@@ -345,8 +318,10 @@ void opc_schip_00FC(void) {
 
     cpu_draw_flag = true;
 
-    if (cpu_debug_mode)
-        sprintf(cpu_debug_message, "SCHIP 00FC: Scroll display left");
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP 00FC: Scroll display left");
+		puts(cpu_debug_message);
+	}
 }
 
 
@@ -358,8 +333,10 @@ void opc_schip_FX30(unsigned char x) {
 	// Load SCHIP font. Start from Memory[80]
 	I = 80 + V[x]*10;
 
-	if ( cpu_debug_mode )
-		sprintf(cpu_debug_message, "SCHIP Fx30: Set I(%X) = location of sprite for digit V[x(%d)]:%d (*10)", I, x, V[x] );
+	if (cpu_debug_mode) {
+		snprintf(cpu_debug_message, sizeof(cpu_debug_message), "SCHIP Fx30: Set I(%X) = location of sprite for digit V[x(%u)]:%u (*10)", (unsigned)I, (unsigned)x, (unsigned)V[x]);
+		puts(cpu_debug_message);
+	}
 }
 
 

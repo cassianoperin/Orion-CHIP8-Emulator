@@ -287,8 +287,9 @@ int menu(struct nk_context *ctx)
                 nk_layout_row_static(ctx, 20, 176, 2);
                 option = nk_option_label(ctx, "1: CHIP-8 (Cosmac VIP)",  option == 0) ? 0 : option;
                 option = nk_option_label(ctx, "2: CHIP-8 (Modern)",  option == 1) ? 1 : option;
-                option = nk_option_label(ctx, "3: SuperCHIP 1.1 (beta)",  option == 2) ? 2 : option;
-                option = nk_option_label(ctx, "4: hybridVIP",  option == 3) ? 3 : option;
+                option = nk_option_label(ctx, "3: SuperCHIP 1.0",  option == 2) ? 2 : option;
+                option = nk_option_label(ctx, "4: SuperCHIP 1.1",  option == 3) ? 3 : option;
+                option = nk_option_label(ctx, "5: hybridVIP",  option == 4) ? 4 : option;
 
                 switch( option )
                 {
@@ -320,7 +321,7 @@ int menu(struct nk_context *ctx)
                         break;
                     }
 
-                    // SuperCHIP 1.1
+                    // SuperCHIP 1.0
                     case 2: {
                         core = 2;
                         // Detect core changes
@@ -334,9 +335,23 @@ int menu(struct nk_context *ctx)
                         break;
                     }
 
-                    // hybridVIP
+                    // SuperCHIP 1.1
                     case 3: {
                         core = 3;
+                        // Detect core changes
+                        if ( core != core_current ) {
+                            // printf("Core changed to %d\n", core);
+                            // Update the current core
+                            core_current = core;
+                            handle_quirks(rom_info, platform_info, rom_header.hash_str);
+                        }
+
+                        break;
+                    }
+
+                    // hybridVIP
+                    case 4: {
+                        core = 4;
                         // Detect core changes
                         if ( core != core_current ) {
                             // printf("Core changed to %d\n", core);

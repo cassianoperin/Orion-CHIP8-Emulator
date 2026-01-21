@@ -141,11 +141,13 @@ bool            cpu_rom_loaded;              // Tell the main loop when to start
 // Cosmac VIP Hardware routines
 bool            cosmac_vip_hw_2d8;           // Allow interpreter to understand 0XXX (02d8) invalid instruction
                                              // (cosmac vip hardware routine call needed by CHIP8 hybrid CLOCK program)
-// Buggy Spaceflight 2091 rom workaround
+// Workarounds for specific ROMs
+bool            workaround_DXY0_loresWideSprite; // Apply an workaround on DXY0 to draw 16 bytes sprites in low res mode
 bool            workaround_Fx1E_Spacefight;	// Apply an workaround on FX1E to handle an bugged version of Spacefight 2091 rom
+
 // CHIP-8 Core / Variant
-int             core = 0;                    // 0 = Cosmac VIP (Original), 1 = Modern CHIP-8, 2 = SuperCHIP 1.1
-                                             // 3 = hybridVIP
+int             core = 0;                    // 0 = Cosmac VIP (Original), 1 = Modern CHIP-8, 2 = SuperCHIP 1.0
+                                             // 3 = SuperCHIP 1.1, 4 = hybridVIP
 int             core_current = 0;            // Detect core changes to reset the quirks
 bool            core_autodetection_enabled;  // Automatically try to load the core from programs.json
 
