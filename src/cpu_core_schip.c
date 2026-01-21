@@ -108,9 +108,15 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
 
     for (byte = 0; byte < n; byte++) {
 
-        // Always fetch as 16x16 source (2 bytes per row)
-        sprite  = Memory[I + (byte * 2)];
-        sprite2 = Memory[I + (byte * 2) + 1];
+        // In LOW-RES and workaround disabled: behave like 8x16, bytes are contiguous (I + byte)
+        if (cpu_SCHIP_LORES_mode && !workaround_DXY0_loresWideSprite) {
+            sprite  = Memory[I + byte];
+            sprite2 = 0; // not used
+        } else {
+            // 16x16 source (2 bytes per row)
+            sprite  = Memory[I + (byte * 2)];
+            sprite2 = Memory[I + (byte * 2) + 1];
+        }
 
         // --------- Row --------- //
         if (quirk_Wrap_Dxyn) {
@@ -121,7 +127,7 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
                 continue;
         }
 
-        // --------- First 8 pixels (left byte) --------- //
+        // --------- First 8 pixels (left byte / 8x16 byte) --------- //
         for (bit = 0; bit < 8; bit++) {
 
             bit_value = (sprite & 0x80) >> 7;
@@ -147,6 +153,7 @@ void opc_schip_DXY0(unsigned char x, unsigned char y, unsigned char n) {
         }
 
         // --------- Second 8 pixels (right byte) --------- //
+        // Only draw the second byte when NOT in 8x16 low-res compatibility mode
         if (!cpu_SCHIP_LORES_mode || workaround_DXY0_loresWideSprite) {
 
             for (bit = 0; bit < 8; bit++) {
